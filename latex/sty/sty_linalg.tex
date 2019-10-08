@@ -1,0 +1,41 @@
+% \ProvidesPackage{miv_linalg}
+
+% misc
+\newcommand{\twovec}[2]{\sqb{\begin{matrix} #1 \\ #2 \end{matrix} } }
+\newcommand{\listvec}[2]{#1_1, #1_2, \ldots, #1_{#2}}
+\newcommand{\listvecn}[1]{#1_1, #1_2, \ldots, #1_n}
+\newcommand{\Tr}[1]{\tau \p{#1}}
+\newcommand{\Det}[1]{\left| #1 \right|}
+
+
+% vector stuff
+\renewcommand{\b}[1]{\textbf{#1}}
+\renewcommand{\v}[1]{\vec{#1}}
+\newcommand{\vv}{\v{v}}
+\newcommand{\vu}{\v{u}}
+\newcommand{\vw}{\v{w}}
+\newcommand{\vx}{\v{x}}
+\newcommand{\bv}{\b{v}}
+\newcommand{\bu}{\b{u}}
+\newcommand{\bw}{\b{w}}
+\newcommand{\bx}{\b{x}}
+
+
+% matrix macros
+
+% Id mat
+\newcommand{\Id}{\mathrm{Id}}
+
+\newcommand{\IdMatrix}{ 
+\sqb{ \begin{matrix}
+1 & \cdots & 0 \\ 
+\vdots & \ddots & \vdots \\ 
+0 & \cdots & 1 
+\end{matrix} }}
+
+
+\newcommand{\Mat}[1]{ \begin{bmatrix} #1 \end{bmatrix} }
+\newcommand{\Mats}[1]{\sqb{\begin{smallmatrix} #1 \end{smallmatrix}} }
+\newcommand{\twomat}[1]{\sqb{\begin{matrix} #1 \end{matrix} } }
+
+
