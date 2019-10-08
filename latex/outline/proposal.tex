@@ -1,0 +1,52 @@
+% ============================================================
+\documentclass{article}
+
+\usepackage[margin=0.7in]{geometry}
+\usepackage{cite}
+
+% ============================================================
+% custom pckgs
+\usepackage{"../sty/sty_base"}
+% ------------------------------------------------------------
+\input{"../sty/sty_sci"}
+% \input{"../sty/sty_stat"}
+% \input{"../sty/sty_linalg"}
+% ============================================================
+
+\sisetup{
+	per-mode=fraction,
+	fraction-function=\tfrac
+}
+
+% unit shorthands
+\newcommand{\UmV}{\u{mV}}
+\newcommand{\UmM}{\u{mM}}
+\newcommand{\UcmPs}{\u{cm/s}}
+\newcommand{\UdC}{\ensuremath{\dg\u{C}}}
+\newcommand{\UdK}{\ensuremath{\dg\u{K}}}
+
+\newcommand{\UCr}{\ensuremath{\mu \u{A} / \u{cm}^2}}
+
+% element shorthands
+\newcommand{\ENa}{\ensuremath{\u{Na}^+}\ }
+\newcommand{\EK}{\ensuremath{\u{K}^+}\ }
+\newcommand{\ECl}{\ensuremath{\u{Cl}^-}\ }
+
+\newcommand{\centerShort}[1]{\begin{center} #1 \end{center}}
+
+\title{TITLE}
+\author{Michael Ivanitskiy, Aakash Patel, Connor Puritz}
+\date{\today}
+
+\title{Math 568 project: proposal}
+	
+\begin{document}
+\maketitle\noindent
+
+test \cite{luo2014dynamic}
+
+\bibliography{../refs}{}
+\bibliographystyle{plain}
+
+\end{document}
+
