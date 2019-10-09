@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6800 64-bit) (preloaded format=pdflatex 2018.9.21)  8 OCT 2019 18:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6800 64-bit) (preloaded format=pdflatex 2018.9.21)  8 OCT 2019 18:49
 entering extended mode
 **c:/Users/mivan/Gdrive/Fall_19/MATH_568/568_project/git-repo/latex/outline/proposal.tex
 (c:/Users/mivan/Gdrive/Fall_19/MATH_568/568_project/git-repo/latex/outline/proposal.tex
@@ -489,18 +489,18 @@ Package: translator 2018/01/04 v1.12 Easy translation of strings in LaTeX
 ))) (proposal.aux)
 \openout1 = `proposal.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -679,28 +679,28 @@ Dictionary: translator-basic-dictionary, Language: English
 ) ("C:\Program Files (x86)\MiKTex\tex\latex\siunitx\siunitx-abbreviations.cfg"
 File: siunitx-abbreviations.cfg 2017/11/26 v2.7k siunitx: Abbreviated units
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 43.
+LaTeX Font Info:    Try loading font information for U+msa on input line 45.
  ("C:\Program Files (x86)\MiKTex\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 43.
+LaTeX Font Info:    Try loading font information for U+msb on input line 45.
  ("C:\Program Files (x86)\MiKTex\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (proposal.bbl) [1
 
 {C:/Users/mivan/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] (proposal.aux) ) 
 Here is how much of TeX's memory you used:
- 14193 strings out of 492972
- 287675 string characters out of 3135001
- 314615 words of memory out of 3000000
- 17947 multiletter control sequences out of 15000+200000
+ 14194 strings out of 492972
+ 287683 string characters out of 3135001
+ 315640 words of memory out of 3000000
+ 17948 multiletter control sequences out of 15000+200000
  540687 words of font info for 64 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,6n,36p,10458b,275s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files (x86)/MiKTex/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files (x86)/MiKTex/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86)/MiKTex/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files (x86)/MiKTex/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files (x86)/MiKTex/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on proposal.pdf (1 page, 63033 bytes).
+<C:/Program Files (x86)/MiKTex/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files (x86)/MiKTex/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files (x86)/MiKTex/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86)/MiKTex/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files (x86)/MiKTex/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files (x86)/MiKTex/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files (x86)/MiKTex/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on proposal.pdf (1 page, 82392 bytes).
 PDF statistics:
- 26 PDF objects out of 1000 (max. 8388607)
+ 34 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

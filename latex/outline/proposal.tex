@@ -8,31 +8,12 @@
 % custom pckgs
 \usepackage{"../sty/sty_base"}
 % ------------------------------------------------------------
-\input{"../sty/sty_sci"}
+% \input{"../sty/sty_sci"}
 % \input{"../sty/sty_stat"}
 % \input{"../sty/sty_linalg"}
 % ============================================================
 
-\sisetup{
-	per-mode=fraction,
-	fraction-function=\tfrac
-}
-
-% unit shorthands
-\newcommand{\UmV}{\u{mV}}
-\newcommand{\UmM}{\u{mM}}
-\newcommand{\UcmPs}{\u{cm/s}}
-\newcommand{\UdC}{\ensuremath{\dg\u{C}}}
-\newcommand{\UdK}{\ensuremath{\dg\u{K}}}
-
-\newcommand{\UCr}{\ensuremath{\mu \u{A} / \u{cm}^2}}
-
-% element shorthands
-\newcommand{\ENa}{\ensuremath{\u{Na}^+}\ }
-\newcommand{\EK}{\ensuremath{\u{K}^+}\ }
-\newcommand{\ECl}{\ensuremath{\u{Cl}^-}\ }
-
-\newcommand{\centerShort}[1]{\begin{center} #1 \end{center}}
+\newcommand{\needcite}{$^{[citation \ needed]}$}
 
 \title{TITLE}
 \author{Michael Ivanitskiy, Aakash Patel, Connor Puritz}
@@ -43,7 +24,7 @@
 \begin{document}
 \maketitle\noindent
 
-test \cite{luo2014dynamic}
+Recently, the connectome of both sexes of \emph{C. elegans} has been mapped throughout its development \needcite. The processes by which new synapses are formed during development is also well documented. For our project, we hope to start with a \emph{C. elegans} from early in development, try to mimic synaptic growth by releasing the appropriate amounts of neurotrophins by the correct neurons, and then compare the resulting network to that of adult \emph{C. elegans}.
 
 \bibliography{../refs}{}
 \bibliographystyle{plain}
