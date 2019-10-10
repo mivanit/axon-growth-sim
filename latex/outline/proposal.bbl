@@ -1,10 +1,41 @@
 \begin{thebibliography}{1}
 
-\bibitem{luo2014dynamic}
+\bibitem{axon-guidance-genetics}
+Andrew~D Chisholm, Harald Hutter, Yishi Jin, and William~G Wadsworth.
+\newblock The genetics of axon guidance and axon regeneration in caenorhabditis
+  elegans.
+\newblock {\em Genetics}, 204(3):849--882, 2016.
+
+\bibitem{sexes-whole-connectome}
+Steven~J Cook, Travis~A Jarrell, Christopher~A Brittin, Yi~Wang, Adam~E
+  Bloniarz, Maksim~A Yakovlev, Ken~CQ Nguyen, Leo T-H Tang, Emily~A Bayer,
+  Janet~S Duerr, et~al.
+\newblock Whole-animal connectomes of both caenorhabditis elegans sexes.
+\newblock {\em Nature}, 571(7763):63, 2019.
+
+\bibitem{decision-connectome}
+Travis~A Jarrell, Yi~Wang, Adam~E Bloniarz, Christopher~A Brittin, Meng Xu,
+  J~Nichol Thomson, Donna~G Albertson, David~H Hall, and Scott~W Emmons.
+\newblock The connectome of a decision-making neural network.
+\newblock {\em Science}, 337(6093):437--444, 2012.
+
+\bibitem{connectome-development}
+Marcus Kaiser.
+\newblock Mechanisms of connectome development.
+\newblock {\em Trends in Cognitive Sciences}, 21(9):703--717, 2017.
+
+\bibitem{dynamic-encoding-chemotaxis}
 Linjiao Luo, Quan Wen, Jing Ren, Michael Hendricks, Marc Gershow, Yuqi Qin,
   Joel Greenwood, Edward~R Soucy, Mason Klein, Heidi~K Smith-Parker, et~al.
 \newblock Dynamic encoding of perception, memory, and movement in a c. elegans
   chemotaxis circuit.
 \newblock {\em Neuron}, 82(5):1115--1128, 2014.
+
+\bibitem{sexual-dimorphism}
+Laura Pereira, Florian Aeschimann, Chen Wang, Hannah Lawson, Esther
+  Serrano-Saiz, Douglas~S Portman, Helge Grosshans, and Oliver Hobert.
+\newblock Timing mechanism of sexually dimorphic nervous system
+  differentiation.
+\newblock {\em Elife}, 8:e42078, 2019.
 
 \end{thebibliography}
