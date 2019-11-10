@@ -1,0 +1,2 @@
+# csv file, with columns as follows
+[period], [phase], [amplitude], [num_steps]
