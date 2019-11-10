@@ -12,6 +12,8 @@
 #include <utility>
 #include <cmath>
 
+#include "../run/consts.h"
+
 // Decimal precision for output to CSV
 #define _PRECISION_ 8
 
@@ -67,6 +69,8 @@ public:
 
 	// Set the concentration at a point
     void set(const unsigned int row, const unsigned int col, const double val);
+    void Crd_set(const Coord in_crd, const double val);
+    void Crd_add(const Coord in_crd, const double val);
     
 	// Get the concentration at a point
     double concentration(const unsigned int row, const unsigned int col) const;

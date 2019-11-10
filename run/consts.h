@@ -95,10 +95,7 @@ const float T_MIN_DELAY = 5.1;
 
 
 
-// * typedefs
-
-// Typedef for coordinate pair of unsigned ints
-// typedef std::pair<unsigned int, unsigned int> Coord;
+// TODO: move this to a different file
 struct Coord
 {
 	double x;
@@ -130,6 +127,13 @@ struct Coord
 	void norm()
 	{
 		this->scale(1 / this->mag);
+	}
+
+	/* add a given vector to this vector */
+	void add(Coord to_add)
+	{
+		x += to_add.x;
+		y += to_add.y;
 	}
 };
 
@@ -168,6 +172,13 @@ struct Axon_chemType
 
 };
 
+
+
+// misc
+int round(float f)
+{
+	return floor(f + 0.5);
+}
 
 
 

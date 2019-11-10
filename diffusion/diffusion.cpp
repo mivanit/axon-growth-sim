@@ -1,6 +1,7 @@
 // diffusion.cpp
 
 #include "diffusion.h"
+#include "../run/consts.h"
 
 /*******************************************************************/
 
@@ -44,6 +45,14 @@ Diffusion::~Diffusion() {
 void Diffusion::set(const unsigned int row, const unsigned int col,
                     const double val) {
     u_[row][col] = val;
+}
+
+void Diffusion::Crd_set(const Coord in_crd, const double val) {
+    u_[round(in_crd.x)][round(in_crd.y)] = val;
+}
+
+void Diffusion::Crd_add(const Coord in_crd, const double val) {
+    u_[round(in_crd.x)][round(in_crd.y)] += val;
 }
 
 /*******************************************************************/
