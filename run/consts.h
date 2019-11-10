@@ -101,13 +101,32 @@ const float T_MIN_DELAY = 5.1;
 // typedef std::pair<unsigned int, unsigned int> Coord;
 struct Coord
 {
-	uint16_t x;
-	uint16_t y;
+	double x;
+	double y;
 
-	uint16_t operator [](int i) 
+	double operator [](int i) 
 	{
 		if (i == 0) return x;
 		else return y;
+	}
+
+	/* get vector magnitude */
+	double mag()
+	{
+		return pow(pow(x, 2.0) + pow(y, 2.0), 0.5);
+	}
+
+	/* scale vector by some factor */
+	void scale(float scaling_factor)
+	{
+		x *= scaling_factor;
+		y *= scaling_factor;
+	}
+
+	/* normalize vector */
+	void norm()
+	{
+		this.scale(1 / this.mag);
 	}
 };
 
@@ -134,8 +153,7 @@ inline bool zero_f(float a)
 
 
 
-
-
+// * chem type classes and instances
 
 struct Axon_chemType
 {
