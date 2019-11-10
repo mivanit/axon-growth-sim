@@ -62,6 +62,12 @@ double Diffusion::concentration(const unsigned int row,
     return u_[row][col];
 }
 
+// TODO: this
+// double Diffusion::concentration(const unsigned int row,
+//                                 const unsigned int col) const {
+//     return u_[row][col];
+// }
+
 /*******************************************************************/
 
 void Diffusion::adi_step() {
