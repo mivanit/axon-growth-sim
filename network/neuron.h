@@ -33,9 +33,6 @@ neuron(uint16_t in_ID, uint8_t in_chemType, uint16_t in_coord_x, uint16_t in_coo
 }
 
 
-
-
-
 };
 
 #endif

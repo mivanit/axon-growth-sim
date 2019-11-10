@@ -14,6 +14,12 @@
 #include <vector>
 #include <math.h>
 #include <cstdint>
+#include <random>
+
+// * RNG stuff
+std::random_device rd;
+std::mt19937 e2(rd());
+
 
 // * Time-related
 
@@ -92,8 +98,18 @@ const float T_MIN_DELAY = 5.1;
 // * typedefs
 
 // Typedef for coordinate pair of unsigned ints
-typedef std::pair<unsigned int, unsigned int> Coord;
+// typedef std::pair<unsigned int, unsigned int> Coord;
+struct Coord
+{
+	uint16_t x;
+	uint16_t y;
 
+	uint16_t operator [](int i) 
+	{
+		if (i == 0) return x;
+		else return y;
+	}
+};
 
 
 
@@ -115,5 +131,23 @@ inline bool zero_f(float a)
 {
 	return fabs(a) <= EPSILON;
 }
+
+
+
+
+
+
+struct Axon_chemType
+{
+	public:
+	float stepSize;
+	// TODO: noise term
+	// TODO: neurotrophin attraction
+	// TODO: turning rate
+
+};
+
+
+
 
 #endif
