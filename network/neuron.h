@@ -14,7 +14,7 @@
 #include "../run/consts.h"
 #include "synapse.h"
 
-class neuron
+class Neuron
 {
 public:
 

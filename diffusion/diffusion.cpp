@@ -140,7 +140,7 @@ void Diffusion::tri_solve(double**& A, double*& B, double*& soln,
 
 bool Diffusion::add_source(const unsigned int row, const unsigned int col,
                            const double strength) {
-    Coord c(row, col);
+    iCoord c(row, col);
     auto itr = sources_.find(c);
     if (itr != sources_.end()) {
         itr->second = strength;
@@ -155,7 +155,7 @@ bool Diffusion::add_source(const unsigned int row, const unsigned int col,
 
 bool Diffusion::remove_source(const unsigned int row,
                               const unsigned int col) {
-    auto itr = sources_.find(Coord(row, col));
+    auto itr = sources_.find(iCoord(row, col));
     if (itr == sources_.end()) {
         return false;
     } else {
@@ -167,7 +167,7 @@ bool Diffusion::remove_source(const unsigned int row,
 /*******************************************************************/
 
 void Diffusion::fire(unsigned int row, unsigned int col) {
-    u_[row][col] += sources_[Coord(row, col)];
+    u_[row][col] += sources_[iCoord(row, col)];
 }
 
 /*******************************************************************/

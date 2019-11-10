@@ -16,14 +16,14 @@
 #define _PRECISION_ 8
 
 // Typedef for coordinate pair of unsigned ints
-typedef std::pair<unsigned int, unsigned int> Coord;
+typedef std::pair<unsigned int, unsigned int> iCoord;
 
 class Diffusion {
 private:
 	// Grid to store concentrations at each point
     double** u_;
     // The sources/sinks in the grid
-    std::map<Coord, double> sources_;
+    std::map<iCoord, double> sources_;
     
     // Dimension of the grid (dim x dim)
     const unsigned int dim_;
