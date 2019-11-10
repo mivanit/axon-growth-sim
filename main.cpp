@@ -25,11 +25,12 @@ int main(int argc, char ** argv)
 	neurons.reserve(N_NEURONS);
 	for (int i = 0; i < N_NEURONS; ++i) {
 		// generate random initial coordinates
-		// REVIEW: clustering of positions
+		
+		// REVIEW: clustering of positions, rang gen chem type
 		int x_init = rand() % N_GRIDSIZE;
 		int y_init = rand() % N_GRIDSIZE;
-		
-		neurons.emplace_back(i, _MINCHEM_, x_init, y_init);
+
+		neurons.emplace_back(i, 1, Coord(float(x_init), float(y_init));
 	}
 
 	// run simulation for N_STEPS steps

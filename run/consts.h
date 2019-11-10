@@ -104,6 +104,9 @@ struct Coord
 	double x;
 	double y;
 
+	Coord(float in_x, float in_y)
+		: x(in_x), y(in_y) {}
+
 	double operator [](int i) 
 	{
 		if (i == 0) return x;
@@ -126,7 +129,7 @@ struct Coord
 	/* normalize vector */
 	void norm()
 	{
-		this.scale(1 / this.mag);
+		this->scale(1 / this->mag);
 	}
 };
 
