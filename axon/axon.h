@@ -6,21 +6,25 @@
 
 #include "../run/consts.h"
 
+// RNG stuff
+// TODO: make all of this depend on config file chem types
+// TODO: move this all to config file?
+std::default_random_engine rng;
+std::normal_distribution<float> rdist_dirNoise(0.0, 0.1); // RNG for noise on (normalized) direction vector
+std::normal_distribution<float> rdist_move(1.5, 0.1); // RNG for distance travelled
+
 
 class Axon
 {
 public:
 
-	// CRIT: static reference to grid 
+	// CRIT: static reference to grid vector
 
 	// vars
 	uint16_t id;
 	uint8_t chemType; // chemType determines step size, etc etc
 	Coord dir; // relative direction vector (NOT ABSOLUTE)
 	std::vector<Coord> past_loc;
-	// RNG stuff
-	std::default_random_engine rng;
-	std::normal_distribution<float> dir_rdist(0.0, 0.1); // RNG for noise on (normalized) direction vector
 
 	Coord loc()
 	{
@@ -49,6 +53,7 @@ private:
 		// test which grid square has highest concentration
 
 		// add on noise term
+		// rdist_dirNoise()
 
 	}
 
@@ -64,6 +69,7 @@ private:
 		update_dir();
 		Coord move_new = dir;
 		// multiply by some noise term
+		move_new.scale(rdist_move(rng));
 
 		past_loc.push_back
 
