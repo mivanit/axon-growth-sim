@@ -17,7 +17,8 @@
 int main(int argc, char ** argv)
 {
 	srand(time(0)); // initialize random number generator
-
+	std::default_random_engine rng;
+	std::normal_distribution<float> rdist_timeOn(30, 5); // RNG for time neuron stays on
 
 	//* initialize diffusion grid for each neurotrophic factor
 	std::vector<Diffusion> dGrids(1, Diffusion(N_GRIDSIZE, 1, 1, 1, 1));
@@ -37,10 +38,21 @@ int main(int argc, char ** argv)
 		int x_init = rand() % N_GRIDSIZE;	
 		int y_init = rand() % N_GRIDSIZE;
 
-		neurons.emplace_back(i, 1, Coord(float(x_init), float(y_init)));
 
-		// TODO: hardcoded NT release RNG
-		// neurons.back().NT_end
+		// create new neuron
+		Neuron new_neuron(i, 1, Coord(float(x_init), float(y_init)));
+
+		// model start time using uniform random distribution
+		start_time = rand() % N_STEPS;
+		// model time neuron stays on using normal distribution
+		end_time = rdist_timeOn(rng) + start_time;
+
+		new_neuron.NT_start = start_time;
+		new_neuron.NT_end = end_time;
+		new_neuron.NT_amt = 1;
+
+		// model amount to release randomly
+		neurons.push_back(new_neuron);
 	}
 
 
