@@ -1,10 +1,12 @@
-#ifndef NEURON
-#define NEURON
+#ifndef AXON
+#define AXON
 
 #include <vector>
 #include <random>
 
 #include "../run/consts.h"
+#include "../diffusion/diffusion.h"
+
 
 // RNG stuff
 // TODO: make all of this depend on config file chem types
@@ -17,14 +19,15 @@ std::normal_distribution<float> rdist_move(1.5, 0.1); // RNG for distance travel
 class Axon
 {
 public:
-
-	// CRIT: static reference to grid vector
+	// static pointer to diffusion grid list
+	static std::vector<Diffusion> * dGrids;
 
 	// vars
-	uint16_t id;
+	uint16_t id; // id of parent neuron
 	uint8_t chemType; // chemType determines step size, etc etc
 	Coord dir; // relative direction vector (NOT ABSOLUTE)
 	std::vector<Coord> past_loc;
+	// TODO: ids of post-synaptic neurons
 
 	Coord loc()
 	{
@@ -36,6 +39,16 @@ public:
 	: id(in_ID), chemType( in_chemType )
 	{
 		past_loc.push_back(in_coord);
+	}
+	
+	// TODO: assignment/copy
+
+	/*
+	* main update function
+	*/
+	void update()
+	{
+
 	}
 
 private:
@@ -70,11 +83,14 @@ private:
 		Coord move_new = dir;
 		// multiply by some noise term
 		move_new.scale(rdist_move(rng));
+		// add original
+		move_new.add(past_loc.back());
 
-		past_loc.push_back
-
+		past_loc.push_back(move_new);
 	}
 
 };
+
+std::vector<Diffusion> * Axon::dGrids = nullptr;
 
 #endif
