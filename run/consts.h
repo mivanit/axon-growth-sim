@@ -31,7 +31,7 @@ const float TIMESTEP_WF = 10.0;
 
 // current timestep count
 size_t TIME = 0;
-
+size_t N_STEPS = 1000;
 
 
 // * network specs
