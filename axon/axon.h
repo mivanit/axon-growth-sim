@@ -3,6 +3,9 @@
 
 #include <vector>
 #include <random>
+#include <math.h>
+#include <numeric>      // std::iota
+#include <algorithm>    // std::sort
 
 #include "../run/consts.h"
 #include "../diffusion/diffusion.h"
@@ -53,6 +56,19 @@ public:
 
 private:
 
+	static std::vector<Coord> directions = {
+		Coord(0, 1),			/* up */
+		Coord(1, 1).norm(),		/* up right */
+		Coord(1, 0),			/* right */
+		Coord(1, -1).norm(),	/* down right */
+		Coord(0, -1),			/* down */
+		Coord(-1, -1).norm(),	/* down left */
+		Coord(-1, 0),			/* left*/
+		Coord(-1, 1).norm()		/* up left */
+	}
+
+	const tau = 0;
+
 	/*
 	* knowing location and current direction,
 	* find a new direction + noise term
@@ -60,13 +76,32 @@ private:
 	* NOTE: this can be modified later if we choose to update gradient sensing
 	*/
 	void update_dir()
-	{
-		// find all points with positive dot product
+	{	
+		std::vector<double> dot_products(8);
+
+		// use dot products to determine closest points to direction axon is facing
+		for (int i = 0; i < 8; ++i) {
+			Coord &chk_dir = directions[i];
+			dot_products[i] = chk_dir[0]*dir[0] + chk_dir[1]*dir[1];
+		}
 
 		// test which grid square has highest concentration
+		Coord optimal_dir(0, 0);
+		double highest_concentration = 0.0;
+		for (int i = 0; i < 8; ++i) {
+			if (dot_products[i] > tau) {
+				// TODO: get grid number from chemType
+				double concentration = (*dGrids)[0].crd_concentration(past_loc.back() + directions[i]);
+				if (concentration > highest_concentration) {
+					highest_concentration = concentration;
+					optimal_dir = directions[i];
+				}
+			}
+		}
 
-		// add on noise term
-		// rdist_dirNoise()
+		// add noise term to normalized direction and set as new direction
+		float noise = rdist_dirNoise();
+		dir = optimal_dir.norm() + Coord(noise, noise);
 
 	}
 

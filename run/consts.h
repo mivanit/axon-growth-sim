@@ -124,9 +124,10 @@ struct Coord
 	}
 
 	/* normalize vector */
-	void norm()
+	Coord norm()
 	{
 		this->scale(1 / this->mag);
+		return *this;
 	}
 
 	/* add a given vector to this vector */
