@@ -99,8 +99,9 @@ private:
 			}
 		}
 
-		// add on noise term
-		// rdist_dirNoise()
+		// add noise term to normalized direction and set as new direction
+		float noise = rdist_dirNoise();
+		dir = optimal_dir.norm() + Coord(noise, noise);
 
 	}
 
