@@ -101,8 +101,13 @@ struct Coord
 	double x;
 	double y;
 
+	// raw ctor
 	Coord(float in_x, float in_y)
 		: x(in_x), y(in_y) {}
+
+	// copy ctor
+	Coord(const Coord& rhs) 
+		: x(rhs.x), y(rhs.y) {}
 
 	double operator [](int i) 
 	{
@@ -117,10 +122,11 @@ struct Coord
 	}
 
 	/* scale vector by some factor */
-	void scale(float scaling_factor)
+	Coord scale(float scaling_factor)
 	{
 		x *= scaling_factor;
 		y *= scaling_factor;
+		return *this;
 	}
 
 	/* normalize vector */
@@ -131,13 +137,17 @@ struct Coord
 	}
 
 	/* add a given vector to this vector */
-	void add(Coord to_add)
+	Coord add(Coord to_add)
 	{
 		x += to_add.x;
 		y += to_add.y;
+		return *this;
 	}
 };
 
+Coord operator+(const Coord& a, const Coord& b) {
+	return Coord(a).add(b);
+}
 
 
 

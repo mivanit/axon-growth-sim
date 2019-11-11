@@ -42,13 +42,11 @@ int main(int argc, char ** argv)
 		// create new neuron
 		Neuron new_neuron(i, 1, Coord(float(x_init), float(y_init)));
 
-		// model start time using uniform random distribution
-		start_time = rand() % N_STEPS;
-		// model time neuron stays on using normal distribution
-		end_time = rdist_timeOn(rng) + start_time;
 
-		new_neuron.NT_start = start_time;
-		new_neuron.NT_end = end_time;
+		// model start time using uniform random distribution
+		new_neuron.NT_start = rand() % N_STEPS;
+		// model time neuron stays on using normal distribution
+		new_neuron.NT_end = rdist_timeOn(rng) + new_neuron.NT_start;
 		new_neuron.NT_amt = 1;
 
 		// model amount to release randomly
