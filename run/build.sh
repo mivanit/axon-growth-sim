@@ -1,2 +1,1 @@
-
-g++ -std=c++17 main.cpp ../diffusion/diffusion.cpp -o main.exe
+g++ -std=c++17 main.cpp ../diffusion/diffusion.cpp config_default.c -o main.exe
