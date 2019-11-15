@@ -56,6 +56,7 @@ public:
 
 private:
 
+	// TODO: declare these from consts file? in main? cant declare them here
 	static std::vector<Coord> directions = {
 		Coord(0, 1),			/* up */
 		Coord(1, 1).norm(),		/* up right */
@@ -65,9 +66,11 @@ private:
 		Coord(-1, -1).norm(),	/* down left */
 		Coord(-1, 0),			/* left*/
 		Coord(-1, 1).norm()		/* up left */
-	}
+	};
 
-	const tau = 0;
+	// angle to search in
+	static const double tau;
+	// tau = 0.0;
 
 	/*
 	* knowing location and current direction,

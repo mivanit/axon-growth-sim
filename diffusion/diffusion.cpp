@@ -48,11 +48,11 @@ void Diffusion::set(const unsigned int row, const unsigned int col,
 }
 
 void Diffusion::Crd_set(const Coord in_crd, const double val) {
-    u_[round(in_crd.x)][round(in_crd.y)] = val;
+    u_[in_crd.ix()][in_crd.iy()] = val;
 }
 
 void Diffusion::Crd_add(const Coord in_crd, const double val) {
-    u_[round(in_crd.x)][round(in_crd.y)] += val;
+    u_[in_crd.ix()][in_crd.iy()] += val;
 }
 
 /*******************************************************************/

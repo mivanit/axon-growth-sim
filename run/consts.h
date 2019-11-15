@@ -115,6 +115,17 @@ struct Coord
 		else return y;
 	}
 
+	// rounded getters
+	int ix()
+	{
+		return floor(x + 0.5);
+	}
+
+	int iy()
+	{
+		return floor(y + 0.5);
+	}
+
 	/* get vector magnitude */
 	double mag()
 	{
