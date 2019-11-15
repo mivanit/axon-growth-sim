@@ -78,8 +78,9 @@ struct Coord
 	}
 };
 
-Coord operator+(const Coord& a, const Coord& b) {
-	return Coord(a).add(b);
+inline Coord operator+(const Coord& a, const Coord& b) {
+	Coord x(a);
+	return Coord(x).add(b);
 }
 
 
@@ -120,14 +121,6 @@ const Coord search_vec[8] = {
 	Coord(-1, 0),			/* left*/
 	Coord(-1, 1).norm()		/* up left */
 };
-
-
-// misc
-int round_float(float f)
-{
-	return (int) floor(f + 0.5);
-}
-
 
 
 #endif

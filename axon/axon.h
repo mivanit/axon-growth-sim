@@ -25,6 +25,10 @@ public:
 	// pointer to vector of diffusion grids
 	static std::vector<Diffusion> * dGrids;
 
+	// angle to search in
+	static const double tau;
+	// tau = 0.0;
+
 	// vars
 	uint16_t id; // id of parent neuron
 	uint8_t chemType; // chemType determines step size, etc etc
@@ -59,10 +63,6 @@ public:
 	}
 
 private:
-
-	// angle to search in
-	static const double tau;
-	// tau = 0.0;
 
 	/*
 	* knowing location and current direction,
@@ -115,5 +115,9 @@ private:
 	}
 
 };
+
+const double Axon::tau = 0.0;
+std::vector<Diffusion> * Axon::dGrids = nullptr;
+
 
 #endif

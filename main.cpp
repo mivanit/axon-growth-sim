@@ -9,6 +9,7 @@
 
 // load configs from file
 #include "run/consts.h"
+#include "run/config.h"
 
 #include "diffusion/diffusion.h"
 #include "axon/axon.h"

@@ -7,12 +7,14 @@
 #include <cstdlib>
 #include <ctime>
 
+#include "consts.h"
+#include "config.h"
+
 #include "../diffusion/diffusion.h"
 #include "../network/neuron.h"
 #include "../axon/axon.h"
 
 // load configs from file
-#include "consts.h"
 
 int main(int argc, char ** argv)
 {

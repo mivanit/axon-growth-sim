@@ -1,7 +1,6 @@
 // diffusion.cpp
 
 #include "diffusion.h"
-#include "../run/consts.h"
 
 /*******************************************************************/
 

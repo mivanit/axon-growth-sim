@@ -12,11 +12,6 @@
 #include <math.h>
 #include <random>
 
-// * RNG stuff
-std::random_device rd;
-std::mt19937 e2(rd());
-
-
 // * Time-related
 
 // timestep for diffusion, in ms
