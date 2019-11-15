@@ -22,7 +22,7 @@ std::normal_distribution<float> rdist_move(1.5, 0.1); // RNG for distance travel
 class Axon
 {
 public:
-	// static pointer to diffusion grid list
+	// pointer to vector of diffusion grids
 	static std::vector<Diffusion> * dGrids;
 
 	// vars
@@ -30,43 +30,35 @@ public:
 	uint8_t chemType; // chemType determines step size, etc etc
 	Coord dir; // relative direction vector (NOT ABSOLUTE)
 	std::vector<Coord> past_loc;
-	// TODO: ids of post-synaptic neurons
+	std::vector<uint16_t> postSyn_id;
 
 	Coord loc()
 	{
 		return past_loc.back();
 	}
 
-	// ctor
+	Axon() : id(-1), chemType(-1) {}
+
+	// std ctor
 	Axon(uint16_t in_ID, uint8_t in_chemType, Coord in_coord)
-	: id(in_ID), chemType( in_chemType )
+		: id(in_ID), chemType( in_chemType ) 
 	{
 		past_loc.push_back(in_coord);
 	}
 	
-	// TODO: assignment/copy
+	// implicit copy & assignment are good enough
+	
 
 	/*
-	* main update function
+	* main update (on timestep) function
 	*/
 	void update()
 	{
-
+		update_dir();
+		move(dir);
 	}
 
 private:
-
-	// TODO: declare these from consts file? in main? cant declare them here
-	static std::vector<Coord> directions = {
-		Coord(0, 1),			/* up */
-		Coord(1, 1).norm(),		/* up right */
-		Coord(1, 0),			/* right */
-		Coord(1, -1).norm(),	/* down right */
-		Coord(0, -1),			/* down */
-		Coord(-1, -1).norm(),	/* down left */
-		Coord(-1, 0),			/* left*/
-		Coord(-1, 1).norm()		/* up left */
-	};
 
 	// angle to search in
 	static const double tau;
@@ -84,7 +76,7 @@ private:
 
 		// use dot products to determine closest points to direction axon is facing
 		for (int i = 0; i < 8; ++i) {
-			Coord &chk_dir = directions[i];
+			Coord chk_dir = search_vec[i];
 			dot_products[i] = chk_dir[0]*dir[0] + chk_dir[1]*dir[1];
 		}
 
@@ -94,31 +86,26 @@ private:
 		for (int i = 0; i < 8; ++i) {
 			if (dot_products[i] > tau) {
 				// TODO: get grid number from chemType
-				double concentration = (*dGrids)[0].crd_concentration(past_loc.back() + directions[i]);
+				double concentration = (*dGrids)[0].Crd_getC(past_loc.back() + search_vec[i]);
 				if (concentration > highest_concentration) {
 					highest_concentration = concentration;
-					optimal_dir = directions[i];
+					optimal_dir = search_vec[i];
 				}
 			}
 		}
 
 		// add noise term to normalized direction and set as new direction
-		float noise = rdist_dirNoise();
-		dir = optimal_dir.norm() + Coord(noise, noise);
-
+		dir = optimal_dir + Coord(rdist_dirNoise(rng), rdist_dirNoise(rng));
+		dir.norm();
 	}
 
 	
 	/*
-	* knowing location and current direction
-	* call update_dir(), and move along that new direction
-	* with some noise
+	* knowing location and new direction
+	* move along that new direction with some noise
 	*/
-	void update_loc()
+	void move(Coord move_new)
 	{
-		// update and copy direction vector
-		update_dir();
-		Coord move_new = dir;
 		// multiply by some noise term
 		move_new.scale(rdist_move(rng));
 		// add original
@@ -128,7 +115,5 @@ private:
 	}
 
 };
-
-std::vector<Diffusion> * Axon::dGrids = nullptr;
 
 #endif

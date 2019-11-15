@@ -58,10 +58,6 @@ const char * CSTR_STIMEXT = ".csv";
 
 
 
-
-
-
-
 // * neuron specs
 
 // resting voltage

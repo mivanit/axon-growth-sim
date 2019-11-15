@@ -74,7 +74,8 @@ public:
     
 	// Get the concentration at a point
     double concentration(const unsigned int row, const unsigned int col) const;
-    
+    double Crd_getC(const Coord in_crd);
+
     // Write the grid in CSV form to file
     void write_to_csv(const std::string& file) const;
     

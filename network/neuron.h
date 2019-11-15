@@ -55,7 +55,7 @@ public:
 		}
 
 		// update axons
-		axon.update()
+		axon.update();
 	}
 
 };

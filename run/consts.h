@@ -18,6 +18,11 @@ struct Coord
 	double x;
 	double y;
 
+	// default NaN ctor
+	Coord()
+		: x(std::numeric_limits<double>::quiet_NaN()), 
+		y(std::numeric_limits<double>::quiet_NaN()) {}
+
 	// raw ctor
 	Coord(float in_x, float in_y)
 		: x(in_x), y(in_y) {}
@@ -33,18 +38,18 @@ struct Coord
 	}
 
 	// rounded getters
-	int ix()
+	int ix() const
 	{
 		return floor(x + 0.5);
 	}
 
-	int iy()
+	int iy() const
 	{
 		return floor(y + 0.5);
 	}
 
 	/* get vector magnitude */
-	double mag()
+	double mag() const
 	{
 		return pow(pow(x, 2.0) + pow(y, 2.0), 0.5);
 	}
@@ -60,7 +65,7 @@ struct Coord
 	/* normalize vector */
 	Coord norm()
 	{
-		this->scale(1 / this->mag);
+		this->scale(1 / this->mag());
 		return *this;
 	}
 
@@ -91,6 +96,7 @@ inline bool zero_f(float a)
 
 
 // * chem type classes and instances
+// TODO: all chemType stuff
 
 struct Axon_chemType
 {
@@ -103,11 +109,23 @@ struct Axon_chemType
 };
 
 
+// TODO: make this more extensible?
+const Coord search_vec[8] = {
+	Coord(0, 1),			/* up */
+	Coord(1, 1).norm(),		/* up right */
+	Coord(1, 0),			/* right */
+	Coord(1, -1).norm(),	/* down right */
+	Coord(0, -1),			/* down */
+	Coord(-1, -1).norm(),	/* down left */
+	Coord(-1, 0),			/* left*/
+	Coord(-1, 1).norm()		/* up left */
+};
+
 
 // misc
-int round(float f)
+int round_float(float f)
 {
-	return floor(f + 0.5);
+	return (int) floor(f + 0.5);
 }
 
 
