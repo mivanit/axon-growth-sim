@@ -7,12 +7,13 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "diffusion/diffusion.h"
-#include "network/neuron.h"
-#include "axon/axon.h"
-
 // load configs from file
 #include "run/consts.h"
+
+#include "diffusion/diffusion.h"
+#include "axon/axon.h"
+#include "network/neuron.h"
+
 
 int main(int argc, char ** argv)
 {

@@ -6,12 +6,17 @@
 // template header for configuring consts
 // there should be a seperate file for every network run
 
+// 
+
 #ifndef CONFIG_VALS
 #define CONFIG_VALS
 
 #include <cstdint>
 #include <math.h>
 #include <random>
+
+
+// CRIT: keep defns in header, set values in .c file. This gets rid of the linker errors, and also makes it easier to switch out config files
 
 // * RNG stuff
 std::random_device rd;
