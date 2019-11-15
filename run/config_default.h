@@ -3,17 +3,14 @@
 // balisujohn@gmail.com 
 // mivanits@umich.edu
 
-// template header for defining consts
+// template header for configuring consts
 // there should be a seperate file for every network run
 
-#ifndef CONSTS
-#define CONSTS
+#ifndef CONFIG_VALS
+#define CONFIG_VALS
 
 #include <cstdint>
-#include <queue>
-#include <vector>
 #include <math.h>
-#include <cstdint>
 #include <random>
 
 // * RNG stuff
@@ -31,6 +28,8 @@ const float TIMESTEP_WF = 10.0;
 
 // current timestep count
 size_t TIME = 0;
+
+// maximum timestep count
 size_t N_STEPS = 1000;
 
 
@@ -39,10 +38,6 @@ size_t N_STEPS = 1000;
 const uint16_t N_NEURONS = 50;
 const uint16_t N_GRIDSIZE = 100;
 const uint16_t N_PADDING = 10;
-const float MU_CONN = 3.0;
-const float SIG_CONN = 4.0;
-const uint16_t MAX_CONN = 10;
-
 
 // Range for chem types
 const uint8_t _MINCHEM_ = 1;
@@ -93,115 +88,10 @@ const float T_MIN_DELAY = 5.1;
 
 
 
-
-
-// TODO: move this to a different file
-struct Coord
-{
-	double x;
-	double y;
-
-	// raw ctor
-	Coord(float in_x, float in_y)
-		: x(in_x), y(in_y) {}
-
-	// copy ctor
-	Coord(const Coord& rhs) 
-		: x(rhs.x), y(rhs.y) {}
-
-	double operator [](int i) 
-	{
-		if (i == 0) return x;
-		else return y;
-	}
-
-	// rounded getters
-	int ix()
-	{
-		return floor(x + 0.5);
-	}
-
-	int iy()
-	{
-		return floor(y + 0.5);
-	}
-
-	/* get vector magnitude */
-	double mag()
-	{
-		return pow(pow(x, 2.0) + pow(y, 2.0), 0.5);
-	}
-
-	/* scale vector by some factor */
-	Coord scale(float scaling_factor)
-	{
-		x *= scaling_factor;
-		y *= scaling_factor;
-		return *this;
-	}
-
-	/* normalize vector */
-	Coord norm()
-	{
-		this->scale(1 / this->mag);
-		return *this;
-	}
-
-	/* add a given vector to this vector */
-	Coord add(Coord to_add)
-	{
-		x += to_add.x;
-		y += to_add.y;
-		return *this;
-	}
-};
-
-Coord operator+(const Coord& a, const Coord& b) {
-	return Coord(a).add(b);
-}
-
-
-
 // * floating point arithmetic consts
 
 // margin for comparing floats
 // #define EPSILON 0.01f;
 const float EPSILON = 0.01;
-
-
-// code for comparing two floats
-inline bool comp_f(float a, float b)
-{
-    return fabs(a - b) <= EPSILON;
-}
-
-inline bool zero_f(float a)
-{
-	return fabs(a) <= EPSILON;
-}
-
-
-
-// * chem type classes and instances
-
-struct Axon_chemType
-{
-	public:
-	float stepSize;
-	// TODO: noise term
-	// TODO: neurotrophin attraction
-	// TODO: turning rate
-
-};
-
-
-
-// misc
-int round(float f)
-{
-	return floor(f + 0.5);
-}
-
-
 
 #endif
