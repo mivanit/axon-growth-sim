@@ -11,7 +11,7 @@
 #include <cstdint>
 #include <math.h>
 
-#include "config_ref.h"
+#include "config.h"
 
 struct Coord
 {
