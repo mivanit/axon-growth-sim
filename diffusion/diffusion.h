@@ -26,6 +26,8 @@ private:
     double** u_;
     // The sources/sinks in the grid
     std::map<iCoord, double> sources_;
+    // Name for this grid
+    const std::string LABEL_;
     
     // Dimension of the grid (dim x dim)
     const unsigned int dim_;
@@ -56,7 +58,7 @@ private:
 public:
     // Initializes grid to all zeroes with dimensions of (dim dx) x (dim dy)
     Diffusion(const unsigned int dim, const double D, const double dx,
-              const double dy, const double dt);
+              const double dy, const double dt, const std::string l);
     
     // Destructor
     ~Diffusion();
@@ -93,5 +95,7 @@ public:
     
     // Set strength of decay rate
     void set_decay(const double decay) { decay_ = decay; }
+    
+    std::string label() const { return LABEL_; }
 };
 #endif

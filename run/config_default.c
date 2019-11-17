@@ -67,3 +67,7 @@ extern const float T_MIN_DELAY = 5.1;
 // margin for comparing floats
 // #define EPSILON 0.01f;
 extern const float EPSILON = 0.01;
+
+
+// Decimal precision for writing to files
+extern const int PRECISION = 8;

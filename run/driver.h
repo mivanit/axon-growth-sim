@@ -35,6 +35,7 @@ public:
 	std::default_random_engine rng;
 	std::normal_distribution<float> rdist_timeOn; // RNG for time neuron stays on
 
+    const std::string NAME = "Test"; // FIXME
 
 /*
  ######  ########  #######  ########
@@ -55,7 +56,8 @@ public:
 		rdist_timeOn = std::normal_distribution<float>(40.0, 10.0);
 
 		//* dGrid setup
-		dGrids = std::vector<Diffusion>(1, Diffusion(N_GRIDSIZE, 1, 1, 1, 1));
+        //FIXME label
+		dGrids = std::vector<Diffusion>(1, Diffusion(N_GRIDSIZE, 1, 1, 1, 1, "LABEL"));
 
 		//* neuron setup
 		gen_neurons();
@@ -138,26 +140,35 @@ public:
 	void save_state() {
 		// TODO: call `Diffusion::write_to_csv`, write and call similar functions for axons and neurons. need to figure out how it will be split into files.
 	}
+    
+    void axon_write(const std::string& file) const {
+        
+    }
 
+    void neuron_write(const std::string& file) const {
+        
+    }
+
+    void diffusion_write(const std::string& file) const {
+        std::ofstream ofs(file, std::ios_base::app);
+        if (!ofs.is_open()) {
+            std::cerr << "Error opening " << file << ", aborting."
+                      << std::endl;
+            return;
+        }
+        ofs.precision(PRECISION);
+        
+        for (Diffusion& d : dGrids) {
+            ofs << d.label() << "\n";
+            for (unsigned int i = 0; i < dim_; ++i) {
+                for (unsigned int j = 0; j < dim_; ++j) {
+                    ofs << std::to_string(u_[j][i]) << ",";
+                }
+                ofs << "\n";
+            }
+            ofs << std::endl;
+        }
+    }
 }
-
-
-
-
-
-// Diffusion d(100, 1, 1, 1, 0.1);
-//     d.set(25, 25, 20);
-//     d.set_decay(0.1);
-//     for (unsigned int i = 0; i < 500; ++i) {
-//         d.adi_step();
-//         if (i % 50 == 0) {
-//             d.write_to_csv("outputs/diffusion_" + std::to_string(i) + ".csv");
-//         }
-//         if (i == 100) {
-//             d.set(75, 75, 15);
-//         }
-//     }
-//     d.write_to_csv("outputs/diffusion_" + std::to_string(500) + ".csv");
-//     return 0;
 
 #endif

@@ -69,6 +69,10 @@ extern const float T_MIN_DELAY;
 extern const float EPSILON;
 
 
+// Decimal precision for writing to files
+extern const int PRECISION;
+
+
 //* chem type classes
 // TODO: all chemType stuff
 

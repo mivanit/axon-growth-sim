@@ -5,9 +5,10 @@
 /*******************************************************************/
 
 Diffusion::Diffusion(const unsigned int dim, const double D, const double dx,
-                     const double dy, const double dt) : dim_{ dim }, D_{ D },
-                     dx_{ dx }, dy_{ dy }, dt_{ dt }, ax_{ D * dt / (dx * dx) },
-                     ay_{ D * dt / (dy * dy) } {
+                     const double dy, const double dt, const std::string l) :
+                     dim_{ dim }, D_{ D }, dx_{ dx }, dy_{ dy }, dt_{ dt },
+                     ax_{ D * dt / (dx * dx) }, ay_{ D * dt / (dy * dy) },
+                     LABEL_ { l } {
     u_ = init_2d(dim);
                          
     // Note that since we are using Dirichlet BCs, we only need to
