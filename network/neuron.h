@@ -12,7 +12,7 @@
 #include "../run/consts.h"
 #include "../axon/axon.h"
 #include "../diffusion/diffusion.h"
-// #include "../waveform/waveform_D.h"
+#include "../waveform/waveform.h"
 
 
 class Neuron

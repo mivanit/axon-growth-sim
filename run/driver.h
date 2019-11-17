@@ -33,7 +33,7 @@ public:
 	//* RNG stuff
 	unsigned int RNG_seed;
 	std::default_random_engine rng;
-	std::normal_distribution<float> rdist_timeOn; // RNG for time neuron stays on
+    std::normal_distribution<float> rdist_timeOn; // RNG for time neuron stays on
 
     const std::string NAME = "Test"; // FIXME
 
@@ -79,6 +79,7 @@ public:
 
 	// TODO: gen_dGrids() that inherits from chemtype classes
 
+    // TODO: remove this, moved to network.h
 	void gen_neurons() {
 		// create neurons randomly
 		neurons.reserve(N_NEURONS);

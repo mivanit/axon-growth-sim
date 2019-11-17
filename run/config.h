@@ -86,7 +86,6 @@ public:
 	// UGLY: make this poisson/exponential instead?
 	float stepSize_mu, stepSize_sigma;
 
-
 	// search angle
 	float searchAngle_tau;
 
