@@ -33,8 +33,8 @@ extern const uint16_t N_GRIDSIZE;
 extern const uint16_t N_PADDING;
 
 // Range for chem types
-extern const uint8_t _MINCHEM_;
-extern const uint8_t _MAXCHEM_;
+extern const uint8_t MAX_CELLTYPE;
+extern const uint8_t MAX_CHEMTYPE;
 
 
 //* neuron specs
@@ -72,23 +72,36 @@ extern const float EPSILON;
 //* chem type classes
 // TODO: all chemType stuff
 
-struct Axon_chemType
+struct cellType
 {
 public:
+	// ID of this chemtype instance
+	uint16_t cellType_ID; 
+	
 	// stepsize as normal distribution
 	// UGLY: make this poisson/exponential instead?
-	uint16_t chem_ID;
-	float stepSize_mu;
-	float stepSize_sigma;
+	float stepSize_mu, stepSize_sigma;
 
-	float senseNoise_sigma;
-	
-	
-	
-	// TODO: noise term
-	// TODO: neurotrophin attraction
-	// TODO: turning rate
 
+	// search angle
+	float searchAngle_tau;
+
+	// maximum turning rate for the axon
+	float turningRate_max;	
+
+	// noise term for sensing certain chemtypes
+	float * senseNoise_sigma;
+	
+	// axonal affinities for the various chemical types
+	// positive --> turn towards
+	// negative --> turn away
+	float * chemType_affinities; 
+
+
+	// emission coefficients for various chem types
+	// positive --> proportional to activity
+	// negative --> inverse of activity
+	float * chemType_release;
 };
 
 #endif

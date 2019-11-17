@@ -31,7 +31,7 @@ public:
 
 	// vars
 	uint16_t id; // id of parent neuron
-	uint8_t chemType; // chemType determines step size, etc etc
+	uint8_t cellType; // cellType determines step size, etc etc
 	Coord dir; // relative direction vector (NOT ABSOLUTE)
 	std::vector<Coord> past_loc;
 	std::vector<uint16_t> postSyn_id;
@@ -42,11 +42,11 @@ public:
 		return past_loc.back();
 	}
 
-	Axon() : id(-1), chemType(-1) {}
+	Axon() : id(-1), cellType(-1) {}
 
 	// std ctor
-	Axon(uint16_t in_ID, uint8_t in_chemType, Coord in_coord)
-		: id(in_ID), chemType( in_chemType ) 
+	Axon(uint16_t in_ID, uint8_t in_cellType, Coord in_coord)
+		: id(in_ID), cellType( in_cellType ) 
 	{
 		past_loc.push_back(in_coord);
 	}
@@ -66,8 +66,7 @@ public:
 private:
 
 	/*
-	* knowing location and current direction,
-	* find a new direction + noise term
+	* knowing location and current direction, find a new direction + noise term
 	* save to direction vector
 	* NOTE: this can be modified later if we choose to update gradient sensing
 	*/
@@ -86,7 +85,7 @@ private:
 		double highest_concentration = 0.0;
 		for (int i = 0; i < 8; ++i) {
 			if (dot_products[i] > tau) {
-				// TODO: get grid number from chemType
+				// TODO: get grid numbers from cellType
 				double concentration = (*dGrids)[0].Crd_getC(past_loc.back() + search_vec[i]);
 				if (concentration > highest_concentration) {
 					highest_concentration = concentration;

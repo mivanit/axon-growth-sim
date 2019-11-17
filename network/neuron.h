@@ -23,7 +23,7 @@ public:
 
 	// vars
 	uint16_t id;
-	uint8_t chemType;
+	uint8_t cellType;
 	Coord loc;
 	Axon axon;
 	
@@ -38,9 +38,9 @@ public:
 	// TODO: dendrites? both RV and references
 
 	// ctor
-	Neuron(uint16_t in_ID, uint8_t in_chemType, Coord in_coord)
-		: id(in_ID), chemType( in_chemType ), loc(in_coord) {
-		axon = Axon(in_ID, in_chemType, in_coord);
+	Neuron(uint16_t in_ID, uint8_t in_cellType, Coord in_coord)
+		: id(in_ID), cellType( in_cellType ), loc(in_coord) {
+		axon = Axon(in_ID, in_cellType, in_coord);
 	}
 
 	// update

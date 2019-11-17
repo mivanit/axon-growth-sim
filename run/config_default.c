@@ -32,9 +32,9 @@ extern const uint16_t N_NEURONS = 50;
 extern const uint16_t N_GRIDSIZE = 100;
 extern const uint16_t N_PADDING = 10;
 
-// Range for chem types
-extern const uint8_t _MINCHEM_ = 1;
-extern const uint8_t _MAXCHEM_ = 10;
+// Range for chem types, cell types
+extern const uint8_t MAX_CELLTYPE = 10;
+extern const uint8_t MAX_CHEMTYPE = 10;
 
 
 // * neuron specs
@@ -67,3 +67,5 @@ extern const float T_MIN_DELAY = 5.1;
 // margin for comparing floats
 // #define EPSILON 0.01f;
 extern const float EPSILON = 0.01;
+
+// TODO: read `cellType` class instances from csv?
