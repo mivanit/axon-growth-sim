@@ -15,10 +15,7 @@
 #define DRIVER
 
 
-class Driver
-{
-
-
+class Driver {
 public:
 /*
 ##     ##    ###    ########   ######
@@ -50,8 +47,7 @@ public:
 */
 
 	// default ctor, inherits everything from config.h
-	Driver()
-	{
+	Driver() {
 		//* RNG setup
 		RNG_seed = time(0);
 		srand(RNG_seed);
@@ -81,13 +77,10 @@ public:
 
 	// TODO: gen_dGrids() that inherits from chemtype classes
 
-
-	void gen_neurons()
-	{
+	void gen_neurons() {
 		// create neurons randomly
 		neurons.reserve(N_NEURONS);
-		for (int i = 0; i < N_NEURONS; ++i) 
-		{	
+		for (int i = 0; i < N_NEURONS; ++i)  {
 			// generate random initial coordinates	
 			// REVIEW: clustering of positions, range gen chem type, padding
 			int x_init = rand() % N_GRIDSIZE;	
@@ -119,12 +112,16 @@ public:
  ######     ##    ######## ##
 */
 
-	void sim_step(){
+	void sim_step() {
 		// update all grids
-		for (auto & g : dGrids) g.adi_step();
+        for (auto & g : dGrids) {
+            g.adi_step();
+        }
 
 		// update all the neurons (which will in turn update axons)
-		for (auto & nrn : neurons) nrn.update();
+        for (auto & nrn : neurons) {
+            nrn.update();
+        }
 	}
 
 
@@ -138,8 +135,7 @@ public:
 ##    ## ##     ##   ## ##   ##
  ######  ##     ##    ###    ########
 */
-	void save_state() 
-	{
+	void save_state() {
 		// TODO: call `Diffusion::write_to_csv`, write and call similar functions for axons and neurons. need to figure out how it will be split into files.
 	}
 
