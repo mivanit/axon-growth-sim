@@ -35,6 +35,7 @@ public:
 	Coord dir; // relative direction vector (NOT ABSOLUTE)
 	std::vector<Coord> past_loc;
 	std::vector<uint16_t> postSyn_id;
+	std::vector<float> postSyn_wgt;
 
 	Coord loc()
 	{

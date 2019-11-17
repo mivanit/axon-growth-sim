@@ -96,19 +96,6 @@ inline bool zero_f(float a)
 }
 
 
-// * chem type classes and instances
-// TODO: all chemType stuff
-
-struct Axon_chemType
-{
-	public:
-	float stepSize;
-	// TODO: noise term
-	// TODO: neurotrophin attraction
-	// TODO: turning rate
-
-};
-
 
 // TODO: make this more extensible?
 const Coord search_vec[8] = {

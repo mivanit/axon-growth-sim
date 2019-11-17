@@ -11,7 +11,7 @@
 #include <cstdint>
 #include <math.h>
 
-// * Time-related
+//* Time-related
 
 // timestep for diffusion, in ms
 extern const float TIMESTEP_DIFF;
@@ -26,7 +26,7 @@ extern size_t TIME;
 extern size_t N_STEPS;
 
 
-// * network specs
+//* network specs
 
 extern const uint16_t N_NEURONS;
 extern const uint16_t N_GRIDSIZE;
@@ -37,7 +37,7 @@ extern const uint8_t _MINCHEM_;
 extern const uint8_t _MAXCHEM_;
 
 
-// * neuron specs
+//* neuron specs
 
 // resting voltage
 extern const float V_REST;
@@ -62,10 +62,33 @@ extern const float T_MIN_DELAY;
 
 
 
-// * floating point arithmetic extern consts
+//* floating point arithmetic extern consts
 
 // margin for comparing floats
 // #define EPSILON 0.01f;
 extern const float EPSILON;
+
+
+//* chem type classes
+// TODO: all chemType stuff
+
+struct Axon_chemType
+{
+public:
+	// stepsize as normal distribution
+	// UGLY: make this poisson/exponential instead?
+	uint16_t chem_ID;
+	float stepSize_mu;
+	float stepSize_sigma;
+
+	float senseNoise_sigma;
+	
+	
+	
+	// TODO: noise term
+	// TODO: neurotrophin attraction
+	// TODO: turning rate
+
+};
 
 #endif
