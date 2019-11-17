@@ -1,0 +1,26 @@
+
+# driver:
+	[ ] move stuff to `Driver` class (cleaner, will let us call from python if needed)
+	[ ] saving current state
+
+# diffusion:
+	[ ] check source/sink code, either use it or get rid of it
+	[ ] work on saving/display
+
+# axon:
+	[ ] streamline `search_vec` declaration to allow for larger search space
+	[ ] consider doing something with molecular kinetics?
+	[ ] other realism changes
+
+# neuron:
+	[ ] include wf processing stuff
+
+# network:
+	[ ] ???????
+
+# chemType:
+	[ ] fill out chemType classes (placeholders are fine)
+	[ ] make axon, neuron use chemtype class data
+
+
+

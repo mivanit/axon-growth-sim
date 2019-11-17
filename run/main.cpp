@@ -29,7 +29,6 @@ int main(int argc, char ** argv)
 	Axon::dGrids = &dGrids;
 	Neuron::dGrids = &dGrids;
 
-
 	//* initialize neurons (and in turn axons)
 	std::vector<Neuron> neurons;
 	neurons.reserve(N_NEURONS);
@@ -39,7 +38,6 @@ int main(int argc, char ** argv)
 		// REVIEW: clustering of positions, rang gen chem type
 		int x_init = rand() % N_GRIDSIZE;	
 		int y_init = rand() % N_GRIDSIZE;
-
 
 		// create new neuron
 		Neuron new_neuron(i, 1, Coord(float(x_init), float(y_init)));
@@ -58,7 +56,7 @@ int main(int argc, char ** argv)
 
 	//* run simulation
 	for (TIME; TIME < N_STEPS; ++TIME) {
-		// update all the grids
+		// update all grids
 		for (auto & g : dGrids) g.adi_step();
 
 		// update all the neurons (which will in turn update axons)
