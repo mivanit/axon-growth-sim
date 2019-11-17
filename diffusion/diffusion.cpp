@@ -62,8 +62,7 @@ double Diffusion::concentration(const unsigned int row,
     return u_[row][col];
 }
 
-double Diffusion::Crd_getC(const Coord in_crd)
-{
+double Diffusion::Crd_getC(const Coord in_crd) {
     return u_[in_crd.ix()][in_crd.iy()];
 }
 
