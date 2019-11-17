@@ -137,16 +137,38 @@ public:
 ##    ## ##     ##   ## ##   ##
  ######  ##     ##    ###    ########
 */
-	void save_state() {
-		// TODO: call `Diffusion::write_to_csv`, write and call similar functions for axons and neurons. need to figure out how it will be split into files.
+    // Write the state of the network at time step t
+	void save_state(unsigned int t) {
+		// TODO: call `Diffusion::write_to_csv`, write and call similar functions for axons and neurons.
+        const std::string DIR = "../data/" + NAME + "/";
+        const std::string END = "_" + std::to_string(t) + ".csv";
+        axon_write(DIR + "axon" + END);
+        neuron_write(DIR + "neuron" + END);
+        diffusion_write(DIR + "diffusion" + END);
 	}
     
     void axon_write(const std::string& file) const {
+        std::ofstream ofs(file, std::ios_base::app);
+        if (!ofs.is_open()) {
+            std::cerr << "Error opening " << file << ", aborting."
+                      << std::endl;
+            return;
+        }
+        ofs.precision(PRECISION);
         
+        // TODO
     }
 
     void neuron_write(const std::string& file) const {
+        std::ofstream ofs(file, std::ios_base::app);
+        if (!ofs.is_open()) {
+            std::cerr << "Error opening " << file << ", aborting."
+                      << std::endl;
+            return;
+        }
+        ofs.precision(PRECISION);
         
+        // TODO
     }
 
     void diffusion_write(const std::string& file) const {
@@ -158,11 +180,11 @@ public:
         }
         ofs.precision(PRECISION);
         
-        for (Diffusion& d : dGrids) {
+        for (const Diffusion& d : dGrids) {
             ofs << d.label() << "\n";
-            for (unsigned int i = 0; i < dim_; ++i) {
-                for (unsigned int j = 0; j < dim_; ++j) {
-                    ofs << std::to_string(u_[j][i]) << ",";
+            for (unsigned int i = 0; i < d.dim(); ++i) {
+                for (unsigned int j = 0; j < d.dim(); ++j) {
+                    ofs << std::to_string(d.concentration(j, i)) << ",";
                 }
                 ofs << "\n";
             }
