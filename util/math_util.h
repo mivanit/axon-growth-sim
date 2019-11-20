@@ -34,7 +34,6 @@ int xEuclid_old(int a, int b, int &x, int &y)
 // https://www.sanfoundry.com/cpp-program-implement-extended-eucledian-algorithm/
 int xEuclid(int a, int b, int &xLast, int &yLast)
 {
-	TEST("F00");
     int x = 1, y = 0;
     xLast = 0;
 	yLast = 1;
@@ -54,7 +53,6 @@ int xEuclid(int a, int b, int &xLast, int &yLast)
     }
     // xLast, yLast have results
 	// return gcd
-	TEST("F90");
 	return b;
 }
 
