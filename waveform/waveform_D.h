@@ -16,6 +16,8 @@
 #include "../run/consts.h"
 #include "../util/math_util.h"
 
+// CRIT: go over all waveform code
+
 // * class def
 
 // wave component

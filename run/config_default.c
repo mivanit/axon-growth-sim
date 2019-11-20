@@ -68,7 +68,7 @@ extern const float T_MIN_DELAY = 5.1;
 // #define EPSILON 0.01f;
 extern const float EPSILON = 0.01;
 
-// TODO: read `cellType` class instances from csv?
+// FIXME: read `cellType` class instances from csv?
 
 // Decimal precision for writing to files
 extern const int PRECISION = 8;

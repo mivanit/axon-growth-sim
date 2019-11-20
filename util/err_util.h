@@ -24,12 +24,10 @@ void TEST();
 void __DEBUG( std::string const& msg );
 void __DEBUG();
 
-int num_tests = 0;
-const bool PRINT_DEBUG = true;
-const bool PRINT_TEST = true;
+#define PRINT_DEBUG true
+#define PRINT_TEST true
 
-// const bool PRINT_DEBUG = true;
-// const bool PRINT_TEST = true;
+int num_tests = 0;
 
 // print error
 

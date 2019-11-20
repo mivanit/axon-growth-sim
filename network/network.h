@@ -31,6 +31,7 @@ public:
 	// pass along activity, update every neuron individually
 	void update()
 	{
+		// FIXME: network update function
 		// first pass: forward activity
 		
 
@@ -39,11 +40,6 @@ public:
 
 
 	}
-
-
-
-
-
 
 
 
@@ -77,6 +73,8 @@ public:
 			neurons.push_back(new_neuron);
 		}
 	}
+
+	// FIXME: state saving to stringstream
 
 
 };

@@ -111,7 +111,14 @@ FILE_TYPES = [
 # to make things faster
 MAX_SEARCH_LEN = 15
 
-REGEX_STR = '((' + '|'.join(COMMENT_LINES) + ')\\s*(' + '|'.join(COMMENT_TAGS) + '))'
+# TODO: make this read from a config file, integrate with CLI
+FILES_EXCLUDE = [
+	'scrape-inline-todo.py',
+	'inline.todo',
+	'master.todo',
+]
+
+# REGEX_STR = '((' + '|'.join(COMMENT_LINES) + ')\\s*(' + '|'.join(COMMENT_TAGS) + '))'
 
 #* get all valid files
 
@@ -122,7 +129,7 @@ for fileType in FILE_TYPES:
 	glob_str = OPT['searchDir'] + '**/*.%s' % fileType
 	files_search.extend( glob.glob( glob_str, recursive=True ) )
 
-files_search = sorted([ s.replace('\\', '/') for s in files_search ])
+files_search = sorted([ s.replace('\\', '/') for s in files_search if s not in FILES_EXCLUDE ])
 
 
 #* search files

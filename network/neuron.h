@@ -14,6 +14,8 @@
 #include "../diffusion/diffusion.h"
 #include "../waveform/waveform.h"
 
+// CRIT: make Neuron class actually work
+// TODO: integrate Neuron class with cellTypes
 
 class Neuron
 {

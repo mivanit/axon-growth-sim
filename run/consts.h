@@ -97,7 +97,7 @@ inline bool zero_f(float a)
 
 
 
-// TODO: make this more extensible?
+// TODO: make search_vec more extensible
 const Coord search_vec[8] = {
 	Coord(0, 1),			/* up */
 	Coord(1, 1).norm(),		/* up right */

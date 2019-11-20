@@ -1,11 +1,19 @@
 # inline TODO summary:
-Updated:	2019-11-20 03:14:22.306015
+Updated:	2019-11-20 03:42:52.497876
 
 # CRIT:
 
- ## `python-inline-todo.py`:
-  [ ] "CRIT", 
-  (line 68)
+ ## `network/neuron.h`:
+  [ ] CRIT: make Neuron class actually work 
+  (line 17)
+
+ ## `run/driver.h`:
+  [ ] CRIT: get rid of this, inherit from chemtype 
+  (line 66)
+
+ ## `waveform/waveform_D.h`:
+  [ ] CRIT: go over all waveform code 
+  (line 19)
 
 # TODO:
 
@@ -15,71 +23,71 @@ Updated:	2019-11-20 03:14:22.306015
   [ ] TODO: move this all to config file? 
   (line 16)
   [ ] TODO: get grid numbers from cellType 
-  (line 88)
+  (line 89)
 
  ## `network/generator.old/network.h`:
   [ ] TODO: neuron chemtypes for this 
   (line 94)
 
  ## `network/neuron.h`:
+  [ ] TODO: integrate Neuron class with cellTypes 
+  (line 18)
   [ ] TODO: waveforms 
-  (line 35)
+  (line 37)
   [ ] TODO: dendrites? both RV and references 
-  (line 38)
+  (line 40)
   [ ] TODO: update waveforms 
-  (line 49)
-
- ## `python-inline-todo.py`:
-  [ ] "TODO", 
-  (line 69)
+  (line 51)
 
  ## `run/config.h`:
   [ ] TODO: all chemType stuff 
   (line 77)
 
- ## `run/config_default.c`:
-  [ ] TODO: read `cellType` class instances from csv? 
-  (line 71)
-
  ## `run/consts.h`:
-  [ ] TODO: make this more extensible? 
+  [ ] TODO: make search_vec more extensible 
   (line 100)
 
  ## `run/driver.h`:
-  [ ] TODO: get rid of this, inherit from chemtype 
-  (line 55)
+  [ ] TODO: ambient concentrations, baseline stimulation 
+  (line 31)
   [ ] TODO: print config and initial state to files/console 
-  (line 65)
-  [ ] TODO: gen_dGrids() that inherits from chemtype classes 
-  (line 80)
-  [ ] TODO: remove this, moved to network.h 
-  (line 82)
-  [ ] TODO: neuron chemtypes for this 
-  (line 95)
-  [ ] TODO: call `Diffusion::write_to_csv`, write and call similar functions for axons and neurons. 
-  (line 143)
-  [ ] TODO 
-  (line 160)
-  [ ] TODO 
-  (line 172)
+  (line 70)
+  [ ] TODO: `axon_write` function 
+  (line 122)
+  [ ] TODO: `neuron_write` function 
+  (line 131)
+
+ ## `run/main.cpp`:
+  [ ] TODO: pass timestep to `save_state` function 
+  (line 27)
 
  ## `waveform/waveform_D.h`:
   [ ] TODO: interference ctor 
-  (line 77)
+  (line 79)
   [ ] TODO: check for period/phase greater than TIMESTEP_DIFF ? 
-  (line 209)
+  (line 211)
   [ ] TODO: kill/adjust spikes that are too close 
-  (line 219)
+  (line 221)
 
 # FIXME:
 
- ## `python-inline-todo.py`:
-  [ ] "FIXME", 
-  (line 70)
+ ## `network/network.h`:
+  [ ] FIXME: network update function 
+  (line 34)
+  [ ] FIXME: state saving to stringstream 
+  (line 77)
+
+ ## `run/config_default.c`:
+  [ ] FIXME: read `cellType` class instances from csv? 
+  (line 71)
 
  ## `run/driver.h`:
-  [ ] FIXME label 
-  (line 59)
+  [ ] FIXME: name of driver class? 
+  (line 42)
+
+ ## `run/main.cpp`:
+  [ ] FIXME: pass name (from argv) to Driver ctor 
+  (line 21)
 
  ## `util/cJSON/cJSON.c`:
   [ ] FIXME: Can overflow here. Cannot be fixed without breaking the API */ 
@@ -87,15 +95,25 @@ Updated:	2019-11-20 03:14:22.306015
 
 # FIX:
 
- ## `python-inline-todo.py`:
-  [ ] "FIXME", 
-  (line 70)
-  [ ] "FIX", 
+ ## `network/network.h`:
+  [ ] FIXME: network update function 
+  (line 34)
+  [ ] FIXME: state saving to stringstream 
+  (line 77)
+
+ ## `run/config_default.c`:
+  [ ] FIXME: read `cellType` class instances from csv? 
   (line 71)
 
  ## `run/driver.h`:
-  [ ] FIXME label 
-  (line 59)
+  [ ] FIXME: name of driver class? 
+  (line 42)
+  [ ] FIXME: label and correct init for dGrids 
+  (line 62)
+
+ ## `run/main.cpp`:
+  [ ] FIXME: pass name (from argv) to Driver ctor 
+  (line 21)
 
  ## `util/cJSON/cJSON.c`:
   [ ] FIXME: Can overflow here. Cannot be fixed without breaking the API */ 
@@ -103,12 +121,6 @@ Updated:	2019-11-20 03:14:22.306015
 
 # BUG:
 
- ## `python-inline-todo.py`:
-  [ ] "BUG", 
-  (line 72)
-  [ ] "DEBUG", 
-  (line 73)
-
  ## `util/err_util.h`:
   [ ] void __DEBUG( std::string const& msg ); 
   (line 24)
@@ -117,26 +129,22 @@ Updated:	2019-11-20 03:14:22.306015
 
  ## `waveform/waveform_D.h`:
   [ ] __DEBUG("wf_act, input size: " + std::to_string(wf.size())); 
-  (line 145)
+  (line 147)
   [ ] __DEBUG("idx: " + std::to_string(idx)); 
-  (line 164)
+  (line 166)
   [ ] __DEBUG("naive wf_out size: " + std::to_string(wf_out.size())); 
-  (line 181)
+  (line 183)
   [ ] __DEBUG("wf_small size: " + std::to_string(wf_small.size())); 
-  (line 182)
+  (line 184)
   [ ] __DEBUG("\t i = " + std::to_string(i)); 
-  (line 190)
+  (line 192)
   [ ] __DEBUG("\t\t j = " + std::to_string(j)); 
-  (line 194)
+  (line 196)
   [ ] __DEBUG("done wf_act, out size: " + std::to_string(wf_out.size())); 
-  (line 217)
+  (line 219)
 
 # DEBUG:
 
- ## `python-inline-todo.py`:
-  [ ] "DEBUG", 
-  (line 73)
-
  ## `util/err_util.h`:
   [ ] void __DEBUG( std::string const& msg ); 
   (line 24)
@@ -145,55 +153,45 @@ Updated:	2019-11-20 03:14:22.306015
 
  ## `waveform/waveform_D.h`:
   [ ] __DEBUG("wf_act, input size: " + std::to_string(wf.size())); 
-  (line 145)
+  (line 147)
   [ ] __DEBUG("idx: " + std::to_string(idx)); 
-  (line 164)
+  (line 166)
   [ ] __DEBUG("naive wf_out size: " + std::to_string(wf_out.size())); 
-  (line 181)
+  (line 183)
   [ ] __DEBUG("wf_small size: " + std::to_string(wf_small.size())); 
-  (line 182)
+  (line 184)
   [ ] __DEBUG("\t i = " + std::to_string(i)); 
-  (line 190)
+  (line 192)
   [ ] __DEBUG("\t\t j = " + std::to_string(j)); 
-  (line 194)
+  (line 196)
   [ ] __DEBUG("done wf_act, out size: " + std::to_string(wf_out.size())); 
-  (line 217)
+  (line 219)
 
 # UGLY:
 
  ## `network/neuron.h`:
   [ ] UGLY: NT release vars 
-  (line 30)
+  (line 32)
   [ ] UGLY: hardcoded NT release 
-  (line 51)
-
- ## `python-inline-todo.py`:
-  [ ] "UGLY", 
-  (line 74)
+  (line 53)
 
  ## `run/config.h`:
   [ ] UGLY: make this poisson/exponential instead? 
   (line 86)
 
-# HACK:
-
- ## `python-inline-todo.py`:
-  [ ] "HACK", 
-  (line 75)
+ ## `run/driver.h`:
+  [ ] UGLY: specify format in comments 
+  (line 141)
 
 # NOTE:
 
  ## `axon/axon.h`:
   [ ] NOTE: this can be modified later if we choose to update gradient sensing 
-  (line 71)
+  (line 72)
 
  ## `network/generator.old/generator.cpp`:
   [ ] NOTE: if modifying network topology during operation, then this should be written seperately 
   (line 192)
-
- ## `python-inline-todo.py`:
-  [ ] "NOTE", 
-  (line 76)
 
  ## `util/cJSON/cJSON.h`:
   [ ] NOTE: cJSON is not always 100% accurate in estimating how much memory it will use, so to be safe allocate 5 bytes more than you actually need */ 
@@ -215,17 +213,15 @@ Updated:	2019-11-20 03:14:22.306015
 
  ## `waveform/waveform_D.h`:
   [ ] NOTE: modifies waveform "main" 
-  (line 135)
+  (line 137)
   [ ] NOTE: in csv file, phase and period stored explicitly 
-  (line 232)
-
-# IDEA:
-
- ## `python-inline-todo.py`:
-  [ ] "IDEA", 
-  (line 77)
+  (line 234)
 
 # REVIEW:
+
+ ## `axon/axon.h`:
+  [ ] REVIEW: move multiple times per diffusion timestep? 
+  (line 63)
 
  ## `network/generator.old/network.h`:
   [ ] REVIEW: clustering of positions, range gen chem type, padding 
@@ -233,17 +229,7 @@ Updated:	2019-11-20 03:14:22.306015
 
  ## `network/network.h`:
   [ ] REVIEW: clustering of positions, range gen chem type, padding 
-  (line 58)
-
- ## `python-inline-todo.py`:
-  [ ] "REVIEW", 
-  (line 78)
-  [ ] REVIEW: only looks for tag, not comment line. feature not a bug?? 
-  (line 137)
-
- ## `run/driver.h`:
-  [ ] REVIEW: clustering of positions, range gen chem type, padding 
-  (line 88)
+  (line 54)
 
  ## `run/main_legacy.cpp`:
   [ ] REVIEW: clustering of positions, rang gen chem type 
@@ -251,44 +237,24 @@ Updated:	2019-11-20 03:14:22.306015
 
  ## `waveform/waveform_D.h`:
   [ ] REVIEW: f_phase set to avg, change this? 
-  (line 99)
+  (line 101)
   [ ] REVIEW: this sort might not be needed, adding for safety for now 
-  (line 146)
+  (line 148)
   [ ] REVIEW: check for off by one in idx usage 
-  (line 159)
+  (line 161)
   [ ] REVIEW: crashes if i==j, figure out why. probably irrelevant but idk 
-  (line 199)
+  (line 201)
 
 # OPTIMIZE:
 
- ## `python-inline-todo.py`:
-  [ ] "OPTIMIZE", 
-  (line 79)
-
  ## `waveform/waveform_D.h`:
   [ ] OPTIMIZE: reserve space? 
-  (line 169)
+  (line 171)
 
 # CONFIG:
-
- ## `python-inline-todo.py`:
-  [ ] "CONFIG", 
-  (line 80)
 
  ## `run/config.h`:
   [ ] ifndef CONFIG_H 
   (line 8)
   [ ] define CONFIG_H 
   (line 9)
-
-# !!!:
-
- ## `python-inline-todo.py`:
-  [ ] "!!!", 
-  (line 81)
-
-# OLD:
-
- ## `python-inline-todo.py`:
-  [ ] "OLD" 
-  (line 82)

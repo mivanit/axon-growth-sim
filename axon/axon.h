@@ -60,6 +60,7 @@ public:
 	void update()
 	{
 		update_dir();
+		// REVIEW: move multiple times per diffusion timestep?
 		move(dir);
 	}
 

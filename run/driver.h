@@ -11,6 +11,8 @@
 #include "../network/neuron.h"
 #include "../axon/axon.h"
 
+#include "../util/err_util.h"
+
 #ifndef DRIVER
 #define DRIVER
 
@@ -26,6 +28,8 @@ public:
   ## ##   ##     ## ##    ##  ##    ##
    ###    ##     ## ##     ##  ######
 */
+    // TODO: ambient concentrations, baseline stimulation
+
 	//* actual data
 	std::vector<Diffusion> dGrids;
 	std::vector<Neuron> neurons;
@@ -35,7 +39,8 @@ public:
 	std::default_random_engine rng;
     std::normal_distribution<float> rdist_timeOn; // RNG for time neuron stays on
 
-    const std::string NAME = "Test"; // FIXME
+    // FIXME: name of driver class?
+    const std::string NAME = "Test"; 
 
 /*
  ######  ########  #######  ########
@@ -52,56 +57,17 @@ public:
 		//* RNG setup
 		RNG_seed = time(0);
 		srand(RNG_seed);
-		// TODO: get rid of this, inherit from chemtype
-		rdist_timeOn = std::normal_distribution<float>(40.0, 10.0);
 
 		//* dGrid setup
-        //FIXME label
+        // FIXME: label and correct init for dGrids
 		dGrids = std::vector<Diffusion>(1, Diffusion(N_GRIDSIZE, 1, 1, 1, 1, "LABEL"));
 
 		//* neuron setup
+		// CRIT: get rid of this, inherit from chemtype
+		rdist_timeOn = std::normal_distribution<float>(40.0, 10.0);
 		gen_neurons();
 
 		// TODO: print config and initial state to files/console
-	}
-
-
-
-/*
- ######   ######## ##    ##
-##    ##  ##       ###   ##
-##        ##       ####  ##
-##   #### ######   ## ## ##
-##    ##  ##       ##  ####
-##    ##  ##       ##   ###
- ######   ######## ##    ##
-*/
-
-	// TODO: gen_dGrids() that inherits from chemtype classes
-
-    // TODO: remove this, moved to network.h
-	void gen_neurons() {
-		// create neurons randomly
-		neurons.reserve(N_NEURONS);
-		for (int i = 0; i < N_NEURONS; ++i)  {
-			// generate random initial coordinates	
-			// REVIEW: clustering of positions, range gen chem type, padding
-			int x_init = rand() % N_GRIDSIZE;	
-			int y_init = rand() % N_GRIDSIZE;
-
-			// create new neuron
-			Neuron new_neuron(i, 1, Coord(float(x_init), float(y_init)));
-
-			// TODO: neuron chemtypes for this
-			// model start time using uniform random distribution
-			new_neuron.NT_start = rand() % N_STEPS;
-			// model time neuron stays on using normal distribution
-			new_neuron.NT_end = rdist_timeOn(rng) + new_neuron.NT_start;
-			new_neuron.NT_amt = 1;
-
-			// model amount to release randomly
-			neurons.push_back(new_neuron);
-		}
 	}
 
 
@@ -140,7 +106,6 @@ public:
 */
     // Write the state of the network at time step t
 	void save_state(unsigned int t) {
-		// TODO: call `Diffusion::write_to_csv`, write and call similar functions for axons and neurons.
         const std::string DIR = "../data/" + NAME + "/";
         const std::string END = "_" + std::to_string(t) + ".csv";
         axon_write(DIR + "axon" + END);
@@ -149,38 +114,31 @@ public:
 	}
     
     void axon_write(const std::string& file) const {
+        // init ofstream
         std::ofstream ofs(file, std::ios_base::app);
-        if (!ofs.is_open()) {
-            std::cerr << "Error opening " << file << ", aborting."
-                      << std::endl;
-            return;
-        }
+        CHK_ERROR(!ofs.is_open(), "Error opening " + file + ", aborting.")
         ofs.precision(PRECISION);
         
-        // TODO
+        // TODO: `axon_write` function
     }
 
     void neuron_write(const std::string& file) const {
+        // init ofstream
         std::ofstream ofs(file, std::ios_base::app);
-        if (!ofs.is_open()) {
-            std::cerr << "Error opening " << file << ", aborting."
-                      << std::endl;
-            return;
-        }
+        CHK_ERROR(!ofs.is_open(), "Error opening " + file + ", aborting.")
         ofs.precision(PRECISION);
         
-        // TODO
+        // TODO: `neuron_write` function
     }
 
     void diffusion_write(const std::string& file) const {
+        // init ofstream
         std::ofstream ofs(file, std::ios_base::app);
-        if (!ofs.is_open()) {
-            std::cerr << "Error opening " << file << ", aborting."
-                      << std::endl;
-            return;
-        }
+        CHK_ERROR(!ofs.is_open(), "Error opening " + file + ", aborting.")
         ofs.precision(PRECISION);
         
+        // write diffusion grids
+        // UGLY: specify format in comments
         for (const Diffusion& d : dGrids) {
             ofs << d.label() << "\n";
             for (unsigned int i = 0; i < d.dim(); ++i) {
