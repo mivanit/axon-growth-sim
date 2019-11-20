@@ -32,9 +32,10 @@ public:
 	void update()
 	{
 		// first pass: forward activity
-
+		
 
 		// second pass: update each neuron (and by extension, axons)
+
 
 
 	}

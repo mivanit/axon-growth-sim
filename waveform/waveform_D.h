@@ -10,15 +10,11 @@
 
 #include <vector>
 #include <algorithm>
-#include <fstream>
-#include <string>
 #include <cstdint>
 #include <cmath>
 
 #include "../run/consts.h"
-#include "../util/csv_parser.h"
 #include "../util/math_util.h"
-#include "../util/err_util.h"
 
 // * class def
 
@@ -27,78 +23,85 @@ class wave_component
 {
 public:
 	
-int16_t phase; // phase
-uint16_t period; // period, for frequency of component
-float amp; // amplitude coefficient
+	// phase
+	int16_t phase; 
+	
+	// period, for frequency of component
+	uint16_t period; 
+	
+	// amplitude coefficient
+	float amp; 
+	
+	// precise phase
+	float f_phase; 
 
-// on which diffusion timestep to start/end spiking
-size_t t_strt; size_t t_end;
-float f_phase; // precise phase
+	// usual ctor
+	wave_component(
+			uint16_t in_phase, 
+			uint16_t in_per, 
+			float in_amp, 
+			float in_fPhase 
+		) : phase(in_phase), 
+		period(in_per), 
+		amp(in_amp), 
+		f_phase(in_fPhase) 
+	{}
 
-
-// usual ctor
-wave_component(uint16_t in_phase, uint16_t in_per, float in_amp, size_t in_tS_s, size_t in_tS_e, float in_fPhase)
-	: phase(in_phase), period(in_per), amp(in_amp), t_strt(in_tS_s), t_end(in_tS_e), f_phase(in_fPhase) {}
-
-// raw data ctor
-wave_component(float in_phase, float in_per, float in_amp, size_t in_tS_s, size_t in_tS_e) 
-	: amp(in_amp), t_strt(in_tS_s), t_end(in_tS_e)
-{
-	this->phase = (int16_t) (in_phase / TIMESTEP_WF);
-	this->period = (int16_t) (in_per / TIMESTEP_WF);
-	this->f_phase = std::fmod( phase, TIMESTEP_WF );
-}
-
-// empty ctor for first element, only pass the next update time
-wave_component(size_t in_step)
-	: phase(0), period(0), amp(0.0), t_strt(in_step), t_end(in_step+1), f_phase(0.0) {}
-
-// "copy" ctor that sets amp to V_SPIKEAMP if activ is true
-wave_component(const wave_component & cpy, bool activ = false)
-{
-	this->phase = cpy.phase;
-	this->period = cpy.period;
-
-	this->t_strt = cpy.t_strt;
-	this->t_end = cpy.t_end;
-	this->f_phase = cpy.f_phase;
-
-	if (activ) this->amp = V_SPIKEAMP;
-	else this->amp = cpy.amp;
-}
-
-
-// "interference" ctor that returns a waveform created from constructive interference of the two components
-wave_component(const wave_component & A, const wave_component & B, bool activ = false)
-{
-	// TODO: interference ctor
-	// solve for phase using exEuclid
-	// xEuclid solves the equation a * n_A + b * n_B = 1
-	// we start with p_A * n_A + phi_A = p_B * n_B + phi_B
-	int phi = abs(A.phase - B.phase);
-	if (phi == 0) this->phase = A.phase;
-	else
+	// raw float data ctor
+	wave_component(float in_phase, float in_per, float in_amp) 
+		: amp(in_amp), t_strt(in_tS_s), t_end(in_tS_e)
 	{
-		int n_A, n_B;
-		xEuclid(A.period/phi, B.period/phi, n_A, n_B);
-		CHK_WARNING( (A.period * n_A + A.phase != B.period * n_B + B.phase), "phi_X calculation broken" );
-		this->phase = A.period * n_A + A.phase;
+		this->phase = (int16_t) (in_phase / TIMESTEP_WF);
+		this->period = (int16_t) (in_per / TIMESTEP_WF);
+		this->f_phase = std::fmod( phase, TIMESTEP_WF );
 	}
 
-	// solve for period using LCM
-	this->period = LCM(A.period, B.period);
+	// "copy" ctor that sets amp to V_SPIKEAMP if activ is true
+	wave_component(const wave_component & cpy, bool activ = false)
+	{
+		this->phase = cpy.phase;
+		this->period = cpy.period;
+		this->f_phase = cpy.f_phase;
 
-	// start time max of both
-	this->t_strt = std::max(A.t_strt, B.t_strt);
-	// end time min of both
-	this->t_end = std::min(A.t_end, B.t_end);
+		if (activ) this->amp = V_SPIKEAMP;
+		else this->amp = cpy.amp;
+	}
 
-	// REVIEW: f_phase set to avg, change this?
-	this->f_phase = (A.f_phase + B.f_phase) / 2;
 
-	if (activ) this->amp = V_SPIKEAMP;
-	else this->amp = A.amp + B.amp;
-}
+	// "interference" ctor that returns a waveform created from constructive interference of the two components
+	wave_component(
+		const wave_component & A, 
+		const wave_component & B, 
+		bool activ = false
+	) {
+		// TODO: interference ctor
+		// solve for phase using exEuclid
+		// xEuclid solves the equation a * n_A + b * n_B = 1
+		// we start with p_A * n_A + phi_A = p_B * n_B + phi_B
+		int phi = abs(A.phase - B.phase);
+		if (phi == 0) this->phase = A.phase;
+		else
+		{
+			int n_A, n_B;
+			xEuclid(A.period/phi, B.period/phi, n_A, n_B);
+			CHK_WARNING( (A.period * n_A + A.phase != B.period * n_B + B.phase), "phi_X calculation broken" );
+			this->phase = A.period * n_A + A.phase;
+		}
+
+		// solve for period using LCM
+		this->period = LCM(A.period, B.period);
+
+		// start time max of both
+		this->t_strt = std::max(A.t_strt, B.t_strt);
+		// end time min of both
+		this->t_end = std::min(A.t_end, B.t_end);
+
+		// REVIEW: f_phase set to avg, change this?
+		this->f_phase = (A.f_phase + B.f_phase) / 2;
+
+		if (activ) this->amp = V_SPIKEAMP;
+		else this->amp = A.amp + B.amp;
+	}
 
 };
 
