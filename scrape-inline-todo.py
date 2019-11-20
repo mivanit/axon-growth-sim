@@ -39,7 +39,7 @@ def get_args(flags, argv = sys.argv):
 # default options
 OPT = {
 	'searchDir' : '',
-	'outfile'   : '.todo',
+	'outfile'   : 'inline.todo',
 	'links'  	: True,
 	'tag-sort'  : True,
 	'file-sort' : True,
