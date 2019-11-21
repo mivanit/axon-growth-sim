@@ -1,7 +1,10 @@
 
 # driver:
-	[ ] move stuff to `Driver` class (cleaner, will let us call from python if needed)
 	[ ] saving current state
+		[x] specify formats @done(19-11-21)
+		[x] diffusion grids @done(19-11-21)
+		[ ] neurons
+		[ ] axons
 
 # diffusion:
 	[ ] check source/sink code, either use it or get rid of it

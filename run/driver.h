@@ -32,7 +32,9 @@ public:
 
 	//* actual data
 	std::vector<Diffusion> dGrids;
-	std::vector<Neuron> neurons;
+    // CRIT: use network class instead of vector of neurons
+    Network net;
+	// std::vector<Neuron> neurons;
 
 	//* RNG stuff
 	unsigned int RNG_seed;
@@ -65,6 +67,7 @@ public:
 		//* neuron setup
 		// CRIT: get rid of this, inherit from chemtype
 		rdist_timeOn = std::normal_distribution<float>(40.0, 10.0);
+        // CRIT: create Network class
 		gen_neurons();
 
 		// TODO: print config and initial state to files/console
@@ -104,14 +107,46 @@ public:
 ##    ## ##     ##   ## ##   ##
  ######  ##     ##    ###    ########
 */
+    // TODO: move write functions to their respective classes?
     // Write the state of the network at time step t
 	void save_state(unsigned int t) {
-        const std::string DIR = "../data/" + NAME + "/";
-        const std::string END = "_" + std::to_string(t) + ".csv";
+        // relies on build script to create this folder
+        const std::string DIR = "../data/" + NAME + "/raw/";
+        // TODO: check for validity of path
+        const std::string END = "_" + std::to_string(t) + ".tsv";
+        neuron_write(DIR + "neur" + END);
         axon_write(DIR + "axon" + END);
-        neuron_write(DIR + "neuron" + END);
-        diffusion_write(DIR + "diffusion" + END);
+        diffusion_write(DIR + "diff" + END);
 	}
+    
+    void neuron_write(const std::string& file) const {
+        // init ofstream
+        std::ofstream ofs(file, std::ios_base::app);
+        CHK_ERROR(!ofs.is_open(), "Error opening " + file + ", aborting.")
+        ofs.precision(PRECISION);
+        
+
+        // write neuron data (without axon data)
+        // format:
+        // for every neuron in order, write:
+        /*
+            ==========
+            <neuron.id>, <neuron.cellType>, <neuron.loc>
+            [waveform arrays]
+        */
+        for (const Neuron& neuron : net.data) {
+            ofs << "==========\n";
+            ofs << neuron.id << "\t"
+                << neuron.cellType << "\t"
+                << neuron.loc << "\t"
+                << "\n";
+
+            // FIXME: print waveform arrays for neuron write
+
+            // additional newline, flush stream
+            ofs << std::endl;
+        }
+    }
     
     void axon_write(const std::string& file) const {
         // init ofstream
@@ -119,17 +154,47 @@ public:
         CHK_ERROR(!ofs.is_open(), "Error opening " + file + ", aborting.")
         ofs.precision(PRECISION);
         
-        // TODO: `axon_write` function
+        // write axon data
+        // format:
+        // for every axon in order, write:
+        /*
+            ==========
+            <axon.id>, <axon.cellType>, <axon.loc>, <axon.dir>
+            [past_loc array]
+            [postSyn_id array]
+            [postSyn_wgt array]
+        */
+        for (const Axon& axon : net.data) {
+            ofs << "==========\n";
+            ofs << axon.id << "\t"
+                << axon.cellType << "\t"
+                << axon.loc().to_str() << "\t"
+                << axon.dir << "\t"
+                << "\n";
+            
+            // locations
+            for (Coord& c : axon.past_loc) {
+                ofs << c.to_str() << "\t";
+            }
+            ofs << "\n";
+
+            // post stynaptic connection IDs
+            for (uint16_t id : axon.postSyn_id) {
+                ofs << std::to_string(id) << "\t";
+            }
+            ofs << "\n";
+
+            // post stynaptic weights
+            for (float wgt : axon.postSyn_wgt) {
+                ofs << std::to_string(wgt) << "\t";
+            }
+            ofs << "\n";
+            
+            // additional newline, flush stream
+            ofs << std::endl;
+        }
     }
 
-    void neuron_write(const std::string& file) const {
-        // init ofstream
-        std::ofstream ofs(file, std::ios_base::app);
-        CHK_ERROR(!ofs.is_open(), "Error opening " + file + ", aborting.")
-        ofs.precision(PRECISION);
-        
-        // TODO: `neuron_write` function
-    }
 
     void diffusion_write(const std::string& file) const {
         // init ofstream
@@ -137,16 +202,27 @@ public:
         CHK_ERROR(!ofs.is_open(), "Error opening " + file + ", aborting.")
         ofs.precision(PRECISION);
         
-        // write diffusion grids
-        // UGLY: specify format in comments
+        // write diffusion grid data
+        // format:
+        // for every diffusion grid, in order:
+        /*
+            ==========
+            <grid.label>
+            [array]
+        */
+        // TODO: add grid ID, grid size
         for (const Diffusion& d : dGrids) {
-            ofs << d.label() << "\n";
+            ofs << "==========\n"; // separator
+            ofs << d.label() << "\n"; // label of grid
+
+            // output array
             for (unsigned int i = 0; i < d.dim(); ++i) {
                 for (unsigned int j = 0; j < d.dim(); ++j) {
-                    ofs << std::to_string(d.concentration(j, i)) << ",";
+                    ofs << std::to_string(d.concentration(j, i)) << "\t";
                 }
                 ofs << "\n";
             }
+            // additional newline, flush stream
             ofs << std::endl;
         }
     }

@@ -54,6 +54,14 @@ struct Coord
 		return pow(pow(x, 2.0) + pow(y, 2.0), 0.5);
 	}
 
+	// return coordinate pair as string
+	std::string to_str() const
+	{
+		return ( "(" 
+			+ std::to_string(x) + "," 
+			+ std::to_string(y) + ")" );
+	}
+
 	/* scale vector by some factor */
 	Coord scale(float scaling_factor)
 	{

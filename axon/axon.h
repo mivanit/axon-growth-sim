@@ -26,6 +26,7 @@ public:
 	static std::vector<Diffusion> * dGrids;
 
 	// angle to search in
+	// TODO: have search angle `tau` depend on cellType
 	static const double tau;
 	// tau = 0.0;
 
@@ -37,7 +38,7 @@ public:
 	std::vector<uint16_t> postSyn_id;
 	std::vector<float> postSyn_wgt;
 
-	Coord loc()
+	Coord loc() const
 	{
 		return past_loc.back();
 	}
