@@ -1,5 +1,5 @@
 # inline TODO summary:
-Updated:	2019-11-20 17:07:01.342985
+Updated:	2019-11-21 16:44:24.185844
 
 # CRIT:
 
@@ -8,8 +8,12 @@ Updated:	2019-11-20 17:07:01.342985
   (line 17)
 
  ## `run/driver.h`:
+  [ ] CRIT: use network class instead of vector of neurons 
+  (line 35)
   [ ] CRIT: get rid of this, inherit from chemtype 
-  (line 66)
+  (line 68)
+  [ ] CRIT: create Network class 
+  (line 70)
 
  ## `waveform/waveform_D.h`:
   [ ] CRIT: go over all waveform code 
@@ -22,8 +26,10 @@ Updated:	2019-11-20 17:07:01.342985
   (line 15)
   [ ] TODO: move this all to config file? 
   (line 16)
+  [ ] TODO: have search angle `tau` depend on cellType 
+  (line 29)
   [ ] TODO: get grid numbers from cellType 
-  (line 89)
+  (line 90)
 
  ## `network/generator.old/network.h`:
   [ ] TODO: neuron chemtypes for this 
@@ -45,17 +51,19 @@ Updated:	2019-11-20 17:07:01.342985
 
  ## `run/consts.h`:
   [ ] TODO: make search_vec more extensible 
-  (line 100)
+  (line 108)
 
  ## `run/driver.h`:
   [ ] TODO: ambient concentrations, baseline stimulation 
   (line 31)
   [ ] TODO: print config and initial state to files/console 
-  (line 70)
-  [ ] TODO: `axon_write` function 
-  (line 122)
-  [ ] TODO: `neuron_write` function 
-  (line 131)
+  (line 73)
+  [ ] TODO: move write functions to their respective classes? 
+  (line 110)
+  [ ] TODO: check for validity of path 
+  (line 115)
+  [ ] TODO: add grid ID, grid size 
+  (line 213)
 
  ## `run/main.cpp`:
   [ ] TODO: pass timestep to `save_state` function 
@@ -79,7 +87,7 @@ Updated:	2019-11-20 17:07:01.342985
 
  ## `run/driver.h`:
   [ ] FIXME: name of driver class? 
-  (line 42)
+  (line 44)
 
  ## `run/main.cpp`:
   [ ] FIXME: pass name (from argv) to Driver ctor 
@@ -99,9 +107,9 @@ Updated:	2019-11-20 17:07:01.342985
 
  ## `run/driver.h`:
   [ ] FIXME: name of driver class? 
-  (line 42)
+  (line 44)
   [ ] FIXME: label and correct init for dGrids 
-  (line 62)
+  (line 64)
 
  ## `run/main.cpp`:
   [ ] FIXME: pass name (from argv) to Driver ctor 
@@ -171,15 +179,11 @@ Updated:	2019-11-20 17:07:01.342985
   [ ] UGLY: improve configuration of cell types 
   (line 80)
 
- ## `run/driver.h`:
-  [ ] UGLY: specify format in comments 
-  (line 141)
-
 # NOTE:
 
  ## `axon/axon.h`:
   [ ] NOTE: this can be modified later if we choose to update gradient sensing 
-  (line 72)
+  (line 73)
 
  ## `network/generator.old/generator.cpp`:
   [ ] NOTE: if modifying network topology during operation, then this should be written seperately 
@@ -213,7 +217,7 @@ Updated:	2019-11-20 17:07:01.342985
 
  ## `axon/axon.h`:
   [ ] REVIEW: move multiple times per diffusion timestep? 
-  (line 63)
+  (line 64)
 
  ## `network/generator.old/network.h`:
   [ ] REVIEW: clustering of positions, range gen chem type, padding 
