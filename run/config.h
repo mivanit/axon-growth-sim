@@ -10,6 +10,7 @@
 
 #include <cstdint>
 #include <math.h>
+#include <vector>
 
 //* Time-related
 
@@ -73,9 +74,9 @@ extern const float EPSILON;
 extern const int PRECISION;
 
 
-//* chem type classes
-// TODO: all chemType stuff
+//* chem type stuff
 
+// stores various data about how a given cell type behaves
 struct cellType
 {
 public:
@@ -98,13 +99,18 @@ public:
 	// axonal affinities for the various chemical types
 	// positive --> turn towards
 	// negative --> turn away
-	float * chemType_affinities; 
+	float * chemType_affinities;
 
 
 	// emission coefficients for various chem types
 	// positive --> proportional to activity
 	// negative --> inverse of activity
 	float * chemType_release;
+
+	// ctor
+	cellType() {}
 };
+
+extern std::vector < cellType > CELLTYPE_ARR;
 
 #endif

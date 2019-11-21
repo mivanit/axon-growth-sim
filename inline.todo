@@ -1,5 +1,5 @@
 # inline TODO summary:
-Updated:	2019-11-20 03:42:52.497876
+Updated:	2019-11-20 17:07:01.342985
 
 # CRIT:
 
@@ -39,9 +39,9 @@ Updated:	2019-11-20 03:42:52.497876
   [ ] TODO: update waveforms 
   (line 51)
 
- ## `run/config.h`:
-  [ ] TODO: all chemType stuff 
-  (line 77)
+ ## `run/config_default.c`:
+  [ ] TODO: chemType configuration: diffusion coefficient, etc 
+  (line 96)
 
  ## `run/consts.h`:
   [ ] TODO: make search_vec more extensible 
@@ -62,12 +62,12 @@ Updated:	2019-11-20 03:42:52.497876
   (line 27)
 
  ## `waveform/waveform_D.h`:
-  [ ] TODO: interference ctor 
-  (line 79)
+  [ ] TODO: wf_compress(wf, i); 
+  (line 153)
   [ ] TODO: check for period/phase greater than TIMESTEP_DIFF ? 
-  (line 211)
+  (line 196)
   [ ] TODO: kill/adjust spikes that are too close 
-  (line 221)
+  (line 206)
 
 # FIXME:
 
@@ -76,10 +76,6 @@ Updated:	2019-11-20 03:42:52.497876
   (line 34)
   [ ] FIXME: state saving to stringstream 
   (line 77)
-
- ## `run/config_default.c`:
-  [ ] FIXME: read `cellType` class instances from csv? 
-  (line 71)
 
  ## `run/driver.h`:
   [ ] FIXME: name of driver class? 
@@ -100,10 +96,6 @@ Updated:	2019-11-20 03:42:52.497876
   (line 34)
   [ ] FIXME: state saving to stringstream 
   (line 77)
-
- ## `run/config_default.c`:
-  [ ] FIXME: read `cellType` class instances from csv? 
-  (line 71)
 
  ## `run/driver.h`:
   [ ] FIXME: name of driver class? 
@@ -128,20 +120,18 @@ Updated:	2019-11-20 03:42:52.497876
   (line 25)
 
  ## `waveform/waveform_D.h`:
-  [ ] __DEBUG("wf_act, input size: " + std::to_string(wf.size())); 
-  (line 147)
-  [ ] __DEBUG("idx: " + std::to_string(idx)); 
-  (line 166)
+  [ ] ~__DEBUG("wf_act, input size: " + std::to_string(wf.size())); 
+  (line 149)
   [ ] __DEBUG("naive wf_out size: " + std::to_string(wf_out.size())); 
-  (line 183)
+  (line 168)
   [ ] __DEBUG("wf_small size: " + std::to_string(wf_small.size())); 
-  (line 184)
+  (line 169)
   [ ] __DEBUG("\t i = " + std::to_string(i)); 
-  (line 192)
+  (line 177)
   [ ] __DEBUG("\t\t j = " + std::to_string(j)); 
-  (line 196)
+  (line 181)
   [ ] __DEBUG("done wf_act, out size: " + std::to_string(wf_out.size())); 
-  (line 219)
+  (line 204)
 
 # DEBUG:
 
@@ -152,20 +142,18 @@ Updated:	2019-11-20 03:42:52.497876
   (line 25)
 
  ## `waveform/waveform_D.h`:
-  [ ] __DEBUG("wf_act, input size: " + std::to_string(wf.size())); 
-  (line 147)
-  [ ] __DEBUG("idx: " + std::to_string(idx)); 
-  (line 166)
+  [ ] ~__DEBUG("wf_act, input size: " + std::to_string(wf.size())); 
+  (line 149)
   [ ] __DEBUG("naive wf_out size: " + std::to_string(wf_out.size())); 
-  (line 183)
+  (line 168)
   [ ] __DEBUG("wf_small size: " + std::to_string(wf_small.size())); 
-  (line 184)
+  (line 169)
   [ ] __DEBUG("\t i = " + std::to_string(i)); 
-  (line 192)
+  (line 177)
   [ ] __DEBUG("\t\t j = " + std::to_string(j)); 
-  (line 196)
+  (line 181)
   [ ] __DEBUG("done wf_act, out size: " + std::to_string(wf_out.size())); 
-  (line 219)
+  (line 204)
 
 # UGLY:
 
@@ -177,7 +165,11 @@ Updated:	2019-11-20 03:42:52.497876
 
  ## `run/config.h`:
   [ ] UGLY: make this poisson/exponential instead? 
-  (line 86)
+  (line 87)
+
+ ## `run/config_default.c`:
+  [ ] UGLY: improve configuration of cell types 
+  (line 80)
 
  ## `run/driver.h`:
   [ ] UGLY: specify format in comments 
@@ -213,9 +205,9 @@ Updated:	2019-11-20 03:42:52.497876
 
  ## `waveform/waveform_D.h`:
   [ ] NOTE: modifies waveform "main" 
-  (line 137)
+  (line 139)
   [ ] NOTE: in csv file, phase and period stored explicitly 
-  (line 234)
+  (line 235)
 
 # REVIEW:
 
@@ -237,19 +229,17 @@ Updated:	2019-11-20 03:42:52.497876
 
  ## `waveform/waveform_D.h`:
   [ ] REVIEW: f_phase set to avg, change this? 
-  (line 101)
+  (line 106)
   [ ] REVIEW: this sort might not be needed, adding for safety for now 
-  (line 148)
-  [ ] REVIEW: check for off by one in idx usage 
-  (line 161)
+  (line 150)
   [ ] REVIEW: crashes if i==j, figure out why. probably irrelevant but idk 
-  (line 201)
+  (line 186)
 
 # OPTIMIZE:
 
  ## `waveform/waveform_D.h`:
   [ ] OPTIMIZE: reserve space? 
-  (line 171)
+  (line 156)
 
 # CONFIG:
 

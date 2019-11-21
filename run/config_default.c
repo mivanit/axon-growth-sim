@@ -9,6 +9,9 @@
 // #include <stdint.h>
 #include <math.h>
 #include <random>
+#include <vector>
+
+// #include "config.h"
 
 
 // * Time-related
@@ -33,8 +36,8 @@ extern const uint16_t N_GRIDSIZE = 100;
 extern const uint16_t N_PADDING = 10;
 
 // Range for chem types, cell types
-extern const uint8_t MAX_CELLTYPE = 10;
-extern const uint8_t MAX_CHEMTYPE = 10;
+extern const uint8_t MAX_CELLTYPE = 2;
+extern const uint8_t MAX_CHEMTYPE = 2;
 
 
 // * neuron specs
@@ -68,7 +71,28 @@ extern const float T_MIN_DELAY = 5.1;
 // #define EPSILON 0.01f;
 extern const float EPSILON = 0.01;
 
-// FIXME: read `cellType` class instances from csv?
-
 // Decimal precision for writing to files
 extern const int PRECISION = 8;
+
+// * cellType definitions
+CELLTYPE_ARR = std::vector < cellType >(MAX_CELLTYPE, cellType());
+
+// UGLY: improve configuration of cell types
+
+CELLTYPE_ARR[0].stepSize_mu = 1.0;
+CELLTYPE_ARR[0].stepSize_sigma = 0.1;
+CELLTYPE_ARR[0].searchAngle_tau = 0.0;
+CELLTYPE_ARR[0].senseNoise_sigma = {0.1, 0.1};
+CELLTYPE_ARR[0].chemType_affinities = {1.0, -1.0};
+CELLTYPE_ARR[0].chemType_release = {0.1, 1.0};
+
+CELLTYPE_ARR[1].stepSize_mu = 1.0;
+CELLTYPE_ARR[1].stepSize_sigma = 0.1;
+CELLTYPE_ARR[1].searchAngle_tau = 0.0;
+CELLTYPE_ARR[1].senseNoise_sigma = {0.1, 0.1};
+CELLTYPE_ARR[1].chemType_affinities = {-1.0, 1.0};
+CELLTYPE_ARR[1].chemType_release = {1.0, 0.1};
+
+// TODO: chemType configuration: diffusion coefficient, etc
+
+
