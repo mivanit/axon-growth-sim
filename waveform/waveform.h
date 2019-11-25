@@ -60,9 +60,9 @@ public:
 	{}
 
 	// raw float data ctor (rounds floating point phase)
-	wave_component(float in_phase, float in_per, float in_amp) 
-		: amp(in_amp), t_strt(in_tS_s), t_end(in_tS_e)
+	wave_component(float in_phase, float in_per, float in_amp)
 	{
+		this->amp = in_amp;
 		this->phase = (int16_t) (in_phase / TIMESTEP_WF);
 		this->period = (int16_t) (in_per / TIMESTEP_WF);
 		this->f_phase = std::fmod( phase, TIMESTEP_WF );
@@ -224,6 +224,8 @@ waveform wf_activation(waveform & wf, float min_amp = V_THRESHOLD)
 */
 
 
+/*
+
 waveform wf_read(const std::string & filename)
 {
 	// output
@@ -267,7 +269,7 @@ bool wf_save(waveform & wf, const std::string & filename)
 	return true;
 }
 
-
+*/
 
 
 

@@ -12,7 +12,7 @@
 #include "../run/consts.h"
 #include "../axon/axon.h"
 #include "../diffusion/diffusion.h"
-#include "../waveform/waveform.h"
+// #include "../waveform/waveform.h"
 
 // CRIT: make Neuron class actually work
 // TODO: integrate Neuron class with cellTypes

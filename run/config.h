@@ -10,7 +10,6 @@
 
 #include <cstdint>
 #include <math.h>
-#include <vector>
 
 //* Time-related
 
@@ -108,9 +107,27 @@ public:
 	float * chemType_release;
 
 	// ctor
-	cellType() {}
+	cellType(
+		uint16_t in_cellType_ID,
+		float in_stepSize_mu, 
+		float in_stepSize_sigma,
+		float in_searchAngle_tau,
+		float in_turningRate_max,
+		float * in_senseNoise_sigma,
+		float * in_chemType_affinities,
+		float * in_chemType_release
+	) : 
+		cellType_ID(in_cellType_ID),
+		stepSize_mu(in_stepSize_mu),
+		stepSize_sigma(in_stepSize_sigma),
+		searchAngle_tau(in_searchAngle_tau),
+		turningRate_max(in_turningRate_max),
+		senseNoise_sigma(in_senseNoise_sigma),
+		chemType_affinities(in_chemType_affinities),
+		chemType_release(in_chemType_release)
+	{}
 };
 
-extern std::vector < cellType > CELLTYPE_ARR;
+extern cellType CELLTYPE_ARR[];
 
 #endif

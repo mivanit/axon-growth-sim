@@ -25,7 +25,7 @@ int main(int argc, char ** argv)
 	{
 		simulation.sim_step();
 		// TODO: pass timestep to `save_state` function
-		simulation.save_state();
+		simulation.save_state(TIME);
 	}
 
 }

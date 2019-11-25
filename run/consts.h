@@ -10,6 +10,8 @@
 
 #include <cstdint>
 #include <math.h>
+#include <limits>
+#include <string>
 
 #include "config.h"
 

@@ -11,7 +11,7 @@
 #include <random>
 #include <vector>
 
-// #include "config.h"
+#include "config.h"
 
 
 // * Time-related
@@ -75,23 +75,32 @@ extern const float EPSILON = 0.01;
 extern const int PRECISION = 8;
 
 // * cellType definitions
-CELLTYPE_ARR = std::vector < cellType >(MAX_CELLTYPE, cellType());
+cellType CELLTYPE_ARR[MAX_CELLTYPE] = {
+	cellType(
+		1, // cellType_ID
+		1.0, // stepSize_mu
+		0.1, // stepSize_sigma
+		0.0, // searchAngle_tau
+		0.5, // turningRate_max
+		{0.1, 0.1}, // senseNoise_sigma
+		{1.0, -1.0}, // chemType_affinities
+		{0.1, 1.0}, // chemType_release
+	), 
+	cellType(
+
+	)
+};
 
 // UGLY: improve configuration of cell types
 
-CELLTYPE_ARR[0].stepSize_mu = 1.0;
-CELLTYPE_ARR[0].stepSize_sigma = 0.1;
-CELLTYPE_ARR[0].searchAngle_tau = 0.0;
-CELLTYPE_ARR[0].senseNoise_sigma = {0.1, 0.1};
-CELLTYPE_ARR[0].chemType_affinities = {1.0, -1.0};
-CELLTYPE_ARR[0].chemType_release = {0.1, 1.0};
 
-CELLTYPE_ARR[1].stepSize_mu = 1.0;
-CELLTYPE_ARR[1].stepSize_sigma = 0.1;
-CELLTYPE_ARR[1].searchAngle_tau = 0.0;
-CELLTYPE_ARR[1].senseNoise_sigma = {0.1, 0.1};
-CELLTYPE_ARR[1].chemType_affinities = {-1.0, 1.0};
-CELLTYPE_ARR[1].chemType_release = {1.0, 0.1};
+
+// CELLTYPE_ARR[1].stepSize_mu = 1.0;
+// CELLTYPE_ARR[1].stepSize_sigma = 0.1;
+// CELLTYPE_ARR[1].searchAngle_tau = 0.0;
+// CELLTYPE_ARR[1].senseNoise_sigma = {0.1, 0.1};
+// CELLTYPE_ARR[1].chemType_affinities = {-1.0, 1.0};
+// CELLTYPE_ARR[1].chemType_release = {1.0, 0.1};
 
 // TODO: chemType configuration: diffusion coefficient, etc
 

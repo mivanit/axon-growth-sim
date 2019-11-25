@@ -8,6 +8,7 @@
 #include "config.h"
 
 #include "../diffusion/diffusion.h"
+#include "../network/network.h"
 #include "../network/neuron.h"
 #include "../axon/axon.h"
 
@@ -29,10 +30,10 @@ public:
    ###    ##     ## ##     ##  ######
 */
     // TODO: ambient concentrations, baseline stimulation
+    // TODO: keep track of time in driver as well
 
 	//* actual data
 	std::vector<Diffusion> dGrids;
-    // CRIT: use network class instead of vector of neurons
     Network net;
 	// std::vector<Neuron> neurons;
 
@@ -41,8 +42,8 @@ public:
 	std::default_random_engine rng;
     std::normal_distribution<float> rdist_timeOn; // RNG for time neuron stays on
 
-    // FIXME: name of driver class?
-    const std::string NAME = "Test"; 
+    //* name 
+    std::string NAME; 
 
 /*
  ######  ########  #######  ########
@@ -55,10 +56,13 @@ public:
 */
 
 	// default ctor, inherits everything from config.h
-	Driver() {
+	Driver(std::string name_in = "Test") {
 		//* RNG setup
 		RNG_seed = time(0);
 		srand(RNG_seed);
+
+        //* name setup
+        NAME = name_in;
 
 		//* dGrid setup
         // FIXME: label and correct init for dGrids
@@ -67,9 +71,9 @@ public:
 		//* neuron setup
 		// CRIT: get rid of this, inherit from chemtype
 		rdist_timeOn = std::normal_distribution<float>(40.0, 10.0);
-        // CRIT: create Network class
-		gen_neurons();
-
+        // CRIT: network class ctor
+		net = Network();
+        net.gen_neurons();
 		// TODO: print config and initial state to files/console
 	}
 
@@ -91,7 +95,7 @@ public:
         }
 
 		// update all the neurons (which will in turn update axons)
-        for (auto & nrn : neurons) {
+        for (auto & nrn : net.neurons) {
             nrn.update();
         }
 	}
@@ -122,7 +126,7 @@ public:
     void neuron_write(const std::string& file) const {
         // init ofstream
         std::ofstream ofs(file, std::ios_base::app);
-        CHK_ERROR(!ofs.is_open(), "Error opening " + file + ", aborting.")
+        CHK_ERROR(!ofs.is_open(), "Error opening " + file + ", aborting.");
         ofs.precision(PRECISION);
         
 
@@ -134,11 +138,11 @@ public:
             <neuron.id>, <neuron.cellType>, <neuron.loc>
             [waveform arrays]
         */
-        for (const Neuron& neuron : net.data) {
+        for (const Neuron& neuron : net.neurons) {
             ofs << "==========\n";
             ofs << neuron.id << "\t"
                 << neuron.cellType << "\t"
-                << neuron.loc << "\t"
+                << neuron.loc.to_str() << "\t"
                 << "\n";
 
             // FIXME: print waveform arrays for neuron write
@@ -151,7 +155,7 @@ public:
     void axon_write(const std::string& file) const {
         // init ofstream
         std::ofstream ofs(file, std::ios_base::app);
-        CHK_ERROR(!ofs.is_open(), "Error opening " + file + ", aborting.")
+        CHK_ERROR(!ofs.is_open(), "Error opening " + file + ", aborting.");
         ofs.precision(PRECISION);
         
         // write axon data
@@ -164,16 +168,17 @@ public:
             [postSyn_id array]
             [postSyn_wgt array]
         */
-        for (const Axon& axon : net.data) {
+        for (const Neuron& neuron : net.neurons) {
+            const Axon& axon = neuron.axon;
             ofs << "==========\n";
             ofs << axon.id << "\t"
                 << axon.cellType << "\t"
                 << axon.loc().to_str() << "\t"
-                << axon.dir << "\t"
+                << axon.dir.to_str() << "\t"
                 << "\n";
             
             // locations
-            for (Coord& c : axon.past_loc) {
+            for (const Coord& c : axon.past_loc) {
                 ofs << c.to_str() << "\t";
             }
             ofs << "\n";
@@ -199,7 +204,7 @@ public:
     void diffusion_write(const std::string& file) const {
         // init ofstream
         std::ofstream ofs(file, std::ios_base::app);
-        CHK_ERROR(!ofs.is_open(), "Error opening " + file + ", aborting.")
+        CHK_ERROR(!ofs.is_open(), "Error opening " + file + ", aborting.");
         ofs.precision(PRECISION);
         
         // write diffusion grid data
@@ -226,6 +231,6 @@ public:
             ofs << std::endl;
         }
     }
-}
+}; // end driver class
 
 #endif
