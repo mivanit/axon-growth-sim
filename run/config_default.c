@@ -74,7 +74,7 @@ extern const float DIFF_dt = 1.0;
 
 // margin for comparing floats
 // #define EPSILON 0.01f;
-extern const float EPSILON = 0.01;
+extern const float EPSILON = 0.001;
 
 // Decimal precision for writing to files
 extern const int PRECISION = 8;

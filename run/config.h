@@ -86,6 +86,9 @@ extern const int PRECISION;
 // RNG stuff
 std::default_random_engine rng;
 
+// standard normal distribution with mean of 0 and sigma of 1
+std::normal_distribution<float> ndist_STD(0.0, 1.0);
+
 
 //* chem/cell type stuff
 
@@ -161,8 +164,6 @@ public:
 	// negative --> inverse of activity
 	std::vector<float> chemType_release;
 
-	// RNG for noise on (normalized) direction vector
-	std::normal_distribution<float> rdist_dirNoise; 
 	// RNG for distance travelled
 	std::normal_distribution<float> rdist_move;
 
@@ -188,7 +189,6 @@ public:
 		senseNoise_sigma(in_senseNoise_sigma),
 		chemType_affinities(in_chemType_affinities),
 		chemType_release(in_chemType_release),
-		rdist_dirNoise(0.0, in_senseNoise_sigma),
 		rdist_move(in_stepSize_mu, in_stepSize_sigma)
 	{}
 };

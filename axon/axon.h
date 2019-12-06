@@ -64,22 +64,62 @@ private:
 	* NOTE: this can be modified later if we choose to update gradient sensing
 	*/
 	void update_dir()
-	{	
-		std::vector<double> dot_products(8);
-
+	{
 		// use dot products to determine closest points to direction axon is facing
+		std::vector<double> dot_products(8);
 		for (int i = 0; i < 8; ++i) {
 			Coord chk_dir = search_vec[i];
 			dot_products[i] = chk_dir[0]*dir[0] + chk_dir[1]*dir[1];
 		}
 
+		// vector of sensed directions
+		std::vector<Coord> sensed_dir(MAX_CHEMTYPE, Coord());
+
+
+		// REVIEW: combine these two loops for sensing and weighted sum?
+
+		// for each diffusion chemtype (where affinity != 0)
+		for ( int g_idx =0; g_idx < MAX_CHEMTYPE; g_idx++ )
+		{
+			if ( abs(id_celltype->chemType_affinities[g_idx]) > EPSILON )
+			{
+				// store sensed direction
+				sensed_dir[g_idx] = sense_grid(g_idx, dot_products);
+			}
+			else
+			{
+				sensed_dir[g_idx] = Coord(0,0);
+			}
+		}
+		
+		// reset dir vector, weighted sum of components
+		dir = Coord(0, 0);
+		for ( int g_idx =0; g_idx < MAX_CHEMTYPE; g_idx++ )
+		{
+			dir = dir 
+				+ sensed_dir[g_idx].scale( 
+					id_celltype->chemType_affinities[g_idx] 
+				);
+		}
+
+		// normalize
+		dir.norm();
+	}
+
+
+	Coord sense_grid( int g_idx, std::vector<double> & dot_products )
+	{
+		// get grid
+		Diffusion& d = (*dGrids)[g_idx];
+	
 		// test which grid square has highest concentration
 		Coord optimal_dir(0, 0);
 		double highest_concentration = 0.0;
-		for (int i = 0; i < 8; ++i) {
-			if (dot_products[i] > id_celltype->searchAngle_tau) {
-				// TODO: get grid numbers from cellType
-				double concentration = (*dGrids)[0].Crd_getC(past_loc.back() + search_vec[i]);
+		for (int i = 0; i < 8; ++i)
+		{
+			if (dot_products[i] > id_celltype->searchAngle_tau)
+			{
+				double concentration = d.Crd_getC(past_loc.back() + search_vec[i]);
 				if (concentration > highest_concentration) {
 					highest_concentration = concentration;
 					optimal_dir = search_vec[i];
@@ -88,8 +128,15 @@ private:
 		}
 
 		// add noise term to normalized direction and set as new direction
-		dir = optimal_dir + Coord(rdist_dirNoise(rng), rdist_dirNoise(rng));
-		dir.norm();
+		// multiply by noise for that type
+		optimal_dir = optimal_dir + Coord(
+			ndist_STD(rng) * id_celltype->senseNoise_sigma[g_idx],
+			ndist_STD(rng) * id_celltype->senseNoise_sigma[g_idx]
+		);
+
+		optimal_dir.norm();
+
+		return optimal_dir;
 	}
 
 	

@@ -10,7 +10,6 @@
 
 #include <cstdint>
 #include <math.h>
-#include <limits>
 #include <string>
 
 #include "config.h"
@@ -20,10 +19,8 @@ struct Coord
 	double x;
 	double y;
 
-	// default NaN ctor
-	Coord()
-		: x(std::numeric_limits<double>::quiet_NaN()), 
-		y(std::numeric_limits<double>::quiet_NaN()) {}
+	// default (0,0) ctor
+	Coord() : x(0.0), y(0.0) {}
 
 	// raw ctor
 	Coord(float in_x, float in_y)
