@@ -20,6 +20,9 @@ NAME=$2
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 PDIR=$(echo $SCRIPTPATH | rev | cut -d '/' -f 2- | rev)
 
+[ -f $PDIR/run/run_sim.exe ] && rm $PDIR/run/run_sim.exe
+rm -rf $PDIR/data/$NAME
+
 mkdir $PDIR/data/$NAME
 mkdir $PDIR/data/$NAME/raw
 mkdir $PDIR/data/$NAME/cfg
@@ -29,4 +32,4 @@ mkdir $PDIR/data/$NAME/vis
 cp $PDIR/$CONFIG_PATH $PDIR/data/$NAME/cfg/$CONFIG_NAME
 
 # compile executable
-#g++ -std=c++17 main.cpp $PDIR/diffusion/diffusion.cpp $CONFIG_NAME -o run_sim.exe
+g++ -std=c++17 main.cpp $PDIR/diffusion/diffusion.cpp $CONFIG_NAME -o run_sim.exe
