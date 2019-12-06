@@ -21,11 +21,11 @@ int main(int argc, char ** argv)
 	// FIXME: pass name (from argv) to Driver ctor
 	Driver simulation;
 	
-	for (TIME; TIME < N_STEPS; ++TIME) 
+	while (simulation.TIME < N_STEPS) 
 	{
 		simulation.sim_step();
 		// TODO: pass timestep to `save_state` function
-		simulation.save_state(TIME);
+		simulation.save_state();
 	}
 
 }

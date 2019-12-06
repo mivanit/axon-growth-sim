@@ -1,21 +1,23 @@
 # inline TODO summary:
-Updated:	2019-11-21 16:44:24.185844
+Updated:	2019-12-05 21:31:34.482218
 
 # CRIT:
+
+ ## `data/DEFAULT_TEST/cfg/config_default.c`:
+  [ ] CRIT: get this bit working (cellType stuff) 
+  (line 77)
 
  ## `network/neuron.h`:
   [ ] CRIT: make Neuron class actually work 
   (line 17)
 
  ## `run/driver.h`:
-  [ ] CRIT: use network class instead of vector of neurons 
-  (line 35)
   [ ] CRIT: get rid of this, inherit from chemtype 
-  (line 68)
-  [ ] CRIT: create Network class 
-  (line 70)
+  (line 72)
+  [ ] CRIT: network class ctor 
+  (line 74)
 
- ## `waveform/waveform_D.h`:
+ ## `waveform/waveform.h`:
   [ ] CRIT: go over all waveform code 
   (line 19)
 
@@ -30,6 +32,10 @@ Updated:	2019-11-21 16:44:24.185844
   (line 29)
   [ ] TODO: get grid numbers from cellType 
   (line 90)
+
+ ## `data/DEFAULT_TEST/cfg/config_default.c`:
+  [ ] TODO: chemType configuration: diffusion coefficient, etc 
+  (line 104)
 
  ## `network/generator.old/network.h`:
   [ ] TODO: neuron chemtypes for this 
@@ -47,29 +53,31 @@ Updated:	2019-11-21 16:44:24.185844
 
  ## `run/config_default.c`:
   [ ] TODO: chemType configuration: diffusion coefficient, etc 
-  (line 96)
+  (line 117)
 
  ## `run/consts.h`:
   [ ] TODO: make search_vec more extensible 
-  (line 108)
+  (line 110)
 
  ## `run/driver.h`:
   [ ] TODO: ambient concentrations, baseline stimulation 
-  (line 31)
+  (line 32)
+  [ ] TODO: keep track of time in driver as well 
+  (line 33)
   [ ] TODO: print config and initial state to files/console 
-  (line 73)
+  (line 77)
   [ ] TODO: move write functions to their respective classes? 
-  (line 110)
+  (line 114)
   [ ] TODO: check for validity of path 
-  (line 115)
+  (line 119)
   [ ] TODO: add grid ID, grid size 
-  (line 213)
+  (line 218)
 
  ## `run/main.cpp`:
   [ ] TODO: pass timestep to `save_state` function 
   (line 27)
 
- ## `waveform/waveform_D.h`:
+ ## `waveform/waveform.h`:
   [ ] TODO: wf_compress(wf, i); 
   (line 153)
   [ ] TODO: check for period/phase greater than TIMESTEP_DIFF ? 
@@ -84,10 +92,6 @@ Updated:	2019-11-21 16:44:24.185844
   (line 34)
   [ ] FIXME: state saving to stringstream 
   (line 77)
-
- ## `run/driver.h`:
-  [ ] FIXME: name of driver class? 
-  (line 44)
 
  ## `run/main.cpp`:
   [ ] FIXME: pass name (from argv) to Driver ctor 
@@ -106,10 +110,8 @@ Updated:	2019-11-21 16:44:24.185844
   (line 77)
 
  ## `run/driver.h`:
-  [ ] FIXME: name of driver class? 
-  (line 44)
   [ ] FIXME: label and correct init for dGrids 
-  (line 64)
+  (line 68)
 
  ## `run/main.cpp`:
   [ ] FIXME: pass name (from argv) to Driver ctor 
@@ -127,7 +129,7 @@ Updated:	2019-11-21 16:44:24.185844
   [ ] void __DEBUG(); 
   (line 25)
 
- ## `waveform/waveform_D.h`:
+ ## `waveform/waveform.h`:
   [ ] ~__DEBUG("wf_act, input size: " + std::to_string(wf.size())); 
   (line 149)
   [ ] __DEBUG("naive wf_out size: " + std::to_string(wf_out.size())); 
@@ -149,7 +151,7 @@ Updated:	2019-11-21 16:44:24.185844
   [ ] void __DEBUG(); 
   (line 25)
 
- ## `waveform/waveform_D.h`:
+ ## `waveform/waveform.h`:
   [ ] ~__DEBUG("wf_act, input size: " + std::to_string(wf.size())); 
   (line 149)
   [ ] __DEBUG("naive wf_out size: " + std::to_string(wf_out.size())); 
@@ -165,6 +167,10 @@ Updated:	2019-11-21 16:44:24.185844
 
 # UGLY:
 
+ ## `data/DEFAULT_TEST/cfg/config_default.c`:
+  [ ] UGLY: improve configuration of cell types 
+  (line 102)
+
  ## `network/neuron.h`:
   [ ] UGLY: NT release vars 
   (line 32)
@@ -177,7 +183,7 @@ Updated:	2019-11-21 16:44:24.185844
 
  ## `run/config_default.c`:
   [ ] UGLY: improve configuration of cell types 
-  (line 80)
+  (line 84)
 
 # NOTE:
 
@@ -207,11 +213,11 @@ Updated:	2019-11-21 16:44:24.185844
   [ ] NOTE: the input must be a square matrix whose size is a power-of-two 
   (line 221)
 
- ## `waveform/waveform_D.h`:
+ ## `waveform/waveform.h`:
   [ ] NOTE: modifies waveform "main" 
   (line 139)
   [ ] NOTE: in csv file, phase and period stored explicitly 
-  (line 235)
+  (line 237)
 
 # REVIEW:
 
@@ -231,7 +237,7 @@ Updated:	2019-11-21 16:44:24.185844
   [ ] REVIEW: clustering of positions, rang gen chem type 
   (line 38)
 
- ## `waveform/waveform_D.h`:
+ ## `waveform/waveform.h`:
   [ ] REVIEW: f_phase set to avg, change this? 
   (line 106)
   [ ] REVIEW: this sort might not be needed, adding for safety for now 
@@ -241,7 +247,7 @@ Updated:	2019-11-21 16:44:24.185844
 
 # OPTIMIZE:
 
- ## `waveform/waveform_D.h`:
+ ## `waveform/waveform.h`:
   [ ] OPTIMIZE: reserve space? 
   (line 156)
 
