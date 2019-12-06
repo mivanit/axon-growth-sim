@@ -75,6 +75,10 @@ public:
 		CELLTYPE_ARR = init_cellType_arr();
 
 		//* dGrid setup
+
+		// NOTE: IF YOU REMOVE THIS IT WILL SEGFAULT
+		// no copy ctor/dtor for dGrid
+		dGrids.reserve(MAX_CHEMTYPE);
 		for (chemType x : CHEMTYPE_ARR)
 		{
 			dGrids.emplace_back(
