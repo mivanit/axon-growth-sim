@@ -78,28 +78,39 @@ extern const int PRECISION = 8;
 // * cellType definitions
 // cellType * CELLTYPE_ARR[];
 // CELLTYPE_ARR[MAX_CELLTYPE] = {
-cellType CELLTYPE_ARR[MAX_CELLTYPE] = {
-	cellType(
+
+// std::vector< int > meme();
+// meme.emplace_back(5);
+
+
+std::vector< cellType > init_cellType_arr()
+{
+	std::vector< cellType > CELLTYPE_ARR;
+	CELLTYPE_ARR.emplace_back(
 		0, // cellType_ID
 		1.0, // stepSize_mu
 		0.1, // stepSize_sigma
 		0.0, // searchAngle_tau
 		0.5, // turningRate_max
-		{0.1, 0.1}, // senseNoise_sigma
-		{1.0, -1.0}, // chemType_affinities
-		{0.1, 1.0}, // chemType_release
-	), 
-	cellType(
+		std::vector<float>{0.1, 0.1}, // senseNoise_sigma
+		std::vector<float>{1.0, -1.0}, // chemType_affinities
+		std::vector<float>{0.1, 1.0} // chemType_release
+	);
+
+	CELLTYPE_ARR.emplace_back(
 		0, // cellType_ID
 		1.0, // stepSize_mu
 		0.1, // stepSize_sigma
 		0.0, // searchAngle_tau
 		0.5, // turningRate_max
-		{0.1, 0.1}, // senseNoise_sigma
-		{-1.0, 1.0}, // chemType_affinities
-		{1.0, 0.1}, // chemType_release
-	)
-};
+		std::vector<float>{0.1, 0.1}, // senseNoise_sigma
+		std::vector<float>{-1.0, 1.0}, // chemType_affinities
+		std::vector<float>{1.0, 0.1} // chemType_release
+	);
+
+	return CELLTYPE_ARR;
+}
+
 
 // UGLY: improve configuration of cell types
 

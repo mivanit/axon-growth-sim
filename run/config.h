@@ -10,6 +10,7 @@
 
 #include <cstdint>
 #include <math.h>
+#include <vector>
 
 //* Time-related
 
@@ -93,19 +94,24 @@ public:
 	// maximum turning rate for the axon
 	float turningRate_max;	
 
+
 	// noise term for sensing certain chemtypes
-	float * senseNoise_sigma;
-	
+	std::vector<float> senseNoise_sigma;
+
+
 	// axonal affinities for the various chemical types
 	// positive --> turn towards
 	// negative --> turn away
-	float * chemType_affinities;
+	std::vector<float> chemType_affinities;
 
 
 	// emission coefficients for various chem types
 	// positive --> proportional to activity
 	// negative --> inverse of activity
-	float * chemType_release;
+	std::vector<float> chemType_release;
+
+	// default empty ctor
+	cellType() {}
 
 	// ctor
 	cellType(
@@ -114,11 +120,11 @@ public:
 		float in_stepSize_sigma,
 		float in_searchAngle_tau,
 		float in_turningRate_max,
-		float * in_senseNoise_sigma,
-		float * in_chemType_affinities,
-		float * in_chemType_release
+		std::vector<float> in_senseNoise_sigma,
+		std::vector<float> in_chemType_affinities,
+		std::vector<float> in_chemType_release
 	) : 
-		cellType_ID(in_cellType_ID),
+		cellType_ID(in_cellType_ID ),
 		stepSize_mu(in_stepSize_mu),
 		stepSize_sigma(in_stepSize_sigma),
 		searchAngle_tau(in_searchAngle_tau),
