@@ -128,6 +128,6 @@ public:
 	{}
 };
 
-extern cellType CELLTYPE_ARR[];
+extern cellType * CELLTYPE_ARR[];
 
 #endif

@@ -74,10 +74,11 @@ extern const float EPSILON = 0.01;
 // Decimal precision for writing to files
 extern const int PRECISION = 8;
 
+// CRIT: get this bit working (cellType stuff)
 // * cellType definitions
-cellType CELLTYPE_ARR[MAX_CELLTYPE] = {
+CELLTYPE_ARR[MAX_CELLTYPE] = {
 	cellType(
-		1, // cellType_ID
+		0, // cellType_ID
 		1.0, // stepSize_mu
 		0.1, // stepSize_sigma
 		0.0, // searchAngle_tau
@@ -87,20 +88,18 @@ cellType CELLTYPE_ARR[MAX_CELLTYPE] = {
 		{0.1, 1.0}, // chemType_release
 	), 
 	cellType(
-
+		0, // cellType_ID
+		1.0, // stepSize_mu
+		0.1, // stepSize_sigma
+		0.0, // searchAngle_tau
+		0.5, // turningRate_max
+		{0.1, 0.1}, // senseNoise_sigma
+		{-1.0, 1.0}, // chemType_affinities
+		{1.0, 0.1}, // chemType_release
 	)
 };
 
 // UGLY: improve configuration of cell types
-
-
-
-// CELLTYPE_ARR[1].stepSize_mu = 1.0;
-// CELLTYPE_ARR[1].stepSize_sigma = 0.1;
-// CELLTYPE_ARR[1].searchAngle_tau = 0.0;
-// CELLTYPE_ARR[1].senseNoise_sigma = {0.1, 0.1};
-// CELLTYPE_ARR[1].chemType_affinities = {-1.0, 1.0};
-// CELLTYPE_ARR[1].chemType_release = {1.0, 0.1};
 
 // TODO: chemType configuration: diffusion coefficient, etc
 
