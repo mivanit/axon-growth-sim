@@ -79,6 +79,7 @@ public:
 		// NOTE: IF YOU REMOVE THIS IT WILL SEGFAULT
 		// no copy ctor/dtor for dGrid
 		dGrids.reserve(MAX_CHEMTYPE);
+
 		for (chemType x : CHEMTYPE_ARR)
 		{
 			dGrids.emplace_back(
@@ -303,7 +304,7 @@ public:
 			break;
 
 		case 1:
-			// TODO: print more info?
+			// REVIEW: print more info?
 			printf("TIME = \t%d", TIME);
 			break;
 		

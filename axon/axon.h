@@ -75,8 +75,8 @@ private:
 		// vector of sensed directions
 		std::vector<Coord> sensed_dir(MAX_CHEMTYPE, Coord());
 
-
-		// REVIEW: combine these two loops for sensing and weighted sum?
+		// reset dir vector
+		dir = Coord(0, 0);
 
 		// for each diffusion chemtype (where affinity != 0)
 		for ( int g_idx =0; g_idx < MAX_CHEMTYPE; g_idx++ )
@@ -85,21 +85,17 @@ private:
 			{
 				// store sensed direction
 				sensed_dir[g_idx] = sense_grid(g_idx, dot_products);
+				
+				// weighted sum of components
+				dir = dir 
+					+ sensed_dir[g_idx].scale( 
+						id_celltype->chemType_affinities[g_idx] 
+					);
 			}
 			else
 			{
 				sensed_dir[g_idx] = Coord(0,0);
 			}
-		}
-		
-		// reset dir vector, weighted sum of components
-		dir = Coord(0, 0);
-		for ( int g_idx =0; g_idx < MAX_CHEMTYPE; g_idx++ )
-		{
-			dir = dir 
-				+ sensed_dir[g_idx].scale( 
-					id_celltype->chemType_affinities[g_idx] 
-				);
 		}
 
 		// normalize

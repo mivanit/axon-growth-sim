@@ -18,7 +18,7 @@
 void print_info(std::string name){
 	printf("==================================================");
 	printf("simulation initialized with name \t %s", name);
-	// TODO: print more info here
+	// REVIEW: print more info here
 	printf("starting simulation");
 	printf("==================================================");
 }

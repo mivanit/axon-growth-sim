@@ -74,7 +74,6 @@ extern const float EPSILON = 0.01;
 // Decimal precision for writing to files
 extern const int PRECISION = 8;
 
-// CRIT: get this bit working (cellType stuff)
 // * cellType definitions
 CELLTYPE_ARR[MAX_CELLTYPE] = {
 	cellType(
@@ -98,9 +97,4 @@ CELLTYPE_ARR[MAX_CELLTYPE] = {
 		{1.0, 0.1}, // chemType_release
 	)
 };
-
-// UGLY: improve configuration of cell types
-
-// TODO: chemType configuration: diffusion coefficient, etc
-
 
