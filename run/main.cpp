@@ -18,14 +18,7 @@
 // load configs from file
 int main(int argc, char ** argv)
 {
-	// FIXME: pass name (from argv) to Driver ctor
+	// CRIT: pass name (from argv) to Driver ctor
 	Driver simulation;
-	
-	while (simulation.TIME < N_STEPS) 
-	{
-		simulation.sim_step();
-		// TODO: pass timestep to `save_state` function
-		simulation.save_state();
-	}
-
+	simulation.run();
 }

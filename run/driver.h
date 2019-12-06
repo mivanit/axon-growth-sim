@@ -89,6 +89,7 @@ public:
 		}
 
 		//* neuron setup
+		// CRIT: fix neuron/network ctors
 		net = Network();
 		net.gen_neurons();
 		
@@ -105,7 +106,6 @@ public:
 ##    ##    ##    ##       ##
  ######     ##    ######## ##
 */
-	// UGLY: keep track of time in driver as member variable?
 	void sim_step() {
 		// update all grids
 		for (auto & g : dGrids) {
@@ -143,7 +143,7 @@ public:
 ##    ## ##     ##   ## ##   ##
  ######  ##     ##    ###    ########
 */
-	// TODO: move write functions to their respective classes?
+	// REVIEW: move write functions to their respective classes?
 	// Write the state of the network at time step t
 	void save_state() {
 		// relies on build script to create this folder
@@ -247,7 +247,7 @@ public:
 			<grid.label>
 			[array]
 		*/
-		// TODO: add grid ID, grid size
+		// CRIT: add grid ID
 		for (const Diffusion& d : dGrids) {
 			ofs << "==========\n"; // separator
 			ofs << d.label() << "\n"; // label of grid

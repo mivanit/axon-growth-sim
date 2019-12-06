@@ -1,5 +1,5 @@
 # inline TODO summary:
-Updated:	2019-12-05 21:31:34.482218
+Updated:	2019-12-05 23:46:23.135284
 
 # CRIT:
 
@@ -12,10 +12,16 @@ Updated:	2019-12-05 21:31:34.482218
   (line 17)
 
  ## `run/driver.h`:
-  [ ] CRIT: get rid of this, inherit from chemtype 
-  (line 72)
-  [ ] CRIT: network class ctor 
-  (line 74)
+  [ ] CRIT: fix neuron/network ctors 
+  (line 92)
+  [ ] CRIT: print config and initial state to files/console 
+  (line 96)
+  [ ] CRIT: add grid ID 
+  (line 250)
+
+ ## `run/main.cpp`:
+  [ ] CRIT: pass name (from argv) to Driver ctor 
+  (line 21)
 
  ## `waveform/waveform.h`:
   [ ] CRIT: go over all waveform code 
@@ -51,31 +57,13 @@ Updated:	2019-12-05 21:31:34.482218
   [ ] TODO: update waveforms 
   (line 51)
 
- ## `run/config_default.c`:
-  [ ] TODO: chemType configuration: diffusion coefficient, etc 
-  (line 117)
-
  ## `run/consts.h`:
   [ ] TODO: make search_vec more extensible 
   (line 110)
 
  ## `run/driver.h`:
-  [ ] TODO: ambient concentrations, baseline stimulation 
-  (line 32)
-  [ ] TODO: keep track of time in driver as well 
-  (line 33)
-  [ ] TODO: print config and initial state to files/console 
-  (line 77)
-  [ ] TODO: move write functions to their respective classes? 
-  (line 114)
   [ ] TODO: check for validity of path 
-  (line 119)
-  [ ] TODO: add grid ID, grid size 
-  (line 218)
-
- ## `run/main.cpp`:
-  [ ] TODO: pass timestep to `save_state` function 
-  (line 27)
+  (line 151)
 
  ## `waveform/waveform.h`:
   [ ] TODO: wf_compress(wf, i); 
@@ -93,9 +81,9 @@ Updated:	2019-12-05 21:31:34.482218
   [ ] FIXME: state saving to stringstream 
   (line 77)
 
- ## `run/main.cpp`:
-  [ ] FIXME: pass name (from argv) to Driver ctor 
-  (line 21)
+ ## `run/driver.h`:
+  [ ] FIXME: print waveform arrays for neuron write 
+  (line 180)
 
  ## `util/cJSON/cJSON.c`:
   [ ] FIXME: Can overflow here. Cannot be fixed without breaking the API */ 
@@ -110,12 +98,8 @@ Updated:	2019-12-05 21:31:34.482218
   (line 77)
 
  ## `run/driver.h`:
-  [ ] FIXME: label and correct init for dGrids 
-  (line 68)
-
- ## `run/main.cpp`:
-  [ ] FIXME: pass name (from argv) to Driver ctor 
-  (line 21)
+  [ ] FIXME: print waveform arrays for neuron write 
+  (line 180)
 
  ## `util/cJSON/cJSON.c`:
   [ ] FIXME: Can overflow here. Cannot be fixed without breaking the API */ 
@@ -178,12 +162,14 @@ Updated:	2019-12-05 21:31:34.482218
   (line 53)
 
  ## `run/config.h`:
+  [ ] UGLY: should be able to specify common diffusion consts per-grid, but need to rework concentration updating as well as location specifying 
+  (line 67)
   [ ] UGLY: make this poisson/exponential instead? 
-  (line 87)
+  (line 133)
 
  ## `run/config_default.c`:
-  [ ] UGLY: improve configuration of cell types 
-  (line 84)
+  [ ] UGLY: improve configuration method? 
+  (line 83)
 
 # NOTE:
 
@@ -232,6 +218,10 @@ Updated:	2019-12-05 21:31:34.482218
  ## `network/network.h`:
   [ ] REVIEW: clustering of positions, range gen chem type, padding 
   (line 54)
+
+ ## `run/driver.h`:
+  [ ] REVIEW: move write functions to their respective classes? 
+  (line 146)
 
  ## `run/main_legacy.cpp`:
   [ ] REVIEW: clustering of positions, rang gen chem type 
