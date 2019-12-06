@@ -29,4 +29,4 @@ mkdir $PDIR/data/$NAME/vis
 cp $PDIR/$CONFIG_PATH $PDIR/data/$NAME/cfg/$CONFIG_NAME
 
 # compile executable
-#g++ -std=c++17 main.cpp $PDIR/diffusion/diffusion.cpp config_default.c -o run_sim.exe
+#g++ -std=c++17 main.cpp $PDIR/diffusion/diffusion.cpp $CONFIG_NAME -o run_sim.exe
