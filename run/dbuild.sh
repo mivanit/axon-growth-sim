@@ -12,4 +12,4 @@ mkdir $PDIR/data/$NAME/cfg
 mkdir $PDIR/data/$NAME/vis
 cp $PDIR/run/config_default.c $PDIR/data/$NAME/cfg/config_default.c
 
-g++ -std=c++17 main.cpp $PDIR/diffusion/diffusion.cpp $CONFIG_NAME -o run_sim.exe
+g++ -std=c++17 main.cpp $PDIR/diffusion/diffusion.cpp config_default.c -o run_sim.exe
