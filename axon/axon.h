@@ -2,7 +2,6 @@
 #define AXON
 
 #include <vector>
-#include <random>
 #include <math.h>
 #include <numeric>      // std::iota
 #include <algorithm>    // std::sort
@@ -11,44 +10,35 @@
 #include "../diffusion/diffusion.h"
 
 
-// RNG stuff
-// TODO: make all of this depend on config file chem types
-// TODO: move this all to config file?
-std::default_random_engine rng;
-std::normal_distribution<float> rdist_dirNoise(0.0, 0.1); // RNG for noise on (normalized) direction vector
-std::normal_distribution<float> rdist_move(1.5, 0.1); // RNG for distance travelled
 
 
 class Axon
 {
 public:
-	// pointer to vector of diffusion grids
-	static std::vector<Diffusion> * dGrids;
-
-	// angle to search in
-	// TODO: have search angle `tau` depend on cellType
-	static const double tau;
-	// tau = 0.0;
-
 	// vars
-	uint16_t id; // id of parent neuron
-	uint8_t cellType; // cellType determines step size, etc etc
+	uint16_t id_neuron; // id of parent neuron
+	cellType * id_celltype; // cellType determines step size, etc etc
 	Coord dir; // relative direction vector (NOT ABSOLUTE)
 	std::vector<Coord> past_loc;
 	std::vector<uint16_t> postSyn_id;
 	std::vector<float> postSyn_wgt;
+	
+	// pointer to vector of diffusion grids
+	static std::vector<Diffusion> * dGrids;
+
 
 	Coord loc() const
 	{
 		return past_loc.back();
 	}
 
-	Axon() : id(-1), cellType(-1) {}
+	Axon() : id_neuron(-1) {}
 
 	// std ctor
-	Axon(uint16_t in_ID, uint8_t in_cellType, Coord in_coord)
-		: id(in_ID), cellType( in_cellType ) 
+	Axon(uint16_t in_ID, cellType * in_cellType, Coord in_coord)
+		: id_neuron(in_ID)
 	{
+		id_celltype = in_cellType;
 		past_loc.push_back(in_coord);
 	}
 	
@@ -63,6 +53,7 @@ public:
 		update_dir();
 		// REVIEW: move multiple times per diffusion timestep?
 		move(dir);
+		// CRIT: stop movement and write to synapse when close to neuron
 	}
 
 private:
@@ -86,7 +77,7 @@ private:
 		Coord optimal_dir(0, 0);
 		double highest_concentration = 0.0;
 		for (int i = 0; i < 8; ++i) {
-			if (dot_products[i] > tau) {
+			if (dot_products[i] > id_celltype->searchAngle_tau) {
 				// TODO: get grid numbers from cellType
 				double concentration = (*dGrids)[0].Crd_getC(past_loc.back() + search_vec[i]);
 				if (concentration > highest_concentration) {
@@ -118,7 +109,6 @@ private:
 
 };
 
-const double Axon::tau = 0.0;
 std::vector<Diffusion> * Axon::dGrids = nullptr;
 
 

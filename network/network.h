@@ -31,17 +31,16 @@ public:
 	// pass along activity, update every neuron individually
 	void update()
 	{
-		// FIXME: network update function
+		// REVIEW: network update function
 		// first pass: forward activity
 		
 
 		// second pass: update each neuron (and by extension, axons)
-
-
-
+		for ( Neuron n : neurons )
+		{
+			n.update();
+		}
 	}
-
-
 
 	// generates a set of neurons with uniformly random coordinates
 	void gen_neurons()
@@ -63,6 +62,7 @@ public:
 				)
 			); 
 			
+			// CRIT: timed NT release
 			// // model start time using uniform random distribution
 			// new_neuron.NT_start = rand() % N_STEPS;
 			// // model time neuron stays on using normal distribution
@@ -74,7 +74,24 @@ public:
 		}
 	}
 
-	// FIXME: state saving to stringstream
+	/*
+	test each axon if it is close enough 
+	to form a connection to any neuron
+	REVIEW: this is not super realistic
+	*/
+	void try_conn()
+	{
+		// CRIT: proximity testing, synapse formation
+	
+		// loop over all axons
+
+		// try distance to every neuron
+
+		// if distance 
+
+		// OPTIMIZE: splitting into subgrids for faster detection
+
+	}
 
 
 };

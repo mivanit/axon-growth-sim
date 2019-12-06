@@ -12,6 +12,7 @@
 #include <math.h>
 #include <vector>
 #include <string>
+#include <random>
 
 //* Time-related
 
@@ -80,6 +81,10 @@ extern const float EPSILON;
 
 // Decimal precision for writing to files
 extern const int PRECISION;
+
+
+// RNG stuff
+std::default_random_engine rng;
 
 
 //* chem/cell type stuff
@@ -156,6 +161,11 @@ public:
 	// negative --> inverse of activity
 	std::vector<float> chemType_release;
 
+	// RNG for noise on (normalized) direction vector
+	std::normal_distribution<float> rdist_dirNoise; 
+	// RNG for distance travelled
+	std::normal_distribution<float> rdist_move;
+
 	// default empty ctor
 	cellType() {}
 
@@ -177,7 +187,9 @@ public:
 		turningRate_max(in_turningRate_max),
 		senseNoise_sigma(in_senseNoise_sigma),
 		chemType_affinities(in_chemType_affinities),
-		chemType_release(in_chemType_release)
+		chemType_release(in_chemType_release),
+		rdist_dirNoise(0.0, in_senseNoise_sigma),
+		rdist_move(in_stepSize_mu, in_stepSize_sigma)
 	{}
 };
 

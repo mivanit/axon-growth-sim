@@ -82,18 +82,15 @@ public:
 				x.r_diff,
 				DIFF_dx, 
 				DIFF_dy, 
-				DIFF_dt, 
-				"LABEL"
+				DIFF_dt,
+				x.label
 			);
 			dGrids.back().set_decay(x.r_decay);
 		}
 
 		//* neuron setup
-		// CRIT: fix neuron/network ctors
 		net = Network();
 		net.gen_neurons();
-		
-		// CRIT: print config and initial state to files/console
 	}
 
 
@@ -120,14 +117,34 @@ public:
 		TIME++;
 	}
 
-	void run(size_t fin_step = N_STEPS, size_t save_every = 1)
-	{
+	/*
+	- run the simulation until `fin_step`
+	- save when `TIME % save_every == 0`
+	- print info when `TIME % print_every == 0`
+		- `verbosity == 0`  :  dont print
+		- `verbosity == 0`  :  just timestep
+		- `verbosity == 1`  :  timestep, number of active axons (TODO)
+	*/
+	void run(
+		size_t fin_step = N_STEPS, 
+		size_t save_every = 1,
+		int print_every = 1,
+		int verbosity = 1
+	) {
 		while (TIME < fin_step) 
 		{
+			// run step
 			sim_step();
+			// save if needed
 			if (TIME % save_every == 0)
 			{
 				save_state();
+			}
+			
+			// print some information
+			if (TIME % print_every == 0)
+			{
+				print_info(verbosity);
 			}
 		}
 	}
@@ -247,8 +264,10 @@ public:
 			<grid.label>
 			[array]
 		*/
-		// CRIT: add grid ID
-		for (const Diffusion& d : dGrids) {
+		for ( unsigned int g_idx = 0; g_idx < dGrids.size(); g_idx++ ) {
+
+			const Diffusion& d = dGrids[g_idx];
+
 			ofs << "==========\n"; // separator
 			ofs << d.label() << "\n"; // label of grid
 
@@ -263,6 +282,32 @@ public:
 			ofs << std::endl;
 		}
 	}
+
+	/*
+	- `verbosity == 0`  :  dont print
+	- `verbosity == 0`  :  just timestep
+	- `verbosity == 1`  :  timestep, number of active axons (TODO)
+	*/
+	void print_info(int verbosity = 1) {
+		switch (verbosity)
+		{
+		case (-1):
+			break;
+
+		case 0:
+			printf("TIME = \t%d", TIME);
+			break;
+
+		case 1:
+			// TODO: print more info?
+			printf("TIME = \t%d", TIME);
+			break;
+		
+		default:
+			break;
+		}
+	}
+
 }; // end driver class
 
 #endif

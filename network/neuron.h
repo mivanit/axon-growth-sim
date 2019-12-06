@@ -14,9 +14,6 @@
 #include "../diffusion/diffusion.h"
 // #include "../waveform/waveform.h"
 
-// CRIT: make Neuron class actually work
-// TODO: integrate Neuron class with cellTypes
-
 class Neuron
 {
 public:
@@ -34,10 +31,9 @@ public:
 	size_t NT_end;
 	double NT_amt;
 
-	// TODO: waveforms
+	// REVIEW: waveforms, dendrites? both RV and references
 	// waveform wf_in;
 	// waveform wf_out;
-	// TODO: dendrites? both RV and references
 
 	// ctor
 	Neuron(uint16_t in_ID, uint8_t in_cellType, Coord in_coord)
@@ -48,9 +44,9 @@ public:
 	// update
 	void update()
 	{
-		// TODO: update waveforms
+		// REVIEW: update waveforms
 
-		// UGLY: hardcoded NT release
+		// CRIT: hardcoded NT release
 		// if ((TIME > NT_start) && (TIME < NT_end))
 		// {
 		// 	(*dGrids)[0].Crd_add(loc, NT_amt);
