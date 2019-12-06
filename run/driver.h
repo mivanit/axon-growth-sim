@@ -94,7 +94,7 @@ public:
 		}
 
 		//* neuron setup
-		net = Network();
+		net = Network(CELLTYPE_ARR);
 		net.gen_neurons();
 	}
 
@@ -189,13 +189,13 @@ public:
 		// for every neuron in order, write:
 		/*
 			==========
-			<neuron.id>, <neuron.cellType>, <neuron.loc>
+			<neuron.id_neuron>, <neuron.id_cellType>, <neuron.loc>
 			[waveform arrays]
 		*/
 		for (const Neuron& neuron : net.neurons) {
 			ofs << "==========\n";
-			ofs << neuron.id << "\t"
-				<< neuron.cellType << "\t"
+			ofs << neuron.id_neuron << "\t"
+				<< neuron.id_cellType << "\t"
 				<< neuron.loc.to_str() << "\t"
 				<< "\n";
 
@@ -217,7 +217,7 @@ public:
 		// for every axon in order, write:
 		/*
 			==========
-			<axon.id>, <axon.cellType>, <axon.loc>, <axon.dir>
+			<axon.id_neuron>, <axon.id_cellType>, <axon.loc>, <axon.dir>
 			[past_loc array]
 			[postSyn_id array]
 			[postSyn_wgt array]
@@ -225,8 +225,8 @@ public:
 		for (const Neuron& neuron : net.neurons) {
 			const Axon& axon = neuron.axon;
 			ofs << "==========\n";
-			ofs << axon.id << "\t"
-				<< axon.cellType << "\t"
+			ofs << axon.id_neuron << "\t"
+				<< axon.id_cellType << "\t"
 				<< axon.loc().to_str() << "\t"
 				<< axon.dir.to_str() << "\t"
 				<< "\n";

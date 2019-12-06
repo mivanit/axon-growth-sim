@@ -18,11 +18,11 @@ class Neuron
 {
 public:
 	// static pointer to diffusion grid list
-	static std::vector<Diffusion> * dGrids;
+	static std::vector<Diffusion> & dGrids;
 
 	// vars
-	uint16_t id;
-	uint8_t cellType;
+	uint16_t id_neuron;
+	cellType & id_celltype;
 	Coord loc;
 	Axon axon;
 	
@@ -36,10 +36,9 @@ public:
 	// waveform wf_out;
 
 	// ctor
-	Neuron(uint16_t in_ID, uint8_t in_cellType, Coord in_coord)
-		: id(in_ID), cellType( in_cellType ), loc(in_coord) {
-		axon = Axon(in_ID, in_cellType, in_coord);
-	}
+	Neuron(uint16_t in_ID, cellType & in_cellType, Coord in_coord)
+		: id_neuron(in_ID), id_celltype( in_cellType ), loc(in_coord), axon(in_ID, in_cellType, in_coord) 
+	{}
 
 	// update
 	void update()
@@ -58,6 +57,6 @@ public:
 
 };
 
-std::vector<Diffusion> * Neuron::dGrids = nullptr;
+// std::vector<Diffusion> * Neuron::dGrids = nullptr;
 
 #endif

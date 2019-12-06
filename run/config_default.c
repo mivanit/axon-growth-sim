@@ -86,6 +86,8 @@ extern const int PRECISION = 8;
 std::vector< chemType > init_chemType_arr()
 {
 	std::vector< chemType > CHEMTYPE_ARR;
+	CHEMTYPE_ARR.reserve(MAX_CHEMTYPE);
+
 	CHEMTYPE_ARR.emplace_back(
 		0, // chemType_ID
 		0.0, // ambient
@@ -110,6 +112,8 @@ std::vector< chemType > init_chemType_arr()
 std::vector< cellType > init_cellType_arr()
 {
 	std::vector< cellType > CELLTYPE_ARR;
+	CELLTYPE_ARR.reserve(MAX_CELLTYPE);
+	
 	CELLTYPE_ARR.emplace_back(
 		0, // cellType_ID
 		1.0, // stepSize_mu

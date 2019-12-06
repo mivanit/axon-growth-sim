@@ -17,14 +17,14 @@ class Axon
 public:
 	// vars
 	uint16_t id_neuron; // id of parent neuron
-	cellType * id_celltype; // cellType determines step size, etc etc
+	cellType & id_celltype; // cellType determines step size, etc etc
 	Coord dir; // relative direction vector (NOT ABSOLUTE)
 	std::vector<Coord> past_loc;
 	std::vector<uint16_t> postSyn_id;
 	std::vector<float> postSyn_wgt;
 	
 	// pointer to vector of diffusion grids
-	static std::vector<Diffusion> * dGrids;
+	static std::vector<Diffusion> & dGrids;
 
 
 	Coord loc() const
@@ -32,13 +32,10 @@ public:
 		return past_loc.back();
 	}
 
-	Axon() : id_neuron(-1) {}
-
 	// std ctor
-	Axon(uint16_t in_ID, cellType * in_cellType, Coord in_coord)
-		: id_neuron(in_ID)
+	Axon(uint16_t in_ID, cellType & in_cellType, Coord in_coord)
+		: id_neuron(in_ID), id_celltype(in_cellType)
 	{
-		id_celltype = in_cellType;
 		past_loc.push_back(in_coord);
 	}
 	
@@ -81,7 +78,7 @@ private:
 		// for each diffusion chemtype (where affinity != 0)
 		for ( int g_idx =0; g_idx < MAX_CHEMTYPE; g_idx++ )
 		{
-			if ( abs(id_celltype->chemType_affinities[g_idx]) > EPSILON )
+			if ( abs(id_celltype.chemType_affinities[g_idx]) > EPSILON )
 			{
 				// store sensed direction
 				sensed_dir[g_idx] = sense_grid(g_idx, dot_products);
@@ -89,7 +86,7 @@ private:
 				// weighted sum of components
 				dir = dir 
 					+ sensed_dir[g_idx].scale( 
-						id_celltype->chemType_affinities[g_idx] 
+						id_celltype.chemType_affinities[g_idx] 
 					);
 			}
 			else
@@ -106,14 +103,14 @@ private:
 	Coord sense_grid( int g_idx, std::vector<double> & dot_products )
 	{
 		// get grid
-		Diffusion& d = (*dGrids)[g_idx];
+		Diffusion& d = dGrids[g_idx];
 	
 		// test which grid square has highest concentration
 		Coord optimal_dir(0, 0);
 		double highest_concentration = 0.0;
 		for (int i = 0; i < 8; ++i)
 		{
-			if (dot_products[i] > id_celltype->searchAngle_tau)
+			if (dot_products[i] > id_celltype.searchAngle_tau)
 			{
 				double concentration = d.Crd_getC(past_loc.back() + search_vec[i]);
 				if (concentration > highest_concentration) {
@@ -125,10 +122,10 @@ private:
 
 		// add noise term to normalized direction and set as new direction
 		// multiply by noise for that type
-		optimal_dir = optimal_dir + Coord(
-			ndist_STD(rng) * id_celltype->senseNoise_sigma[g_idx],
-			ndist_STD(rng) * id_celltype->senseNoise_sigma[g_idx]
-		);
+		optimal_dir = optimal_dir 
+			+ Coord(ndist_STD(rng),ndist_STD(rng)).scale(
+				id_celltype.senseNoise_sigma[g_idx]
+			);
 
 		optimal_dir.norm();
 
@@ -143,7 +140,7 @@ private:
 	void move(Coord move_new)
 	{
 		// multiply by some noise term
-		move_new.scale(rdist_move(rng));
+		move_new.scale( id_celltype.rdist_move(rng) );
 		// add original
 		move_new.add(past_loc.back());
 
@@ -152,7 +149,7 @@ private:
 
 };
 
-std::vector<Diffusion> * Axon::dGrids = nullptr;
+// std::vector<Diffusion> * Axon::dGrids = nullptr;
 
 
 #endif

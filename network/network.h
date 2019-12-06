@@ -20,9 +20,14 @@ public:
 	
 	// data
 	std::vector<Neuron> neurons;
+
+	// ref to cellType array
+	std::vector< cellType > & CELLTYPE_ARR;
+
 	
 	// ctors
-	Network()
+	Network(std::vector< cellType > & in_CELLTYPE_ARR)
+		: CELLTYPE_ARR(in_CELLTYPE_ARR)
 	{
 		gen_neurons();
 	}
@@ -55,7 +60,7 @@ public:
 			// create new neuron
 			Neuron new_neuron(
 				i, // neuron ID
-				(rand() % MAX_CELLTYPE), // cellType
+				CELLTYPE_ARR[(rand() % MAX_CELLTYPE)], // cellType
 				Coord( //coordinate
 					float(rand() % N_GRIDSIZE), 
 					float(rand() % N_GRIDSIZE)
