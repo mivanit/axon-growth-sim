@@ -76,7 +76,9 @@ extern const int PRECISION = 8;
 
 // CRIT: get this bit working (cellType stuff)
 // * cellType definitions
-CELLTYPE_ARR[MAX_CELLTYPE] = {
+// cellType * CELLTYPE_ARR[];
+// CELLTYPE_ARR[MAX_CELLTYPE] = {
+cellType CELLTYPE_ARR[MAX_CELLTYPE] = {
 	cellType(
 		0, // cellType_ID
 		1.0, // stepSize_mu
