@@ -10,6 +10,8 @@
 
 #include <cstdint>
 #include <math.h>
+#include <vector>
+#include <string>
 
 //* Time-related
 
@@ -20,7 +22,7 @@ extern const float TIMESTEP_DIFF;
 extern const float TIMESTEP_WF;
 
 // current timestep count
-extern size_t TIME;
+// extern size_t TIME;
 
 // maximum timestep count
 extern size_t N_STEPS;
@@ -61,6 +63,13 @@ extern const float T_DECAY;
 extern const float T_MIN_DELAY;
 
 
+//* common diffusion consts
+// UGLY: should be able to specify common diffusion consts per-grid, but need to rework concentration updating as well as location specifying
+
+extern const float DIFF_dx;
+extern const float DIFF_dy;
+extern const float DIFF_dt;
+
 
 //* floating point arithmetic extern consts
 
@@ -73,7 +82,45 @@ extern const float EPSILON;
 extern const int PRECISION;
 
 
-//* chem type stuff
+//* chem/cell type stuff
+
+// stores various data about how a given chem type behaves
+struct chemType
+{
+public:
+	// ID of this chemtype instance
+	uint16_t chemType_ID; 
+	
+	// ambient concentration
+	float ambient;
+
+	// decay rate
+	float r_decay;
+
+	// diffusion rate
+	float r_diff;
+
+	// label of chemical
+	std::string label;
+
+	// default empty ctor
+	chemType() {}
+
+	// ctor
+	chemType(
+		uint16_t in_chemType_ID,
+		float in_ambient, 
+		float in_r_decay,
+		float in_r_diff,
+		std::string in_label
+	) : 
+		chemType_ID(in_chemType_ID ),
+		ambient(in_ambient),
+		r_decay(in_r_decay),
+		r_diff(in_r_diff),
+		label(in_label)
+	{}
+};
 
 // stores various data about how a given cell type behaves
 struct cellType
@@ -93,19 +140,24 @@ public:
 	// maximum turning rate for the axon
 	float turningRate_max;	
 
+
 	// noise term for sensing certain chemtypes
-	float * senseNoise_sigma;
-	
+	std::vector<float> senseNoise_sigma;
+
+
 	// axonal affinities for the various chemical types
 	// positive --> turn towards
 	// negative --> turn away
-	float * chemType_affinities;
+	std::vector<float> chemType_affinities;
 
 
 	// emission coefficients for various chem types
 	// positive --> proportional to activity
 	// negative --> inverse of activity
-	float * chemType_release;
+	std::vector<float> chemType_release;
+
+	// default empty ctor
+	cellType() {}
 
 	// ctor
 	cellType(
@@ -114,11 +166,11 @@ public:
 		float in_stepSize_sigma,
 		float in_searchAngle_tau,
 		float in_turningRate_max,
-		float * in_senseNoise_sigma,
-		float * in_chemType_affinities,
-		float * in_chemType_release
+		std::vector<float> in_senseNoise_sigma,
+		std::vector<float> in_chemType_affinities,
+		std::vector<float> in_chemType_release
 	) : 
-		cellType_ID(in_cellType_ID),
+		cellType_ID(in_cellType_ID ),
 		stepSize_mu(in_stepSize_mu),
 		stepSize_sigma(in_stepSize_sigma),
 		searchAngle_tau(in_searchAngle_tau),
@@ -129,6 +181,8 @@ public:
 	{}
 };
 
-// extern cellType * CELLTYPE_ARR[];
+
+std::vector< chemType > init_chemType_arr();
+std::vector< cellType > init_cellType_arr();
 
 #endif

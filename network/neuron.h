@@ -51,10 +51,10 @@ public:
 		// TODO: update waveforms
 
 		// UGLY: hardcoded NT release
-		if ((TIME > NT_start) && (TIME < NT_end))
-		{
-			(*dGrids)[0].Crd_add(loc, NT_amt);
-		}
+		// if ((TIME > NT_start) && (TIME < NT_end))
+		// {
+		// 	(*dGrids)[0].Crd_add(loc, NT_amt);
+		// }
 
 		// update axons
 		axon.update();
