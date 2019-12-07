@@ -38,3 +38,4 @@ bundle.js
 # Google Drive and Dropbox
 Icon
 .dropbox*
+*.ini
