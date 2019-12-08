@@ -3,17 +3,20 @@
 # tell the script to stop if any command returns nonzero exit code
 set -e
 
-DATA_DIR="../data/"
-EXEC_NAME="run_sim.exe"
 
-DIFFUSION_CODE="../diffusion/diffusion.cpp"
-
-
-if [ $# -ne 2 ]; then
-	echo "USAGE: build <CONFIG_PATH> <SIM_NAME>"
-	echo "to be launched from `/run/` directory"
+if [ $# < 2 ]; then
+	echo "USAGE: ./build_alt.sh <CONFIG_PATH> <SIM_NAME> [OPTIONS]"
+	echo "options:"
+	echo " -g  :  build for gdb debugger"
+	echo "to be launched from 'run/' directory"
 	exit 1
 fi
+
+
+DATA_DIR="../data/"
+EXEC_NAME="run_sim.exe"
+DIFFUSION_CODE="../diffusion/diffusion.cpp"
+
 
 CONFIG_PATH=$1
 CONFIG_NAME="$(basename $CONFIG_PATH)"
@@ -29,7 +32,12 @@ echo "	simulation path:			$SIM_PATH"
 echo "========================="
 
 
-
+# TODO: improve option selection
+OPTIONS="-std=c++17"
+if [ "$3" == "-g" ]; then
+	echo "!!!	building GDB version"
+	OPTIONS+=" -g"
+fi
 
 # clear old data in directory
 echo "	clearing old data"
@@ -56,7 +64,7 @@ cp $CONFIG_PATH $SIM_PATH/cfg/$CONFIG_NAME
 echo "========================="
 echo "compiling executable:"
 echo " "
-g++ -std=c++17 main.cpp $DIFFUSION_CODE $CONFIG_PATH -o $SIM_PATH$EXEC_NAME
+g++ $OPTIONS main.cpp $DIFFUSION_CODE $CONFIG_PATH -o $SIM_PATH$EXEC_NAME
 echo "========================="
 echo "executable compiled successfuly and saved to $SIM_PATH$EXEC_NAME"
 
