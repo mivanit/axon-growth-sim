@@ -18,8 +18,7 @@
 // { return std::vector< cellType >(); }
 
 
-class Network
-{
+class Network {
 public:
 	
 	// neurons vector
@@ -30,10 +29,8 @@ public:
 	std::vector<std::vector<float>> conn_matrix;
 
 	// ctors
-	Network(bool gen = false) 
-	{
-		if (gen)
-		{
+	Network(bool gen = false)  {
+		if (gen) {
 			gen_neurons();
 		}
 	}
@@ -43,34 +40,29 @@ public:
 
 
 
-	Neuron & get_neuron_ref(int idx)
-	{
+	Neuron & get_neuron_ref(int idx) {
 		return neurons[idx];
 	}
 
 	
 	// pass along activity, update every neuron individually
-	void update()
-	{
+	void update() {
 		// REVIEW: network update function
 		// first pass: forward activity
 		
 
 		// second pass: update each neuron (and by extension, axons)
-		for ( Neuron n : neurons )
-		{
+		for (Neuron n : neurons) {
 			n.update();
 		}
 	}
 
 	// generates a set of neurons with uniformly random coordinates
-	void gen_neurons()
-	{
+	void gen_neurons() {
 		// create neurons randomly
 		neurons.clear();
 		neurons.reserve(N_NEURONS);
-		for (int i = 0; i < N_NEURONS; ++i)
-		{
+		for (int i = 0; i < N_NEURONS; ++i) {
 			// generate random initial coordinates	
 			// REVIEW: clustering of positions, range gen chem type, padding
 			
@@ -101,8 +93,7 @@ public:
 	to form a connection to any neuron
 	REVIEW: this is not super realistic
 	*/
-	void try_conn()
-	{
+	void try_conn() {
 		// CRIT: proximity testing, synapse formation
 	
 		// loop over all axons
@@ -113,31 +104,42 @@ public:
 
 		// OPTIMIZE: splitting into subgrids for faster detection
 
+		const float DIST_THRESHOLD = 2.0;
+		const float CONN_PROB = 0.6;
+
+		for (int i = 0; i < N_NEURONS; ++i) {
+			Coord nl = neurons[i].loc;
+			if (bln_stop)
+			for (int j = 0; j < N_NEURONS; ++j) {
+				if (i != j) {
+					Coord al = neurons.axon.loc();
+					float r = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+					if (std::sqrt(pow(nl.x - al.x, 2) + pow(nl.y - al.y, 2)) <=
+						DIST_THRESHOLD && r < CONN_PROB) {
+						// form connection
+					}
+				}			
+
+			}
+		}
+
 	}
 
 
 	// ask the axons for their data and generate a connectivity matrix
 	// `conn_matrix[i][j]` holds the weight of the connection from neuron i --> j
 	// OPTIMIZE: do we really need to clear it??
-	void generate_conn_matrix()
-	{
+	void generate_conn_matrix() {
 		conn_matrix.clear();
 		conn_matrix.reserve(neurons.size());
-		for (int i = 0; i < neurons.size(); i++)
-		{
-			for (int j = 0; j < neurons.size(); j++)
-			{
+		for (int i = 0; i < neurons.size(); ++i) {
+			for (int j = 0; j < neurons.size(); ++j) {
 				float weight = neurons[i].axon.get_weight_to(j);
 				conn_matrix[i][j] = weight;
 			}
 		}
 	}
-
-
-
 };
-
-
 
 
 #endif
