@@ -17,20 +17,33 @@ import os
 import csv
 import numpy as np
 import math
+import sys
 from matplotlib import pyplot as plt
 import matplotlib.patheffects as PathEffects
 
+# number of timesteps to plot 
+PLOT_EVERY_TIMESTEP = 50
+
+# get test dir from command line input
+if len(sys.argv) != 2:
+    print('Usage: plot_axons.py <TEST_NAME>')
+    sys.exit(1)
+
+TEST_NAME = sys.argv[1]
+
 # get filenames of all diffusion timesteps that were saved
-DIFFUSION_DIR = 'diffusion/outputs'
-diffusion_filenames = glob.glob(os.path.join(DIFFUSION_DIR, 'diffusion*'))
+DIFFUSION_DIR = os.path.join('data', TEST_NAME, 'raw')
+diffusion_filenames = [filename for i, filename in 
+    enumerate(glob.glob(os.path.join(DIFFUSION_DIR, 'diff_*.tsv'))) 
+    if i % PLOT_EVERY_TIMESTEP == 0]
 NUM_PLOTS = len(diffusion_filenames)
 
 print(f'{NUM_PLOTS} timesteps found')
 
-AXON_DIR = 'data/processed'
+AXON_DIR = os.path.join('data', TEST_NAME, 'processed')
 axon_filenames = glob.glob(os.path.join(AXON_DIR, 'axon*'))
 
-OUTPUT_DIR = 'vis/output'
+OUTPUT_DIR = os.path.join('data', TEST_NAME, 'vis')
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, 'axon_graph.png')
 
 # create output directory if it doesn't already exist
@@ -71,12 +84,35 @@ for pos in range(rows * cols):
 
     diffusion_file = diffusion_filenames[pos]
     # extract timestep from the filename
-    timestep = int(diffusion_file[diffusion_file.find('_')+1:diffusion_file.find('.csv')])
-    
+    timestep = int(diffusion_file[diffusion_file.find('_')+1:diffusion_file.find('.tsv')])
+
+    # get indices of where each axon info begins
+    with open(diffusion_file) as diff_file:
+        lines = diff_file.readlines()
+        split_indices = [i for i, line in enumerate(lines) if line[0] == '=']
+
+    # split the file and separate all the grids
+    split_indices.append(-1)
+    grid_list = [lines[split_indices[i]+2:split_indices[i+1]-1] for i in range(len(split_indices) - 1)]
+
+    # TODO: adapt this to plot all grids
+    grid = []
+    for line in grid_list[0]:
+        line = line.strip().split('\t')
+        new_line = []
+        for val in line:
+            try:
+                val = float(val)
+            except:
+                val = 0.0
+            new_line.append(val)
+        grid.append(new_line)
+
     # load csv as numpy array. trailing comma prevents use of loadtxt or
     # csv.reader, so we use genfromtxt to fill the 'missing' column with 0s
-    diffusion_arr = np.genfromtxt(diffusion_file, delimiter=',', filling_values=0.0)
-    
+    #diffusion_arr = np.genfromtxt(diffusion_file, delimiter='\t', filling_values=0.0)
+    diffusion_arr = np.array(grid)
+
     im = ax[ypos, xpos].imshow(diffusion_arr)
     ax[ypos, xpos].set_title(f'Step={timestep}', fontsize=15)
 
@@ -112,9 +148,6 @@ for pos in range(rows * cols):
             ax[ypos, xpos].add_artist(plt.Circle((x_arr[0], y_arr[0]), radius=2, color=COLORS[axon_type]))
             txt = ax[ypos, xpos].text(x_arr[0], y_arr[0], axon_id, color='k')
             txt.set_path_effects([PathEffects.withStroke(linewidth=2, foreground='w')])
-
-    # Move to next step
-    pos += 1
 
 # save figure
 print(f'Saving {OUTPUT_FILE}')
