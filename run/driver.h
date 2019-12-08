@@ -3,6 +3,7 @@
 #include <ctime>
 #include <random>
 #include <string>
+#include <sstream>
 
 #include "consts.h"
 #include "config.h"
@@ -167,7 +168,9 @@ public:
 		// const std::string DIR = "../data/" + NAME + "/raw/";
 		const std::string DIR = "raw/";
 		// TODO: check for validity of path
-		const std::string END = "_" + std::to_string(TIME) + ".tsv";
+		std::ostringstream ss;
+		ss << std::setw(5) << std::setfill('0') << std::to_string(TIME);
+		const std::string END = "_" + ss.str() + ".tsv";
 		neuron_write(DIR + "neur" + END);
 		axon_write(DIR + "axon" + END);
 		diffusion_write(DIR + "diff" + END);
