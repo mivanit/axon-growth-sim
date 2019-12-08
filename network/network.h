@@ -52,9 +52,16 @@ public:
 	// pass along activity, update every neuron individually
 	void update()
 	{
-		// REVIEW: network update function
 		// first pass: forward activity
-		
+		for ( Neuron n : neurons )
+		{
+			// for every connection
+			for ( int i : n.axon.postSyn_id )
+			{
+				// pass along activity after multiplying by scaling factor
+				neurons[i].add_activ(n.get_activ_scaled());
+			}
+		}
 
 		// second pass: update each neuron (and by extension, axons)
 		for ( Neuron n : neurons )
@@ -83,14 +90,6 @@ public:
 					float(rand() % N_GRIDSIZE)
 				)
 			); 
-			
-			// CRIT: timed NT release
-			// // model start time using uniform random distribution
-			// new_neuron.NT_start = rand() % N_STEPS;
-			// // model time neuron stays on using normal distribution
-			// new_neuron.NT_end = rdist_timeOn(rng) + new_neuron.NT_start;
-			// model amount to release randomly
-			// new_neuron.NT_amt = 1;
 
 			neurons.push_back(new_neuron);
 		}

@@ -86,6 +86,7 @@ public:
 			dGrids.back().set_decay(x.r_decay);
 		}
 
+		Neuron::init_dGrid_ptr(&dGrids);
 		Axon::init_dGrid_ptr(&dGrids);
 
 		//* neuron setup
