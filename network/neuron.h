@@ -82,10 +82,27 @@ public:
 	}
 
 
-	// CRIT: acvitiy-based release
-	void release_NT()
+	// activity based NT release into grid
+	// UGLY: only works for two NTs, also linear at the moment
+	void activ_release()
 	{
-		
+		float tgt_activ = 1.0;
+
+		// for excitatory
+		float amt_excite = 0.0;
+		if (avg_activity < tgt_activ)
+		{
+			amt_excite = tgt_activ - avg_activity
+		}
+		(*dGrids)[0].Crd_add(loc, amt_excite);
+
+		// for inhibitory
+		float amt_inh = 0.0;
+		if (avg_activity > tgt_activ)
+		{
+			amt_excite = avg_activity - tgt_activ;
+		}
+		(*dGrids)[1].Crd_add(loc, amt_inh);
 	}
 
 };

@@ -92,31 +92,28 @@ public:
 	test each axon if it is close enough 
 	to form a connection to any neuron
 	REVIEW: this is not super realistic
+	OPTIMIZE: splitting into subgrids for faster detection
 	*/
 	void try_conn() {
-		// CRIT: proximity testing, synapse formation
-	
-		// loop over all axons
 
-		// try distance to every neuron
 
-		// if distance less than threshold, make connections
-
-		// OPTIMIZE: splitting into subgrids for faster detection
 
 		const double DIST_THRESHOLD = 2.0;
 		const double CONN_PROB = 0.8;
 
+		// loop over all axons
 		for (unsigned int i = 0; i < N_NEURONS; ++i) {
 			Axon& axon = neurons[i].axon;
 			if (axon.bln_stopped) {
 				continue;
 			}
 			Coord al = axon.loc();
+			// try distance to every neuron
 			for (unsigned int j = 0; j < N_NEURONS; ++j) {
 				if (i != j) {
 					Coord nl = neurons[j].loc;
 					double r = static_cast<double>(rand()) / static_cast<double>(RAND_MAX);
+					// if distance less than threshold, make connections
 					if (std::sqrt(pow(nl.x - al.x, 2) + pow(nl.y - al.y, 2)) <=
 						DIST_THRESHOLD && r < CONN_PROB) {
 						axon.make_conn(neurons[j].id_neuron);

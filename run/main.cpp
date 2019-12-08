@@ -39,7 +39,7 @@ int main(int argc, char ** argv)
 	print_info(sim_name);
 
 	// run simulation
-	simulation.run();
+	simulation.run(1000, 50);
 }
 
 

@@ -121,8 +121,8 @@ private:
 		// UGLY: total sensed chems
 		float total_sensed = 0.0;
 
-		// reset dir vector
-		dir = Coord(0, 0);
+		// create new dir vector
+		Coord new_dir = Coord(0, 0);
 
 		// for each diffusion chemtype (where affinity != 0)
 		for ( int g_idx =0; g_idx < MAX_CHEMTYPE; g_idx++ )
@@ -135,7 +135,7 @@ private:
 				total_sensed += mypair.second;
 				
 				// weighted sum of components
-				dir = dir 
+				new_dir = new_dir 
 					+ sensed_dir[g_idx].scale( 
 						get_cellType().chemType_affinities[g_idx] 
 					);
@@ -146,16 +146,23 @@ private:
 			}
 		}
 
-		// normalize
-		dir.norm();
-
 		// check for no sensing, kill with probability 1/2
 		if (
 			(total_sensed < EPSILON)
-			&& (rand() % 2 == 0)	
+			&& (rand() % 20 == 0)	
 		) {
 			bln_stopped = true;
 		}
+
+		// CRIT: check for far out of bands, kill
+
+
+		// based on total detected NT, weigh the old direction and the new
+		dir = dir + new_dir.scale(total_sensed);
+
+		// normalize
+		dir.norm();
+
 	}
 
 
