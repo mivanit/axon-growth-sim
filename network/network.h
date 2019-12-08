@@ -112,7 +112,7 @@ public:
 			if (axon.bln_stopped) {
 				continue;
 			}
-			Coord& al = axon.loc();
+			Coord al = axon.loc();
 			for (unsigned int j = 0; j < N_NEURONS; ++j) {
 				if (i != j) {
 					Coord nl = neurons[j].loc;
