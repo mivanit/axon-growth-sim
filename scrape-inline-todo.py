@@ -106,6 +106,7 @@ FILE_TYPES = [
 	'py',
 	'm',
 	'tex',
+	'sh'
 ]
 
 # to make things faster

@@ -1,69 +1,43 @@
 # inline TODO summary:
-Updated:	2019-12-05 23:46:23.135284
+Updated:	2019-12-06 17:56:10.854926
 
 # CRIT:
 
- ## `data/DEFAULT_TEST/cfg/config_default.c`:
-  [ ] CRIT: get this bit working (cellType stuff) 
-  (line 77)
+ ## `axon/axon.h`:
+  [ ] CRIT: stop movement and write to synapse when close to neuron 
+  (line 56)
+
+ ## `network/network.h`:
+  [ ] CRIT: timed NT release 
+  (line 65)
+  [ ] CRIT: proximity testing, synapse formation 
+  (line 84)
 
  ## `network/neuron.h`:
-  [ ] CRIT: make Neuron class actually work 
-  (line 17)
+  [ ] CRIT: hardcoded NT release 
+  (line 49)
 
- ## `run/driver.h`:
-  [ ] CRIT: fix neuron/network ctors 
-  (line 92)
-  [ ] CRIT: print config and initial state to files/console 
-  (line 96)
-  [ ] CRIT: add grid ID 
-  (line 250)
-
- ## `run/main.cpp`:
-  [ ] CRIT: pass name (from argv) to Driver ctor 
-  (line 21)
-
- ## `waveform/waveform.h`:
-  [ ] CRIT: go over all waveform code 
-  (line 19)
+ ## `run/build.sh`:
+  [ ] CRIT: implement setup script 
+  (line 1)
 
 # TODO:
-
- ## `axon/axon.h`:
-  [ ] TODO: make all of this depend on config file chem types 
-  (line 15)
-  [ ] TODO: move this all to config file? 
-  (line 16)
-  [ ] TODO: have search angle `tau` depend on cellType 
-  (line 29)
-  [ ] TODO: get grid numbers from cellType 
-  (line 90)
-
- ## `data/DEFAULT_TEST/cfg/config_default.c`:
-  [ ] TODO: chemType configuration: diffusion coefficient, etc 
-  (line 104)
 
  ## `network/generator.old/network.h`:
   [ ] TODO: neuron chemtypes for this 
   (line 94)
 
- ## `network/neuron.h`:
-  [ ] TODO: integrate Neuron class with cellTypes 
-  (line 18)
-  [ ] TODO: waveforms 
-  (line 37)
-  [ ] TODO: dendrites? both RV and references 
-  (line 40)
-  [ ] TODO: update waveforms 
-  (line 51)
-
  ## `run/consts.h`:
   [ ] TODO: make search_vec more extensible 
-  (line 110)
+  (line 107)
 
  ## `run/driver.h`:
   [ ] TODO: check for validity of path 
-  (line 151)
+  (line 173)
+
+ ## `run/old/build.sh`:
+  [ ] printf "TODO" 
+  (line 50)
 
  ## `waveform/waveform.h`:
   [ ] TODO: wf_compress(wf, i); 
@@ -75,15 +49,9 @@ Updated:	2019-12-05 23:46:23.135284
 
 # FIXME:
 
- ## `network/network.h`:
-  [ ] FIXME: network update function 
-  (line 34)
-  [ ] FIXME: state saving to stringstream 
-  (line 77)
-
  ## `run/driver.h`:
   [ ] FIXME: print waveform arrays for neuron write 
-  (line 180)
+  (line 202)
 
  ## `util/cJSON/cJSON.c`:
   [ ] FIXME: Can overflow here. Cannot be fixed without breaking the API */ 
@@ -91,15 +59,9 @@ Updated:	2019-12-05 23:46:23.135284
 
 # FIX:
 
- ## `network/network.h`:
-  [ ] FIXME: network update function 
-  (line 34)
-  [ ] FIXME: state saving to stringstream 
-  (line 77)
-
  ## `run/driver.h`:
   [ ] FIXME: print waveform arrays for neuron write 
-  (line 180)
+  (line 202)
 
  ## `util/cJSON/cJSON.c`:
   [ ] FIXME: Can overflow here. Cannot be fixed without breaking the API */ 
@@ -151,21 +113,15 @@ Updated:	2019-12-05 23:46:23.135284
 
 # UGLY:
 
- ## `data/DEFAULT_TEST/cfg/config_default.c`:
-  [ ] UGLY: improve configuration of cell types 
-  (line 102)
-
  ## `network/neuron.h`:
   [ ] UGLY: NT release vars 
-  (line 32)
-  [ ] UGLY: hardcoded NT release 
-  (line 53)
+  (line 29)
 
  ## `run/config.h`:
   [ ] UGLY: should be able to specify common diffusion consts per-grid, but need to rework concentration updating as well as location specifying 
-  (line 67)
+  (line 68)
   [ ] UGLY: make this poisson/exponential instead? 
-  (line 133)
+  (line 141)
 
  ## `run/config_default.c`:
   [ ] UGLY: improve configuration method? 
@@ -175,11 +131,15 @@ Updated:	2019-12-05 23:46:23.135284
 
  ## `axon/axon.h`:
   [ ] NOTE: this can be modified later if we choose to update gradient sensing 
-  (line 73)
+  (line 64)
 
  ## `network/generator.old/generator.cpp`:
   [ ] NOTE: if modifying network topology during operation, then this should be written seperately 
   (line 192)
+
+ ## `run/driver.h`:
+  [ ] NOTE: IF YOU REMOVE THIS IT WILL SEGFAULT 
+  (line 79)
 
  ## `util/cJSON/cJSON.h`:
   [ ] NOTE: cJSON is not always 100% accurate in estimating how much memory it will use, so to be safe allocate 5 bytes more than you actually need */ 
@@ -209,25 +169,43 @@ Updated:	2019-12-05 23:46:23.135284
 
  ## `axon/axon.h`:
   [ ] REVIEW: move multiple times per diffusion timestep? 
-  (line 64)
+  (line 54)
 
  ## `network/generator.old/network.h`:
   [ ] REVIEW: clustering of positions, range gen chem type, padding 
   (line 87)
 
  ## `network/network.h`:
+  [ ] REVIEW: network update function 
+  (line 34)
   [ ] REVIEW: clustering of positions, range gen chem type, padding 
-  (line 54)
+  (line 53)
+  [ ] REVIEW: this is not super realistic 
+  (line 80)
+
+ ## `network/neuron.h`:
+  [ ] REVIEW: waveforms, dendrites? both RV and references 
+  (line 34)
+  [ ] REVIEW: update waveforms 
+  (line 47)
 
  ## `run/driver.h`:
   [ ] REVIEW: move write functions to their respective classes? 
-  (line 146)
+  (line 168)
+  [ ] REVIEW: print more info? 
+  (line 307)
+
+ ## `run/main.cpp`:
+  [ ] REVIEW: print more info here 
+  (line 21)
 
  ## `run/main_legacy.cpp`:
   [ ] REVIEW: clustering of positions, rang gen chem type 
   (line 38)
 
  ## `waveform/waveform.h`:
+  [ ] REVIEW: go over all waveform code 
+  (line 19)
   [ ] REVIEW: f_phase set to avg, change this? 
   (line 106)
   [ ] REVIEW: this sort might not be needed, adding for safety for now 
@@ -237,11 +215,21 @@ Updated:	2019-12-05 23:46:23.135284
 
 # OPTIMIZE:
 
+ ## `network/network.h`:
+  [ ] OPTIMIZE: splitting into subgrids for faster detection 
+  (line 92)
+
  ## `waveform/waveform.h`:
   [ ] OPTIMIZE: reserve space? 
   (line 156)
 
 # CONFIG:
+
+ ## `run/build.sh`:
+  [ ] CONFIG_PATH=$1 
+  (line 10)
+  [ ] CONFIG_NAME=$(echo $CONFIG_PATH | rev | cut -d '/' -f 1 | rev) 
+  (line 11)
 
  ## `run/config.h`:
   [ ] ifndef CONFIG_H 

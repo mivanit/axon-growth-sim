@@ -14,18 +14,15 @@
 #include "../diffusion/diffusion.h"
 // #include "../waveform/waveform.h"
 
-// CRIT: make Neuron class actually work
-// TODO: integrate Neuron class with cellTypes
-
 class Neuron
 {
 public:
-	// static pointer to diffusion grid list
-	static std::vector<Diffusion> * dGrids;
+	// // static pointer to diffusion grid list
+	// static std::vector<Diffusion> & dGrids;
 
 	// vars
-	uint16_t id;
-	uint8_t cellType;
+	uint16_t id_neuron;
+	uint16_t id_cellType;
 	Coord loc;
 	Axon axon;
 	
@@ -34,23 +31,24 @@ public:
 	size_t NT_end;
 	double NT_amt;
 
-	// TODO: waveforms
+	// REVIEW: waveforms, dendrites? both RV and references
 	// waveform wf_in;
 	// waveform wf_out;
-	// TODO: dendrites? both RV and references
 
 	// ctor
-	Neuron(uint16_t in_ID, uint8_t in_cellType, Coord in_coord)
-		: id(in_ID), cellType( in_cellType ), loc(in_coord) {
-		axon = Axon(in_ID, in_cellType, in_coord);
-	}
+	Neuron(uint16_t in_ID, uint16_t in_cellType, Coord in_coord)
+		: id_neuron(in_ID), 
+		id_cellType( in_cellType ), 
+		loc(in_coord), 
+		axon(in_ID, in_cellType, in_coord) 
+	{}
 
 	// update
 	void update()
 	{
-		// TODO: update waveforms
+		// REVIEW: update waveforms
 
-		// UGLY: hardcoded NT release
+		// CRIT: hardcoded NT release
 		// if ((TIME > NT_start) && (TIME < NT_end))
 		// {
 		// 	(*dGrids)[0].Crd_add(loc, NT_amt);
@@ -60,8 +58,14 @@ public:
 		axon.update();
 	}
 
+	// get cellType class corresponding to ID
+	cellType & get_cellType()
+	{
+		return CELLTYPE_ARR[id_cellType];
+	}
+
 };
 
-std::vector<Diffusion> * Neuron::dGrids = nullptr;
+// std::vector<Diffusion> * Neuron::dGrids = nullptr;
 
 #endif

@@ -12,6 +12,7 @@
 #include <math.h>
 #include <vector>
 #include <string>
+#include <random>
 
 //* Time-related
 
@@ -69,6 +70,7 @@ extern const float T_MIN_DELAY;
 extern const float DIFF_dx;
 extern const float DIFF_dy;
 extern const float DIFF_dt;
+
 
 
 //* floating point arithmetic extern consts
@@ -156,6 +158,9 @@ public:
 	// negative --> inverse of activity
 	std::vector<float> chemType_release;
 
+	// RNG for distance travelled
+	std::normal_distribution<float> rdist_move;
+
 	// default empty ctor
 	cellType() {}
 
@@ -177,12 +182,17 @@ public:
 		turningRate_max(in_turningRate_max),
 		senseNoise_sigma(in_senseNoise_sigma),
 		chemType_affinities(in_chemType_affinities),
-		chemType_release(in_chemType_release)
+		chemType_release(in_chemType_release),
+		rdist_move(in_stepSize_mu, in_stepSize_sigma)
 	{}
 };
 
 
-std::vector< chemType > init_chemType_arr();
-std::vector< cellType > init_cellType_arr();
+
+extern std::vector< chemType > CHEMTYPE_ARR;
+extern std::vector< cellType > CELLTYPE_ARR;
+
+// std::vector< chemType > init_chemType_arr();
+// std::vector< cellType > init_cellType_arr();
 
 #endif
