@@ -163,7 +163,8 @@ public:
 	// Write the state of the network at time step t
 	void save_state() {
 		// relies on build script to create this folder
-		const std::string DIR = "../data/" + NAME + "/raw/";
+		// const std::string DIR = "../data/" + NAME + "/raw/";
+		const std::string DIR = "raw/";
 		// TODO: check for validity of path
 		const std::string END = "_" + std::to_string(TIME) + ".tsv";
 		neuron_write(DIR + "neur" + END);
@@ -297,12 +298,12 @@ public:
 			break;
 
 		case 0:
-			printf("TIME = \t%d", TIME);
+			printf("TIME = \t%d\n", TIME);
 			break;
 
 		case 1:
 			// REVIEW: print more info?
-			printf("TIME = \t%d", TIME);
+			printf("TIME = \t%d\n", TIME);
 			break;
 		
 		default:
