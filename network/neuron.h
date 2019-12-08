@@ -17,8 +17,8 @@
 class Neuron
 {
 public:
-	// // static pointer to diffusion grid list
-	// static std::vector<Diffusion> & dGrids;
+	// static pointer to diffusion grid list
+	static std::vector<Diffusion> * Neuron::dGrids;
 
 	// vars
 	uint16_t id_neuron;
@@ -26,36 +26,38 @@ public:
 	Coord loc;
 	Axon axon;
 	
-	// UGLY: NT release vars
-	size_t NT_start;
-	size_t NT_end;
-	double NT_amt;
+	// aggregatve activity (super simple model)
+	float avg_activity;	
 
 	// REVIEW: waveforms, dendrites? both RV and references
 	// waveform wf_in;
 	// waveform wf_out;
+
+	// initialize dGrid ref
+	static void init_dGrid_ptr(std::vector<Diffusion> * inRef_dGrids)
+	{
+		dGrids = inRef_dGrids;
+	}
 
 	// ctor
 	Neuron(uint16_t in_ID, uint16_t in_cellType, Coord in_coord)
 		: id_neuron(in_ID), 
 		id_cellType( in_cellType ), 
 		loc(in_coord), 
-		axon(in_ID, in_cellType, in_coord) 
-	{}
+		axon(in_ID, in_cellType, in_coord)
+	{
+		avg_activity = CELLTYPE_ARR[id_cellType].base_activ;
+	}
+
 
 	// update
 	void update()
 	{
-		// REVIEW: update waveforms
-
-		// CRIT: hardcoded NT release
-		// if ((TIME > NT_start) && (TIME < NT_end))
-		// {
-		// 	(*dGrids)[0].Crd_add(loc, NT_amt);
-		// }
-
 		// update axons
 		axon.update();
+
+		// REVIEW: reset activity
+		// avg_activity = CELLTYPE_ARR[id_cellType].base_activ;
 	}
 
 	// get cellType class corresponding to ID
@@ -64,8 +66,30 @@ public:
 		return CELLTYPE_ARR[id_cellType];
 	}
 
+
+	// add activity (called from a different neuron)
+	void add_activ(float to_add_activ)
+	{
+		avg_activity += to_add_activ;
+	}
+
+
+	// get scaled activity
+	// scaling by `activ_scale` from cellType
+	const float get_activ_scaled()
+	{
+		return (avg_activity * CELLTYPE_ARR[id_cellType].activ_scale);
+	}
+
+
+	// CRIT: acvitiy-based release
+	void release_NT()
+	{
+		
+	}
+
 };
 
-// std::vector<Diffusion> * Neuron::dGrids = nullptr;
+std::vector<Diffusion> * Neuron::dGrids = nullptr;
 
 #endif
