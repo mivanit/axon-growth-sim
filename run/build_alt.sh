@@ -35,8 +35,9 @@ echo "========================="
 # TODO: improve option selection
 OPTIONS="-std=c++17"
 if [ "$3" == "-g" ]; then
-	echo "!!!	building GDB version"
+	echo "!!!	will build GDB version"
 	OPTIONS+=" -g"
+	EXEC_NAME="run_sim_GDB.exe"
 fi
 
 # clear old data in directory
