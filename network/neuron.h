@@ -22,7 +22,7 @@ public:
 
 	// vars
 	uint16_t id_neuron;
-	cellType & id_celltype;
+	uint16_t id_cellType;
 	Coord loc;
 	Axon axon;
 	
@@ -36,8 +36,11 @@ public:
 	// waveform wf_out;
 
 	// ctor
-	Neuron(uint16_t in_ID, cellType & in_cellType, Coord in_coord)
-		: id_neuron(in_ID), id_celltype( in_cellType ), loc(in_coord), axon(in_ID, in_cellType, in_coord) 
+	Neuron(uint16_t in_ID, uint16_t in_cellType, Coord in_coord)
+		: id_neuron(in_ID), 
+		id_cellType( in_cellType ), 
+		loc(in_coord), 
+		axon(in_ID, in_cellType, in_coord) 
 	{}
 
 	// update
@@ -53,6 +56,12 @@ public:
 
 		// update axons
 		axon.update();
+	}
+
+	// get cellType class corresponding to ID
+	cellType & get_cellType()
+	{
+		return CELLTYPE_ARR[id_cellType];
 	}
 
 };

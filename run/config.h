@@ -72,6 +72,7 @@ extern const float DIFF_dy;
 extern const float DIFF_dt;
 
 
+
 //* floating point arithmetic extern consts
 
 // margin for comparing floats
@@ -81,13 +82,6 @@ extern const float EPSILON;
 
 // Decimal precision for writing to files
 extern const int PRECISION;
-
-
-// RNG stuff
-std::default_random_engine rng;
-
-// standard normal distribution with mean of 0 and sigma of 1
-std::normal_distribution<float> ndist_STD(0.0, 1.0);
 
 
 //* chem/cell type stuff
@@ -194,7 +188,11 @@ public:
 };
 
 
-std::vector< chemType > init_chemType_arr();
-std::vector< cellType > init_cellType_arr();
+
+extern std::vector< chemType > CHEMTYPE_ARR;
+extern std::vector< cellType > CELLTYPE_ARR;
+
+// std::vector< chemType > init_chemType_arr();
+// std::vector< cellType > init_cellType_arr();
 
 #endif

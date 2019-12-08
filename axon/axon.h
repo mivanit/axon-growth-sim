@@ -8,8 +8,7 @@
 
 #include "../run/consts.h"
 #include "../diffusion/diffusion.h"
-
-
+#include "../util/rng_def.h"
 
 
 class Axon
@@ -17,14 +16,20 @@ class Axon
 public:
 	// vars
 	uint16_t id_neuron; // id of parent neuron
-	cellType & id_celltype; // cellType determines step size, etc etc
+	uint16_t id_cellType; // cellType determines step size, etc etc
 	Coord dir; // relative direction vector (NOT ABSOLUTE)
 	std::vector<Coord> past_loc;
 	std::vector<uint16_t> postSyn_id;
 	std::vector<float> postSyn_wgt;
 	
-	// pointer to vector of diffusion grids
+	// ref to vector of diffusion grids
 	static std::vector<Diffusion> & dGrids;
+
+	// initialize dGrid ref
+	static void init_dGrid_ref(std::vector<Diffusion> & inRef_dGrids)
+	{
+		dGrids = inRef_dGrids;
+	}
 
 
 	Coord loc() const
@@ -33,8 +38,8 @@ public:
 	}
 
 	// std ctor
-	Axon(uint16_t in_ID, cellType & in_cellType, Coord in_coord)
-		: id_neuron(in_ID), id_celltype(in_cellType)
+	Axon(uint16_t in_ID, uint16_t in_cellType, Coord in_coord)
+		: id_neuron(in_ID), id_cellType(in_cellType)
 	{
 		past_loc.push_back(in_coord);
 	}
@@ -51,6 +56,21 @@ public:
 		// REVIEW: move multiple times per diffusion timestep?
 		move(dir);
 		// CRIT: stop movement and write to synapse when close to neuron
+	}
+
+	// get cellType class corresponding to ID
+	cellType & get_cellType()
+	{
+		return CELLTYPE_ARR[id_cellType];
+	}
+
+	// get the weight of connection to a given neuron id
+	// return 0.0 if no connection
+	float get_weight_to(int idx_nrn)
+	{
+		std::vector<uint16_t>::iterator it = std::find(postSyn_id.begin(), postSyn_id.end(), idx_nrn);
+		int idx_inArr = std::distance(postSyn_id.begin(), it);
+		return postSyn_wgt[idx_inArr];
 	}
 
 private:
@@ -78,7 +98,7 @@ private:
 		// for each diffusion chemtype (where affinity != 0)
 		for ( int g_idx =0; g_idx < MAX_CHEMTYPE; g_idx++ )
 		{
-			if ( abs(id_celltype.chemType_affinities[g_idx]) > EPSILON )
+			if ( abs(get_cellType().chemType_affinities[g_idx]) > EPSILON )
 			{
 				// store sensed direction
 				sensed_dir[g_idx] = sense_grid(g_idx, dot_products);
@@ -86,7 +106,7 @@ private:
 				// weighted sum of components
 				dir = dir 
 					+ sensed_dir[g_idx].scale( 
-						id_celltype.chemType_affinities[g_idx] 
+						get_cellType().chemType_affinities[g_idx] 
 					);
 			}
 			else
@@ -110,7 +130,7 @@ private:
 		double highest_concentration = 0.0;
 		for (int i = 0; i < 8; ++i)
 		{
-			if (dot_products[i] > id_celltype.searchAngle_tau)
+			if (dot_products[i] > get_cellType().searchAngle_tau)
 			{
 				double concentration = d.Crd_getC(past_loc.back() + search_vec[i]);
 				if (concentration > highest_concentration) {
@@ -124,7 +144,7 @@ private:
 		// multiply by noise for that type
 		optimal_dir = optimal_dir 
 			+ Coord(ndist_STD(rng),ndist_STD(rng)).scale(
-				id_celltype.senseNoise_sigma[g_idx]
+				get_cellType().senseNoise_sigma[g_idx]
 			);
 
 		optimal_dir.norm();
@@ -140,7 +160,7 @@ private:
 	void move(Coord move_new)
 	{
 		// multiply by some noise term
-		move_new.scale( id_celltype.rdist_move(rng) );
+		move_new.scale( get_cellType().rdist_move(rng) );
 		// add original
 		move_new.add(past_loc.back());
 
