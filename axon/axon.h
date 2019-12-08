@@ -2,6 +2,7 @@
 #define AXON
 
 #include <vector>
+#include <utility>
 #include <math.h>
 #include <numeric>      // std::iota
 #include <algorithm>    // std::sort
@@ -15,13 +16,27 @@ class Axon
 {
 public:
 	// vars
-	uint16_t id_neuron; // id of parent neuron
-	uint16_t id_cellType; // cellType determines step size, etc etc
-	Coord dir; // relative direction vector (NOT ABSOLUTE)
+	
+	// id of parent neuron
+	uint16_t id_neuron; 
+	// cellType determines step size, etc etc
+	uint16_t id_cellType; 
+	// relative direction vector (NOT ABSOLUTE)
+	Coord dir; 
+	// vector of past locations
 	std::vector<Coord> past_loc;
+	// vector of id's of neurons we are connected to
 	std::vector<uint16_t> postSyn_id;
+	
+	// vector of weights to the id's we are connected to
+	// `postSyn_wgt[i]` will contain weight for connection to neuron id `postSyn_id[i]`
 	std::vector<float> postSyn_wgt;
 	
+	// keeping track of when stopped
+	bool bln_stopped = false;
+	// TODO: keep track of time when axon growth started/stopped?
+
+
 	// ref to vector of diffusion grids
 	static std::vector<Diffusion> * dGrids;
 
@@ -50,12 +65,15 @@ public:
 	/*
 	* main update (on timestep) function
 	*/
+	// REVIEW: move multiple times per diffusion timestep?
 	void update()
 	{
-		update_dir();
-		// REVIEW: move multiple times per diffusion timestep?
-		move(dir);
-		// CRIT: stop movement and write to synapse when close to neuron
+		if (!bln_stopped)
+		{
+			update_dir();
+			move(dir);
+			// CRIT: stop movement and write to synapse when close to neuron
+		}
 	}
 
 	// get cellType class corresponding to ID
@@ -71,6 +89,15 @@ public:
 		std::vector<uint16_t>::iterator it = std::find(postSyn_id.begin(), postSyn_id.end(), idx_nrn);
 		int idx_inArr = std::distance(postSyn_id.begin(), it);
 		return postSyn_wgt[idx_inArr];
+	}
+
+	
+	// make connection to a given neuron
+	// UGLY: always makes connections weight 1 for now
+	void make_conn(int nrn_id)
+	{
+		postSyn_id.push_back(nrn_id);
+		postSyn_wgt.push_back(1.0);
 	}
 
 private:
@@ -91,6 +118,8 @@ private:
 
 		// vector of sensed directions
 		std::vector<Coord> sensed_dir(MAX_CHEMTYPE, Coord());
+		// UGLY: total sensed chems
+		float total_sensed = 0.0;
 
 		// reset dir vector
 		dir = Coord(0, 0);
@@ -100,8 +129,10 @@ private:
 		{
 			if ( abs(get_cellType().chemType_affinities[g_idx]) > EPSILON )
 			{
+				std::pair<Coord,float> mypair = sense_grid(g_idx, dot_products);
 				// store sensed direction
-				sensed_dir[g_idx] = sense_grid(g_idx, dot_products);
+				sensed_dir[g_idx] = mypair.first;
+				total_sensed += mypair.second;
 				
 				// weighted sum of components
 				dir = dir 
@@ -117,10 +148,19 @@ private:
 
 		// normalize
 		dir.norm();
+
+		// check for no sensing, kill with probability 1/2
+		if (
+			(total_sensed < EPSILON)
+			&& (rand() % 2 == 0)	
+		) {
+			bln_stopped = true;
+		}
 	}
 
 
-	Coord sense_grid( int g_idx, std::vector<double> & dot_products )
+	// returns pair of (direction coord, max sensed concentration) for the given grid
+	std::pair<Coord,float> sense_grid( int g_idx, std::vector<double> & dot_products )
 	{	
 		// test which grid square has highest concentration
 		Coord optimal_dir(0, 0);
@@ -146,7 +186,7 @@ private:
 
 		optimal_dir.norm();
 
-		return optimal_dir;
+		return std::make_pair(optimal_dir,highest_concentration);
 	}
 
 	

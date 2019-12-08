@@ -142,6 +142,11 @@ public:
 	// maximum turning rate for the axon
 	float turningRate_max;	
 
+	// base activation
+	float base_activ;
+
+	// activation multiplier (positive --> excitatory, negative --> inhibitory)
+	float activ_scale;
 
 	// noise term for sensing certain chemtypes
 	std::vector<float> senseNoise_sigma;
@@ -171,6 +176,8 @@ public:
 		float in_stepSize_sigma,
 		float in_searchAngle_tau,
 		float in_turningRate_max,
+		float in_base_activ,
+		float in_activ_scale,
 		std::vector<float> in_senseNoise_sigma,
 		std::vector<float> in_chemType_affinities,
 		std::vector<float> in_chemType_release
@@ -180,6 +187,8 @@ public:
 		stepSize_sigma(in_stepSize_sigma),
 		searchAngle_tau(in_searchAngle_tau),
 		turningRate_max(in_turningRate_max),
+		base_activ(in_base_activ),
+		activ_scale(in_activ_scale),
 		senseNoise_sigma(in_senseNoise_sigma),
 		chemType_affinities(in_chemType_affinities),
 		chemType_release(in_chemType_release),
@@ -192,7 +201,42 @@ public:
 extern std::vector< chemType > CHEMTYPE_ARR;
 extern std::vector< cellType > CELLTYPE_ARR;
 
-// std::vector< chemType > init_chemType_arr();
-// std::vector< cellType > init_cellType_arr();
+// // std::vector< chemType > init_chemType_arr();
+// // std::vector< cellType > init_cellType_arr();
+// // hardcoded release
+// class Hard_release {
+// public:
+// 	size_t t_start;
+// 	size_t t_end;
+// 	float mag;
+
+// 	float get_release(size_t t)
+// 	{
+// 		if (
+// 			(t >= t_start)
+// 			&& (t < t_end)
+// 		){
+// 			return mag;
+// 		}
+// 		else
+// 		{
+// 			return 0.0;
+// 		}
+// 	}
+
+// 	Hard_release() {}
+
+// 	Hard_release(size_t in_t_start, size_t in_t_end, float in_mag)
+// 		: t_start(in_t_start), t_end(in_t_end), mag(in_mag) {}
+
+// }; // end class defn `Hard_release`
+
+
+// std::vector< Hard_release > RELEASE_ARR({
+// 	Hard_release(
+// 		0,
+// 	),
+// });
+
 
 #endif
