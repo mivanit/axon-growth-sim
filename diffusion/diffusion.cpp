@@ -63,6 +63,19 @@ const double Diffusion::concentration(const unsigned int row,
 }
 
 const double Diffusion::Crd_getC(const Coord in_crd) {
+    // check validity
+    if (
+        in_crd.ix() < 1
+        || in_crd.ix() + 1 >= dim_
+        || in_crd.iy() < 1
+        || in_crd.iy() + 1 >= dim_
+    )
+    {
+        return 0.0;
+    }
+
+    
+    // return value
     return u_[in_crd.ix()][in_crd.iy()];
 }
 
