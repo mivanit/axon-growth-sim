@@ -13,6 +13,7 @@
 #include "../axon/axon.h"
 
 #include "../util/err_util.h"
+#include "../util/rng_def.h"
 
 #ifndef DRIVER
 #define DRIVER
@@ -38,16 +39,12 @@ public:
 
 	//* RNG stuff
 	unsigned int RNG_seed;
-	std::default_random_engine rng;
+	// std::default_random_engine rng; // declared in config.h
 	std::normal_distribution<float> rdist_timeOn; // RNG for time neuron stays on
 
 	//* name 
 	std::string NAME; 
 
-	// array of chem type structs
-	std::vector< chemType > CHEMTYPE_ARR;
-	// array of cell type structs
-	std::vector< cellType > CELLTYPE_ARR;
 
 /*
  ######  ########  #######  ########
@@ -59,7 +56,7 @@ public:
  ######     ##     #######  ##     ##
 */
 
-	// default ctor, inherits everything from config.h
+	// main ctor, inherits everything from config.h
 	Driver(std::string name_in = "Test") {
 		TIME = 0;
 
@@ -69,10 +66,6 @@ public:
 
 		//* name setup
 		NAME = name_in;
-
-		//* get arrays of chem, cell types
-		CHEMTYPE_ARR = init_chemType_arr();
-		CELLTYPE_ARR = init_cellType_arr();
 
 		//* dGrid setup
 
@@ -93,8 +86,9 @@ public:
 			dGrids.back().set_decay(x.r_decay);
 		}
 
+		Axon::init_dGrid_ptr(&dGrids);
+
 		//* neuron setup
-		net = Network(CELLTYPE_ARR);
 		net.gen_neurons();
 	}
 
@@ -192,7 +186,8 @@ public:
 			<neuron.id_neuron>, <neuron.id_cellType>, <neuron.loc>
 			[waveform arrays]
 		*/
-		for (const Neuron& neuron : net.neurons) {
+		// // for (Neuron& neuron : net.neurons) {
+		for (auto & neuron : net.neurons) {
 			ofs << "==========\n";
 			ofs << neuron.id_neuron << "\t"
 				<< neuron.id_cellType << "\t"
@@ -222,29 +217,31 @@ public:
 			[postSyn_id array]
 			[postSyn_wgt array]
 		*/
-		for (const Neuron& neuron : net.neurons) {
-			const Axon& axon = neuron.axon;
+		// // for (Neuron& neuron : net.neurons) {
+		// // for (int n_idx = 0; n_idx < net.neurons.size(); n_idx++) {
+		// // Axon& axon = net.get_neuron_ref(n_idx).axon;
+		for (auto & nrn : net.neurons) {
 			ofs << "==========\n";
-			ofs << axon.id_neuron << "\t"
-				<< axon.id_cellType << "\t"
-				<< axon.loc().to_str() << "\t"
-				<< axon.dir.to_str() << "\t"
+			ofs << nrn.axon.id_neuron << "\t"
+				<< nrn.axon.id_cellType << "\t"
+				<< nrn.axon.loc().to_str() << "\t"
+				<< nrn.axon.dir.to_str() << "\t"
 				<< "\n";
 			
 			// locations
-			for (const Coord& c : axon.past_loc) {
+			for (const Coord& c : nrn.axon.past_loc) {
 				ofs << c.to_str() << "\t";
 			}
 			ofs << "\n";
 
 			// post stynaptic connection IDs
-			for (uint16_t id : axon.postSyn_id) {
+			for (uint16_t id : nrn.axon.postSyn_id) {
 				ofs << std::to_string(id) << "\t";
 			}
 			ofs << "\n";
 
 			// post stynaptic weights
-			for (float wgt : axon.postSyn_wgt) {
+			for (float wgt : nrn.axon.postSyn_wgt) {
 				ofs << std::to_string(wgt) << "\t";
 			}
 			ofs << "\n";

@@ -12,24 +12,40 @@
 #include "../run/config.h"
 
 #include "neuron.h"
+#include "../util/rng_def.h"
+
+// std::vector< cellType > create_empty_celltype_vec() 
+// { return std::vector< cellType >(); }
 
 
 class Network
 {
 public:
 	
-	// data
+	// neurons vector
 	std::vector<Neuron> neurons;
 
-	// ref to cellType array
-	std::vector< cellType > & CELLTYPE_ARR;
+	// connectivity matrix
+	// `conn_matrix[i][j]` holds the weight of the connection from neuron i --> j
+	std::vector<std::vector<float>> conn_matrix;
 
-	
 	// ctors
-	Network(std::vector< cellType > & in_CELLTYPE_ARR)
-		: CELLTYPE_ARR(in_CELLTYPE_ARR)
+	Network(bool gen = false) 
 	{
-		gen_neurons();
+		if (gen)
+		{
+			gen_neurons();
+		}
+	}
+
+	// TODO: default assign operator sufficient?
+	Network operator=(const Network &) {}
+
+
+
+	Neuron & get_neuron_ref(int idx)
+	{
+		return neurons[idx];
 	}
 
 	
@@ -51,6 +67,7 @@ public:
 	void gen_neurons()
 	{
 		// create neurons randomly
+		neurons.clear();
 		neurons.reserve(N_NEURONS);
 		for (int i = 0; i < N_NEURONS; ++i)
 		{
@@ -60,7 +77,7 @@ public:
 			// create new neuron
 			Neuron new_neuron(
 				i, // neuron ID
-				CELLTYPE_ARR[(rand() % MAX_CELLTYPE)], // cellType
+				(rand() % MAX_CELLTYPE), // cellType
 				Coord( //coordinate
 					float(rand() % N_GRIDSIZE), 
 					float(rand() % N_GRIDSIZE)
@@ -92,11 +109,30 @@ public:
 
 		// try distance to every neuron
 
-		// if distance 
+		// if distance less than threshold, make connections
 
 		// OPTIMIZE: splitting into subgrids for faster detection
 
 	}
+
+
+	// ask the axons for their data and generate a connectivity matrix
+	// `conn_matrix[i][j]` holds the weight of the connection from neuron i --> j
+	// OPTIMIZE: do we really need to clear it??
+	void generate_conn_matrix()
+	{
+		conn_matrix.clear();
+		conn_matrix.reserve(neurons.size());
+		for (int i = 0; i < neurons.size(); i++)
+		{
+			for (int j = 0; j < neurons.size(); j++)
+			{
+				float weight = neurons[i].axon.get_weight_to(j);
+				conn_matrix[i][j] = weight;
+			}
+		}
+	}
+
 
 
 };
