@@ -104,19 +104,22 @@ public:
 
 		// OPTIMIZE: splitting into subgrids for faster detection
 
-		const float DIST_THRESHOLD = 2.0;
-		const float CONN_PROB = 0.6;
+		const double DIST_THRESHOLD = 2.0;
+		const double CONN_PROB = 0.8;
 
-		for (int i = 0; i < N_NEURONS; ++i) {
-			Coord nl = neurons[i].loc;
-			if (bln_stop)
-			for (int j = 0; j < N_NEURONS; ++j) {
+		for (unsigned int i = 0; i < N_NEURONS; ++i) {
+			Axon& axon = neurons[i].axon;
+			if (axon.bln_stopped) {
+				continue;
+			}
+			Coord& al = axon.loc();
+			for (unsigned int j = 0; j < N_NEURONS; ++j) {
 				if (i != j) {
-					Coord al = neurons.axon.loc();
-					float r = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+					Coord nl = neurons[j].loc;
+					double r = static_cast<double>(rand()) / static_cast<double>(RAND_MAX);
 					if (std::sqrt(pow(nl.x - al.x, 2) + pow(nl.y - al.y, 2)) <=
 						DIST_THRESHOLD && r < CONN_PROB) {
-						// form connection
+						axon.make_conn(neurons[j].id_neuron);
 					}
 				}			
 
