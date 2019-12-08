@@ -121,10 +121,7 @@ private:
 
 
 	Coord sense_grid( int g_idx, std::vector<double> & dot_products )
-	{
-		// get grid
-		Diffusion& d = (*dGrids)[g_idx];
-	
+	{	
 		// test which grid square has highest concentration
 		Coord optimal_dir(0, 0);
 		double highest_concentration = 0.0;
@@ -132,7 +129,7 @@ private:
 		{
 			if (dot_products[i] > get_cellType().searchAngle_tau)
 			{
-				double concentration = d.Crd_getC(past_loc.back() + search_vec[i]);
+				double concentration = (*dGrids)[g_idx].Crd_getC(past_loc.back() + search_vec[i]);
 				if (concentration > highest_concentration) {
 					highest_concentration = concentration;
 					optimal_dir = search_vec[i];
