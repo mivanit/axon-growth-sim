@@ -23,7 +23,7 @@ from matplotlib import pyplot as plt
 import matplotlib.patheffects as PathEffects
 
 # specify which color to plot each axon type in
-COLORS = {-1: 'k', 0: 'w', 1: '#ffff14', 2: 'm'}
+COLORS = {-1: 'k', 0: 'w', 1: '#ff0000', 2: 'm'}
 
 def get_dimension(NUM_PLOTS):
     # we want to find a pair of integers that multiply to the nearest square of

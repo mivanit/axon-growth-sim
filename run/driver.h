@@ -4,6 +4,8 @@
 #include <random>
 #include <string>
 #include <sstream>
+#include <iomanip>
+#include <iostream>
 
 #include "consts.h"
 #include "config.h"
@@ -104,10 +106,18 @@ public:
 ##    ##    ##    ##       ##
  ######     ##    ######## ##
 */
-	void sim_step() {
+	void sim_step(bool releaseNT = true) {
 		// update all grids
 		for (auto & g : dGrids) {
 			g.adi_step();
+
+			if (releaseNT) {
+				for (int i = 10; i < 100; i += 10) {
+					for (int j = 10; j < 100; j += 10) {
+						g.Crd_add(Coord(i, j), 10);
+					}
+				}
+			}
 		}
 
 		// update all the neurons (which will in turn update axons)

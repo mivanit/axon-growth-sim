@@ -151,14 +151,15 @@ private:
 			(total_sensed < EPSILON)
 			&& (rand() % 20 == 0)	
 		) {
-			bln_stopped = true;
+			// bln_stopped = true;
 		}
 
 		// CRIT: check for far out of bands, kill
 
 
 		// based on total detected NT, weigh the old direction and the new
-		dir = dir + new_dir.scale(total_sensed);
+		// dir = dir + new_dir.scale(total_sensed);
+		dir = new_dir;
 
 		// normalize
 		dir.norm();
@@ -170,7 +171,7 @@ private:
 	std::pair<Coord,float> sense_grid( int g_idx, std::vector<double> & dot_products )
 	{	
 		// test which grid square has highest concentration
-		Coord optimal_dir(0, 0);
+		Coord optimal_dir(1, 0);
 		double highest_concentration = 0.0;
 		for (int i = 0; i < 8; ++i)
 		{
@@ -179,19 +180,22 @@ private:
 				double concentration = (*dGrids)[g_idx].Crd_getC(past_loc.back() + search_vec[i]);
 				if (concentration > highest_concentration) {
 					highest_concentration = concentration;
-					optimal_dir = search_vec[i];
+					optimal_dir = Coord(search_vec[i]);
 				}
 			}
 		}
 
+		// std::cout << "Optimal dir before norm: " << optimal_dir.to_str() << std::endl;
+
 		// add noise term to normalized direction and set as new direction
 		// multiply by noise for that type
-		optimal_dir = optimal_dir 
-			+ Coord(ndist_STD(rng),ndist_STD(rng)).scale(
-				get_cellType().senseNoise_sigma[g_idx]
-			);
+		Coord noise_vec = Coord(ndist_STD(rng),ndist_STD(rng)).scale(
+		 		get_cellType().senseNoise_sigma[g_idx]
+		 	);
+		optimal_dir = optimal_dir + noise_vec;
 
 		optimal_dir.norm();
+		// std::cout << "Optimal dir after norm: " << optimal_dir.to_str() << std::endl;
 
 		return std::make_pair(optimal_dir,highest_concentration);
 	}
