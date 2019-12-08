@@ -30,7 +30,6 @@ int main(int argc, char ** argv)
 	// initialize driver with name
 	std::string sim_name = argv[1];
 	Driver simulation(sim_name);
-	// Axon::init_dGrid_ref(simulation.dGrids);
 	
 	// print some info to console
 	print_info(sim_name);

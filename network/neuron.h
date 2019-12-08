@@ -17,8 +17,8 @@
 class Neuron
 {
 public:
-	// static pointer to diffusion grid list
-	static std::vector<Diffusion> & dGrids;
+	// // static pointer to diffusion grid list
+	// static std::vector<Diffusion> & dGrids;
 
 	// vars
 	uint16_t id_neuron;

@@ -23,10 +23,10 @@ public:
 	std::vector<float> postSyn_wgt;
 	
 	// ref to vector of diffusion grids
-	static std::vector<Diffusion> & dGrids;
+	static std::vector<Diffusion> * dGrids;
 
 	// initialize dGrid ref
-	static void init_dGrid_ref(std::vector<Diffusion> & inRef_dGrids)
+	static void init_dGrid_ptr(std::vector<Diffusion> * inRef_dGrids)
 	{
 		dGrids = inRef_dGrids;
 	}
@@ -123,7 +123,7 @@ private:
 	Coord sense_grid( int g_idx, std::vector<double> & dot_products )
 	{
 		// get grid
-		Diffusion& d = dGrids[g_idx];
+		Diffusion& d = (*dGrids)[g_idx];
 	
 		// test which grid square has highest concentration
 		Coord optimal_dir(0, 0);
@@ -169,7 +169,7 @@ private:
 
 };
 
-// std::vector<Diffusion> * Axon::dGrids = nullptr;
+std::vector<Diffusion> * Axon::dGrids = nullptr;
 
 
 #endif
