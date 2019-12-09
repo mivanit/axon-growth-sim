@@ -112,11 +112,12 @@ public:
 			g.adi_step();
 
 			if (releaseNT) {
-				for (int i = 10; i < 100; i += 10) {
-					for (int j = 10; j < 100; j += 10) {
-						g.Crd_add(Coord(i, j), 10);
-					}
-				}
+				// for (int i = N_GRIDSIZE / 10; i < N_GRIDSIZE; i += N_GRIDSIZE / 10) {
+				// 	for (int j = N_GRIDSIZE / 10; j < N_GRIDSIZE; j += N_GRIDSIZE / 10) {
+				// 		g.Crd_add(Coord(i, j), 10);
+				// 	}
+				// }
+				g.Crd_add(Coord(10, 10), 10);
 			}
 		}
 

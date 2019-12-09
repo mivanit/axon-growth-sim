@@ -57,6 +57,7 @@ public:
 		: id_neuron(in_ID), id_cellType(in_cellType)
 	{
 		past_loc.push_back(in_coord);
+		dir = Coord(1, 1);
 	}
 	
 	// implicit copy & assignment are good enough
@@ -108,7 +109,7 @@ private:
 	* NOTE: this can be modified later if we choose to update gradient sensing
 	*/
 	void update_dir()
-	{
+	{	
 		// use dot products to determine closest points to direction axon is facing
 		std::vector<double> dot_products(8);
 		for (int i = 0; i < 8; ++i) {
@@ -161,8 +162,13 @@ private:
 		// dir = dir + new_dir.scale(total_sensed);
 		dir = new_dir;
 
+		std::cout << id_neuron << " new dir before norm: " << dir.to_str() << std::endl;
+
 		// normalize
 		dir.norm();
+
+		std::cout << id_neuron << " new dir after norm: " << dir.to_str() << std::endl;
+
 
 	}
 
@@ -173,6 +179,13 @@ private:
 		// test which grid square has highest concentration
 		Coord optimal_dir(1, 0);
 		double highest_concentration = 0.0;
+
+		std::cout << id_neuron << " " << dir.to_str() << " ";
+		for (double &val : dot_products) {
+			std::cout << val << " ";
+		}
+		std::cout << std::endl;
+
 		for (int i = 0; i < 8; ++i)
 		{
 			if (dot_products[i] > get_cellType().searchAngle_tau)
@@ -185,17 +198,17 @@ private:
 			}
 		}
 
-		// std::cout << "Optimal dir before norm: " << optimal_dir.to_str() << std::endl;
+		std::cout << id_neuron << " optimal dir before norm: " << optimal_dir.to_str() << std::endl;
 
 		// add noise term to normalized direction and set as new direction
 		// multiply by noise for that type
 		Coord noise_vec = Coord(ndist_STD(rng),ndist_STD(rng)).scale(
 		 		get_cellType().senseNoise_sigma[g_idx]
 		 	);
-		optimal_dir = optimal_dir + noise_vec;
+		optimal_dir = optimal_dir; // + noise_vec;
 
 		optimal_dir.norm();
-		// std::cout << "Optimal dir after norm: " << optimal_dir.to_str() << std::endl;
+		std::cout << id_neuron << " optimal dir after norm: " << optimal_dir.to_str() << std::endl;
 
 		return std::make_pair(optimal_dir,highest_concentration);
 	}

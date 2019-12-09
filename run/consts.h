@@ -71,8 +71,14 @@ struct Coord
 
 	/* normalize vector */
 	Coord norm()
-	{
-		this->scale(1 / this->mag());
+	{	
+		if (this->mag() == 0) {
+			this->x = 0.0;
+			this->y = 0.0;
+		}
+		else {
+			this->scale(1 / this->mag());
+		}
 		return *this;
 	}
 

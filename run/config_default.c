@@ -31,13 +31,13 @@ size_t N_STEPS = 1000;
 
 // * network specs
 
-extern const uint16_t N_NEURONS = 2;
-extern const uint16_t N_GRIDSIZE = 100;
-extern const uint16_t N_PADDING = 10;
+extern const uint16_t N_NEURONS = 1;
+extern const uint16_t N_GRIDSIZE = 20;
+extern const uint16_t N_PADDING = 2;
 
 // Range for chem types, cell types
 extern const uint8_t MAX_CELLTYPE = 2;
-extern const uint8_t MAX_CHEMTYPE = 2;
+extern const uint8_t MAX_CHEMTYPE = 1;
 
 
 // * neuron specs
@@ -91,14 +91,14 @@ std::vector< chemType > CHEMTYPE_ARR({
 		0.0, // r_decay
 		1.0, // r_diff
 		"EXCITE" // label
-	),
+	) /*,
 	chemType(
 		1, // chemType_ID
 		0.0, // ambient
 		0.0, // r_decay
 		1.0, // r_diff
 		"INHIBIT" // label
-	)
+	) */
 });
 
 
@@ -114,7 +114,7 @@ std::vector< cellType > CELLTYPE_ARR({
 		std::vector<float>{0.0000001, 0.0000001}, // senseNoise_sigma
 		std::vector<float>{1.0, -1.0}, // chemType_affinities
 		std::vector<float>{0.1, 1.0} // chemType_release
-	),
+	) /*,
 	cellType(
 		1, // cellType_ID
 		1.0, // stepSize_mu
@@ -126,7 +126,7 @@ std::vector< cellType > CELLTYPE_ARR({
 		std::vector<float>{0.0000001, 0.0000001}, // senseNoise_sigma
 		std::vector<float>{-1.0, 1.0}, // chemType_affinities
 		std::vector<float>{1.0, 0.1} // chemType_release
-	)
+	) */
 });
 
 
