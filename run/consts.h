@@ -72,8 +72,14 @@ struct Coord
 	/* normalize vector */
 	// CRIT: fix norm to not nan-out when mag is 0
 	Coord norm()
-	{
-		this->scale(1 / this->mag());
+	{	
+		if (this->mag() == 0) {
+			this->x = 0.0;
+			this->y = 0.0;
+		}
+		else {
+			this->scale(1 / this->mag());
+		}
 		return *this;
 	}
 

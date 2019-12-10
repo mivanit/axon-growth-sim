@@ -92,7 +92,7 @@ public:
 		float amt_excite = 0.0;
 		if (avg_activity < tgt_activ)
 		{
-			amt_excite = tgt_activ - avg_activity
+			amt_excite = tgt_activ - avg_activity;
 		}
 		(*dGrids)[0].Crd_add(loc, amt_excite);
 

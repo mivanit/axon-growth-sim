@@ -4,7 +4,7 @@
 set -e
 
 
-if [ $# < 2 ]; then
+if [ "$#" < 2 ]; then
 	echo "USAGE: ./build_alt.sh <CONFIG_PATH> <SIM_NAME> [OPTIONS]"
 	echo "options:"
 	echo " -g  :  build for gdb debugger"

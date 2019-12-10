@@ -23,7 +23,7 @@ from matplotlib import pyplot as plt
 import matplotlib.patheffects as PathEffects
 
 # specify which color to plot each axon type in
-COLORS = {-1: 'k', 0: 'w', 1: '#ffff14', 2: 'm'}
+COLORS = {-1: 'k', 0: '#ff2146', 1: '#33ff3d', 2: 'm'}
 
 def get_dimension(NUM_PLOTS):
     # we want to find a pair of integers that multiply to the nearest square of
@@ -91,10 +91,8 @@ def make_single_graph(GRID_NUM, diffusion_filenames, NUM_PLOTS, axon_filenames, 
                 new_line.append(val)
             grid.append(new_line)
 
-        # load csv as numpy array. trailing comma prevents use of loadtxt or
-        # csv.reader, so we use genfromtxt to fill the 'missing' column with 0s
-        #diffusion_arr = np.genfromtxt(diffusion_file, delimiter='\t', filling_values=0.0)
         diffusion_arr = np.array(grid)
+        grid_size = diffusion_arr.shape
 
         im = ax[ypos, xpos].imshow(diffusion_arr)
         ax[ypos, xpos].set_title(f'Step={timestep}', fontsize=15)
@@ -128,7 +126,7 @@ def make_single_graph(GRID_NUM, diffusion_filenames, NUM_PLOTS, axon_filenames, 
             ax[ypos, xpos].plot(x_arr, y_arr, color=COLORS[axon_type])
             # label with axon id
             if x_arr.size and y_arr.size:
-                ax[ypos, xpos].add_artist(plt.Circle((x_arr[0], y_arr[0]), radius=2, color=COLORS[axon_type]))
+                ax[ypos, xpos].add_artist(plt.Circle((x_arr[0], y_arr[0]), radius=grid_size[0]/50, color=COLORS[axon_type]))
                 txt = ax[ypos, xpos].text(x_arr[0], y_arr[0], axon_id, color='k')
                 txt.set_path_effects([PathEffects.withStroke(linewidth=2, foreground='w')])
 
@@ -140,6 +138,7 @@ def make_single_graph(GRID_NUM, diffusion_filenames, NUM_PLOTS, axon_filenames, 
 def plot_each_timestep(GRID_NUM, diffusion_filenames, NUM_PLOTS, axon_filenames, OUTPUT_DIR):
     for diffusion_file in diffusion_filenames:
         ax = plt.gca()
+        
         # extract timestep from the filename
         timestep = diffusion_file[diffusion_file.find('_')+1:diffusion_file.find('.tsv')]
         OUTPUT_FILE = os.path.join(OUTPUT_DIR, f'axons_{GRID_NUM}_{timestep}.png')
@@ -173,9 +172,13 @@ def plot_each_timestep(GRID_NUM, diffusion_filenames, NUM_PLOTS, axon_filenames,
             grid.append(new_line)
         diffusion_arr = np.array(grid)
 
+        # limit plot to size of grid
+        plt.xlim((0, diffusion_arr.shape[1])) # pylint: disable=E1136  # pylint/issues/3139
+        plt.ylim((0, diffusion_arr.shape[0])) # pylint: disable=E1136  # pylint/issues/3139
         # plot diffusion grid
         im = ax.imshow(diffusion_arr)
         ax.set_title(f'Step={timestep}', fontsize=15)
+        ax.grid(color='w', linestyle='-', linewidth=2)
 
         # plot axons on top of heatmap
         for ax_filename in axon_filenames:
@@ -203,7 +206,7 @@ def plot_each_timestep(GRID_NUM, diffusion_filenames, NUM_PLOTS, axon_filenames,
                 y_arr = axon_arr[1]
 
             # plot data        
-            ax.plot(x_arr, y_arr, color=COLORS[axon_type])
+            ax.plot(x_arr, y_arr, color=COLORS[axon_type], linewidth=3)
         
         # save figure
         print(f'Saving {OUTPUT_FILE}')
