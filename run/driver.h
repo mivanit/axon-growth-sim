@@ -93,7 +93,27 @@ public:
 		Axon::init_dGrid_ptr(&dGrids);
 
 		//* neuron setup
-		net.gen_neurons();
+		/*
+		std::vector<int> celltypes;
+		celltypes.reserve(50);
+		std::vector<Coord> input_coords;
+		input_coords.reserve(50);
+
+		for (int i = 0; i < 25; ++i) {
+			celltypes.push_back(0);
+			int x = (rand() % 40) + 5;
+			int y = (rand() % 40) + 5;
+			input_coords.push_back(Coord(x, y));
+		}
+		for (int i = 0; i < 25; ++i) {
+			celltypes.push_back(1);
+			int x = 100 - (rand() % 40) - 5;
+			int y = 100 - (rand() % 40) - 5;
+			input_coords.push_back(Coord(x, y));
+		}
+		net.gen_neurons(celltypes, input_coords); // use params defined above
+		*/
+		net.gen_neurons(); // random init
 	}
 
 
@@ -108,22 +128,42 @@ public:
 */
 	void sim_step(bool releaseNT = true) {
 		// update all grids
+		int index = 0;
 		for (auto & g : dGrids) {
 			g.adi_step();
-
+			/*
 			if (releaseNT) {
-				// for (int i = N_GRIDSIZE / 10; i < N_GRIDSIZE; i += N_GRIDSIZE / 10) {
-				// 	for (int j = N_GRIDSIZE / 10; j < N_GRIDSIZE; j += N_GRIDSIZE / 10) {
-				// 		g.Crd_add(Coord(i, j), 10);
-				// 	}
-				// }
-				g.Crd_add(Coord(10, 10), 10);
+				// grid release
+				int chemType = CHEMTYPE_ARR[index].chemType_ID;
+				for (int i = N_GRIDSIZE / 10; i < N_GRIDSIZE; i += N_GRIDSIZE / 10) {
+					for (int j = N_GRIDSIZE / 10; j < N_GRIDSIZE; j += N_GRIDSIZE / 10) {
+						double concentration_to_add = i * j;
+						Coord location(i, j);
+						if (chemType == 1) {
+							concentration_to_add = (N_GRIDSIZE - i) * (N_GRIDSIZE - j);
+							location = Coord(i + 5, j + 5);
+						}
+						g.Crd_add(location, concentration_to_add / 100);
+					}
+				}
 			}
+			*/
+			index++;
 		}
 
 		// update all the neurons (which will in turn update axons)
 		for (auto & nrn : net.neurons) {
 			nrn.update();
+				
+			// add neurotransmitter to appropriate grid
+			if (releaseNT) {
+				std::vector<float> &chemType_release = nrn.get_cellType().chemType_release;
+				double concentration = 100;
+				for (size_t i = 0; i < chemType_release.size(); ++i) {
+					dGrids[i].Crd_add(nrn.loc, concentration * chemType_release[i]);
+				}
+			}
+			
 		}
 
 		TIME++;
@@ -141,7 +181,7 @@ public:
 		size_t fin_step = N_STEPS, 
 		size_t save_every = 1,
 		int print_every = 1,
-		int verbosity = 1
+		int verbosity = 0
 	) {
 		while (TIME < fin_step) 
 		{
@@ -150,7 +190,7 @@ public:
 			// save if needed
 			if (TIME % save_every == 0)
 			{
-				save_state();
+				save_state(TIME == fin_step);
 			}
 			
 			// print some information
@@ -174,7 +214,7 @@ public:
 */
 	// REVIEW: move write functions to their respective classes?
 	// Write the state of the network at time step t
-	void save_state() {
+	void save_state(bool last_step = false) {
 		// relies on build script to create this folder
 		// const std::string DIR = "../data/" + NAME + "/raw/";
 		const std::string DIR = "raw/";
@@ -182,9 +222,12 @@ public:
 		std::ostringstream ss;
 		ss << std::setw(5) << std::setfill('0') << std::to_string(TIME);
 		const std::string END = "_" + ss.str() + ".tsv";
-		neuron_write(DIR + "neur" + END);
-		axon_write(DIR + "axon" + END);
 		diffusion_write(DIR + "diff" + END);
+
+		if (last_step) {
+			neuron_write(DIR + "neur" + END);
+			axon_write(DIR + "axon" + END);
+		}
 	}
 	
 	void neuron_write(const std::string& file) const {
@@ -302,23 +345,25 @@ public:
 	}
 
 	/*
-	- `verbosity == 0`  :  dont print
-	- `verbosity == 0`  :  just timestep
-	- `verbosity == 1`  :  timestep, number of active axons (TODO)
+	- `verbosity == -1`  :  dont print
+	- `verbosity == 0`  :  every 50th timestep
+	- `verbosity == 1`  :  timestep
 	*/
-	void print_info(int verbosity = 1) {
+	void print_info(int verbosity = 0) {
 		switch (verbosity)
 		{
 		case (-1):
 			break;
 
 		case 0:
-			printf("TIME = \t%d\n", TIME);
+			if (TIME % 50 == 0) {
+				printf("TIME = \t%d\n", (int)TIME);
+			}
 			break;
 
 		case 1:
 			// REVIEW: print more info?
-			printf("TIME = \t%d\n", TIME);
+			printf("TIME = \t%d\n", (int)TIME);
 			break;
 		
 		default:
