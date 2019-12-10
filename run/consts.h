@@ -70,6 +70,7 @@ struct Coord
 	}
 
 	/* normalize vector */
+	// CRIT: fix norm to not nan-out when mag is 0
 	Coord norm()
 	{
 		this->scale(1 / this->mag());
@@ -84,6 +85,8 @@ struct Coord
 		return *this;
 	}
 };
+
+// CRIT: assignment operator
 
 inline Coord operator+(const Coord& a, const Coord& b) {
 	Coord x(a);
