@@ -28,10 +28,13 @@ void print_info(std::string name){
 // load configs from file
 int main(int argc, char ** argv)
 {
+	// TODO: check args, print help msg
+
 	// initialize driver with name
 	std::string sim_name = "test";
 	int sim_time = 500;
 	int sim_save_step = 50;
+	
 	if (argc > 1)
 	{
 		sim_name = argv[1];

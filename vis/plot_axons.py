@@ -214,7 +214,7 @@ def plot_each_timestep(GRID_NUM, diffusion_filenames, NUM_PLOTS, axon_filenames,
         plt.close()
 
 def generate_gif(image_files, OUTPUT_DIR):
-    OUTPUT_FILE = os.path.join(OUTPUT_DIR, 'axons.gif')
+    OUTPUT_FILE = os.path.join(OUTPUT_DIR, '../axons.gif')
     print(f'Generating {OUTPUT_FILE}...')
     images = [imageio.imread(image) for image in image_files]
     imageio.mimsave(OUTPUT_FILE, images)

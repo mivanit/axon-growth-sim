@@ -162,13 +162,8 @@ private:
 		// dir = dir + new_dir.scale(total_sensed);
 		dir = new_dir;
 
-		std::cout << id_neuron << " new dir before norm: " << dir.to_str() << std::endl;
-
 		// normalize
 		dir.norm();
-
-		std::cout << id_neuron << " new dir after norm: " << dir.to_str() << std::endl;
-
 
 	}
 
@@ -179,12 +174,6 @@ private:
 		// test which grid square has highest concentration
 		Coord optimal_dir(1, 0);
 		double highest_concentration = 0.0;
-
-		std::cout << id_neuron << " " << dir.to_str() << " ";
-		for (double &val : dot_products) {
-			std::cout << val << " ";
-		}
-		std::cout << std::endl;
 
 		for (int i = 0; i < 8; ++i)
 		{
@@ -198,7 +187,6 @@ private:
 			}
 		}
 
-		std::cout << id_neuron << " optimal dir before norm: " << optimal_dir.to_str() << std::endl;
 
 		// add noise term to normalized direction and set as new direction
 		// multiply by noise for that type
@@ -208,7 +196,6 @@ private:
 		optimal_dir = optimal_dir; // + noise_vec;
 
 		optimal_dir.norm();
-		std::cout << id_neuron << " optimal dir after norm: " << optimal_dir.to_str() << std::endl;
 
 		return std::make_pair(optimal_dir,highest_concentration);
 	}

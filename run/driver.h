@@ -113,6 +113,7 @@ public:
 		}
 		net.gen_neurons(celltypes, input_coords); // use params defined above
 		*/
+
 		net.gen_neurons(); // random init
 	}
 
@@ -131,6 +132,8 @@ public:
 		int index = 0;
 		for (auto & g : dGrids) {
 			g.adi_step();
+
+
 			/*
 			if (releaseNT) {
 				// grid release
@@ -154,7 +157,9 @@ public:
 		// update all the neurons (which will in turn update axons)
 		for (auto & nrn : net.neurons) {
 			nrn.update();
-				
+
+			
+			// CRIT: remove this part once activity release done 
 			// add neurotransmitter to appropriate grid
 			if (releaseNT) {
 				std::vector<float> &chemType_release = nrn.get_cellType().chemType_release;
@@ -199,6 +204,7 @@ public:
 				print_info(verbosity);
 			}
 		}
+
 	}
 
 
@@ -214,7 +220,7 @@ public:
 */
 	// REVIEW: move write functions to their respective classes?
 	// Write the state of the network at time step t
-	void save_state(bool last_step = false) {
+	void save_state(bool print_final = false) {
 		// relies on build script to create this folder
 		// const std::string DIR = "../data/" + NAME + "/raw/";
 		const std::string DIR = "raw/";
@@ -222,12 +228,15 @@ public:
 		std::ostringstream ss;
 		ss << std::setw(5) << std::setfill('0') << std::to_string(TIME);
 		const std::string END = "_" + ss.str() + ".tsv";
-		diffusion_write(DIR + "diff" + END);
 
-		if (last_step) {
+		// CRIT: allow axon/neuron printing at all timesteps
+
+		if (print_final) {
+			const std::string END = "_final.tsv";
 			neuron_write(DIR + "neur" + END);
 			axon_write(DIR + "axon" + END);
 		}
+		diffusion_write(DIR + "diff" + END);
 	}
 	
 	void neuron_write(const std::string& file) const {
@@ -356,9 +365,7 @@ public:
 			break;
 
 		case 0:
-			if (TIME % 50 == 0) {
-				printf("TIME = \t%d\n", (int)TIME);
-			}
+			printf("TIME = \t%d\n", (int)TIME);
 			break;
 
 		case 1:
