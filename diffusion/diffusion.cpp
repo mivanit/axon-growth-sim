@@ -57,6 +57,11 @@ void Diffusion::Crd_add(const Coord in_crd, const double val) {
 
 /*******************************************************************/
 
+// TODO: getC_precise
+// linearly interpolate values to get more precise value of concentration
+// float getC_precise(Coord crd, int g_idx)
+
+
 const double Diffusion::concentration(const unsigned int row,
                                 const unsigned int col) const {
     return u_[row][col];

@@ -1,13 +1,15 @@
 # inline TODO summary:
-Updated:	2019-12-12 19:51:59.902126
+Updated:	2019-12-14 23:58:33.933125
 
 # CRIT:
 
- ## `axon/axon.h`:
+ ## `neuro/axon.h`:
   [ ] CRIT: stop movement and write to synapse when close to neuron 
-  (line 76)
+  (line 97)
   [ ] CRIT: check for far out of bands, kill 
-  (line 158)
+  (line 187)
+  [ ] CRIT: check for far out of bands, kill 
+  (line 253)
 
  ## `run/consts.h`:
   [ ] CRIT: fix norm to not nan-out when mag is 0 
@@ -27,15 +29,19 @@ Updated:	2019-12-12 19:51:59.902126
 
 # TODO:
 
- ## `axon/axon.h`:
-  [ ] TODO: keep track of time when axon growth started/stopped? 
-  (line 37)
+ ## `diffusion/diffusion.cpp`:
+  [ ] TODO: getC_precise 
+  (line 60)
 
- ## `network/generator.old/network.h`:
+ ## `neuro/axon.h`:
+  [ ] TODO: keep track of time when axon growth started/stopped? 
+  (line 47)
+
+ ## `neuro/generator.old/network.h`:
   [ ] TODO: neuron chemtypes for this 
   (line 94)
 
- ## `network/network.h`:
+ ## `neuro/network.h`:
   [ ] TODO: default assign operator sufficient? 
   (line 38)
 
@@ -129,17 +135,19 @@ Updated:	2019-12-12 19:51:59.902126
 
 # UGLY:
 
- ## `axon/axon.h`:
-  [ ] UGLY: always makes connections weight 1 for now 
-  (line 97)
-  [ ] UGLY: total sensed chems 
-  (line 122)
-
  ## `data/test2/cfg/cfg_big.c`:
   [ ] UGLY: improve configuration method? 
   (line 84)
 
- ## `network/neuron.h`:
+ ## `neuro/axon.h`:
+  [ ] UGLY: always makes connections weight 1 for now 
+  (line 118)
+  [ ] UGLY: total sensed chems 
+  (line 151)
+  [ ] UGLY: total sensed chems 
+  (line 217)
+
+ ## `neuro/neuron.h`:
   [ ] UGLY: only works for two NTs, also linear at the moment 
   (line 86)
 
@@ -159,11 +167,11 @@ Updated:	2019-12-12 19:51:59.902126
 
 # NOTE:
 
- ## `axon/axon.h`:
+ ## `neuro/axon.h`:
   [ ] NOTE: this can be modified later if we choose to update gradient sensing 
-  (line 109)
+  (line 204)
 
- ## `network/generator.old/generator.cpp`:
+ ## `neuro/generator.old/generator.cpp`:
   [ ] NOTE: if modifying network topology during operation, then this should be written seperately 
   (line 192)
 
@@ -197,21 +205,21 @@ Updated:	2019-12-12 19:51:59.902126
 
 # REVIEW:
 
- ## `axon/axon.h`:
+ ## `neuro/axon.h`:
   [ ] REVIEW: move multiple times per diffusion timestep? 
-  (line 69)
+  (line 90)
 
- ## `network/generator.old/network.h`:
+ ## `neuro/generator.old/network.h`:
   [ ] REVIEW: clustering of positions, range gen chem type, padding 
   (line 87)
 
- ## `network/network.h`:
+ ## `neuro/network.h`:
   [ ] REVIEW: clustering of positions, range gen chem type, padding 
   (line 75)
   [ ] REVIEW: this is not super realistic 
   (line 94)
 
- ## `network/neuron.h`:
+ ## `neuro/neuron.h`:
   [ ] REVIEW: waveforms, dendrites? both RV and references 
   (line 32)
   [ ] REVIEW: reset activity 
@@ -243,7 +251,7 @@ Updated:	2019-12-12 19:51:59.902126
 
 # OPTIMIZE:
 
- ## `network/network.h`:
+ ## `neuro/network.h`:
   [ ] OPTIMIZE: splitting into subgrids for faster detection 
   (line 95)
   [ ] OPTIMIZE: do we really need to clear it?? 

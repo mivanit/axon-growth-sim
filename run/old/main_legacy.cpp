@@ -11,8 +11,8 @@
 #include "config.h"
 
 #include "../diffusion/diffusion.h"
-#include "../network/neuron.h"
-#include "../axon/axon.h"
+#include "../neuro/neuron.h"
+#include "../neuro/axon.h"
 
 // load configs from file
 

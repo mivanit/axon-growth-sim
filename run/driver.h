@@ -11,9 +11,9 @@
 #include "config.h"
 
 #include "../diffusion/diffusion.h"
-#include "../network/network.h"
-#include "../network/neuron.h"
-#include "../axon/axon.h"
+#include "../neuro/network.h"
+#include "../neuro/neuron.h"
+#include "../neuro/axon.h"
 
 #include "../util/err_util.h"
 #include "../util/rng_def.h"
