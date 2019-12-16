@@ -1,7 +1,7 @@
 #include <string>
 
 #include "gen_wf.h"
-#include "../run/consts.h"
+#include "../util/coord.h"
 #include "../util/err_util.h"
 
 int main(int argc, char ** argv)

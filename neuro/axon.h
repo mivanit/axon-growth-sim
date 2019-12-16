@@ -7,7 +7,7 @@
 #include <numeric>      // std::iota
 #include <algorithm>    // std::sort
 
-#include "../run/consts.h"
+#include "../util/coord.h"
 #include "../diffusion/diffusion.h"
 #include "../util/rng_def.h"
 

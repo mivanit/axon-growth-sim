@@ -10,7 +10,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "../run/consts.h"
+#include "../util/coord.h"
 
 // Create and seed a RNG
 std::default_random_engine g((unsigned int) std::chrono::system_clock::now().time_since_epoch().count());

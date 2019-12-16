@@ -13,7 +13,7 @@
 #include <cstdint>
 #include <cmath>
 
-#include "../run/consts.h"
+#include "../util/coord.h"
 #include "../util/math_util.h"
 
 // REVIEW: go over all waveform code

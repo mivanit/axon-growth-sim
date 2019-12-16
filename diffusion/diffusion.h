@@ -12,7 +12,7 @@
 #include <utility>
 #include <cmath>
 
-#include "../run/consts.h"
+#include "../util/coord.h"
 
 // Decimal precision for output to CSV
 #define _PRECISION_ 8
@@ -73,9 +73,13 @@ public:
 	void Crd_set(const Coord in_crd, const double val);
 	void Crd_add(const Coord in_crd, const double val);
 	
+	// validate coordinate
+	inline const bool Diffusion::Crd_valid(const Coord in_crd);
+
 	// Get the concentration at a point
 	const double concentration(const unsigned int row, const unsigned int col) const;
 	const double Crd_getC(const Coord in_crd);
+	inline const double getC_bilin(const Coord crd);
 
 	// Write the grid in CSV form to file
 	void write_to_csv(const std::string& file) const;

@@ -15,7 +15,7 @@
 #include <cstdint>
 #include <cmath>
 
-#include "../run/consts.h"
+#include "../util/coord.h"
 #include "../util/csv_parser.h"
 #include "../util/math_util.h"
 #include "../util/err_util.h"

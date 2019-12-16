@@ -9,7 +9,7 @@
 #include <iostream>
 #include <string>
 
-#include "../run/consts.h"
+#include "../util/coord.h"
 #include "axon.h"
 #include "../diffusion/diffusion.h"
 // #include "../waveform/waveform.h"

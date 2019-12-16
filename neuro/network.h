@@ -8,7 +8,7 @@
 
 #include <random>
 
-#include "../run/consts.h"
+#include "../util/coord.h"
 #include "../run/config.h"
 
 #include "neuron.h"

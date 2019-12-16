@@ -57,10 +57,14 @@ void Diffusion::Crd_add(const Coord in_crd, const double val) {
 
 /*******************************************************************/
 
-// TODO: getC_precise
-// linearly interpolate values to get more precise value of concentration
-// float getC_precise(Coord crd, int g_idx)
-
+inline const bool Diffusion::Crd_valid(const Coord in_crd) {
+    return (
+        in_crd.ix() > 1
+        && in_crd.iy() > 1
+        && in_crd.ix() + 1 < dim_
+        && in_crd.iy() + 1 < dim_
+    );
+}
 
 const double Diffusion::concentration(const unsigned int row,
                                 const unsigned int col) const {
@@ -82,6 +86,40 @@ const double Diffusion::Crd_getC(const Coord in_crd) {
     
     // return value
     return u_[in_crd.ix()][in_crd.iy()];
+}
+
+// use bilinear interpolation to get more precise value of concentration at a floating point coord
+inline const double Diffusion::getC_bilin(const Coord crd) {
+    /*
+        +y +x -->
+        |
+        V
+
+        a   u |     b
+            * |
+        ------+------
+              |
+        c   v |     d
+    */
+
+    // values at 4 points a,b,c,d:
+    const float a = u_[crd.bx()  ][crd.by()  ];
+    const float b = u_[crd.bx()+1][crd.by()  ];
+    const float c = u_[crd.bx()  ][crd.by()+1];
+    const float d = u_[crd.bx()+1][crd.by()+1];
+
+    // find exact positions x,y
+    const float x = fmod(crd.x,1);
+    const float y = fmod(crd.y,1);
+
+    // linearly interpolate between a,b and c,d by x to get u,v
+    const float u = lin_interp(a,b,x);
+    const float v = lin_interp(c,d,x);
+
+    // linearly interpolate between u,v by y to get result `*`
+    const float out = lin_interp(u,v,y);
+
+    return out;
 }
 
 /*******************************************************************/

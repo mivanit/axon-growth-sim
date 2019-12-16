@@ -1,6 +1,8 @@
 #ifndef RNG_HEADER
 #define RNG_HEADER
 
+#include <random>
+
 // RNG stuff
 
 std::default_random_engine rng;

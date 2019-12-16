@@ -5,14 +5,12 @@
 
 // header for defining common variables and classes
 
-#ifndef CONSTS
-#define CONSTS
+#ifndef COORD
+#define COORD
 
 #include <cstdint>
 #include <math.h>
 #include <string>
-
-#include "config.h"
 
 struct Coord
 {
@@ -34,6 +32,17 @@ struct Coord
 	{
 		if (i == 0) return x;
 		else return y;
+	}
+
+	// floored getters
+	int bx() const
+	{
+		return floor(x);
+	}
+
+	int by() const
+	{
+		return floor(y);
 	}
 
 	// rounded getters
@@ -70,10 +79,9 @@ struct Coord
 	}
 
 	/* normalize vector */
-	// CRIT: fix norm to not nan-out when mag is 0
 	Coord norm()
 	{	
-		if (this->mag() == 0) {
+		if (this->mag() <= 0.0000001) {
 			this->x = 0.0;
 			this->y = 0.0;
 		}
@@ -92,7 +100,6 @@ struct Coord
 	}
 };
 
-// CRIT: assignment operator
 
 inline Coord operator+(const Coord& a, const Coord& b) {
 	Coord x(a);
@@ -100,19 +107,18 @@ inline Coord operator+(const Coord& a, const Coord& b) {
 }
 
 
-// code for comparing two floats
-inline bool comp_f(float a, float b)
+/*
+ linearly interpolate the two given values a, b
+ at a point proportionally x between them 
+ ( positional distance between a,b is 1, we want value distance x from a and (1-x) from b )
+*/
+inline float lin_interp(float a, float b, float x)
 {
-    return fabs(a - b) <= EPSILON;
+	return (a + x * (b-a));
 }
 
-inline bool zero_f(float a)
-{
-	return fabs(a) <= EPSILON;
-}
 
-
-
+// REVIEW: deprecate search_vec for new search method
 // TODO: make search_vec more extensible
 const Coord search_vec[8] = {
 	Coord(0, 1),			/* up */
