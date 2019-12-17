@@ -8,7 +8,7 @@
 #include <ctime>
 #include <string>
 
-#include "consts.h"
+#include "../util/coord.h"
 #include "config.h"
 
 #include "../diffusion/diffusion.h"

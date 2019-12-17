@@ -33,7 +33,7 @@ echo "========================="
 
 
 # TODO: improve option selection
-OPTIONS="-std=c++17"
+OPTIONS="-std=c++0x"
 if [ "$3" == "-g" ]; then
 	echo "!!!	will build GDB version"
 	OPTIONS+=" -g"

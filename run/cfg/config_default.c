@@ -108,24 +108,26 @@ std::vector< cellType > CELLTYPE_ARR({
 		0.2, // stepSize_mu
 		0.05, // stepSize_sigma
 		0.5, // searchAngle_tau
+		1.5, // searchDist
 		0.5, // turningRate_max
 		0.1, // base_activ
 		1.0, // activ_scale
-		std::vector<float>{0.4, 0.4}, // senseNoise_sigma standard {0.01, 0.01}
-		std::vector<float>{0.5, -0.05}, // chemType_affinities
-		std::vector<float>{0.0, 1.0} // chemType_release
+		std::vector<float>{0.001, 0.001}, // senseNoise_sigma standard {0.01, 0.01}
+		std::vector<float>{1.0, -0.2}, // chemType_affinities
+		std::vector<float>{0.1, 1.0} // chemType_release
 	),
 	cellType(
 		1, // cellType_ID
 		0.2, // stepSize_mu
 		0.05, // stepSize_sigma
 		0.5, // searchAngle_tau
+		1.5, // searchDist
 		0.5, // turningRate_max
 		0.1, // base_activ
 		-1.0, // activ_scale
-		std::vector<float>{0.6, 0.6}, // senseNoise_sigma standard {0.01, 0.01}
-		std::vector<float>{-0.05, 0.5}, // chemType_affinities
-		std::vector<float>{1.0, 0.0} // chemType_release
+		std::vector<float>{0.001, 0.001}, // senseNoise_sigma standard {0.01, 0.01}
+		std::vector<float>{-0.2, 1.0}, // chemType_affinities
+		std::vector<float>{1.0, 0.1} // chemType_release
 	)
 });
 

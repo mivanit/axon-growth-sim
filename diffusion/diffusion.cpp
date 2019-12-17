@@ -57,7 +57,7 @@ void Diffusion::Crd_add(const Coord in_crd, const double val) {
 
 /*******************************************************************/
 
-inline const bool Diffusion::Crd_valid(const Coord in_crd) {
+const bool Diffusion::Crd_valid(const Coord in_crd) {
     return (
         in_crd.ix() > 1
         && in_crd.iy() > 1
@@ -89,7 +89,16 @@ const double Diffusion::Crd_getC(const Coord in_crd) {
 }
 
 // use bilinear interpolation to get more precise value of concentration at a floating point coord
-inline const double Diffusion::getC_bilin(const Coord crd) {
+const double Diffusion::getC_bilin(const Coord crd) {
+    // check validity
+    if (
+        !Crd_valid(crd)
+        ||
+        !Crd_valid(Coord( crd.bx()+1, crd.by()+1 ))
+    ) {
+        return 0.0;
+    }
+    
     /*
         +y +x -->
         |

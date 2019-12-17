@@ -91,8 +91,31 @@ struct Coord
 		return *this;
 	}
 
+	// swap x and y values
+	void swap()
+	{
+		const float temp = x;
+		x = y;
+		y = temp;
+	}
+
+	// makes the vector orthogonal to previous value
+	// if lhs == true, rotate 90 deg ccw, otherwise 90 deg cw
+	void orth(bool lhs = true)
+	{
+		swap();
+		if (lhs)
+		{
+			x *= -1;
+		}
+		else
+		{
+			y *= -1;
+		}
+	}
+
 	/* add a given vector to this vector */
-	Coord add(Coord to_add)
+	Coord add(const Coord& to_add)
 	{
 		x += to_add.x;
 		y += to_add.y;
@@ -104,6 +127,10 @@ struct Coord
 inline Coord operator+(const Coord& a, const Coord& b) {
 	Coord x(a);
 	return Coord(x).add(b);
+}
+
+inline Coord Crd_scale_mult(const Coord &a, float x) {
+	return Coord(a).scale(x);
 }
 
 

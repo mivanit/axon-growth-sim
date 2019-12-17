@@ -139,6 +139,15 @@ public:
 	// search angle
 	float searchAngle_tau;
 
+	// coefficient to multiply orthogonal vector by to get prong vector
+	// lambda * w + v = p
+	// where v is facing direction, w is orthogonal vec, p is prong vector
+	float searchAngle_lambda;
+
+
+	// search distance (prong length)
+	float searchDist;
+
 	// maximum turning rate for the axon
 	float turningRate_max;	
 
@@ -175,6 +184,7 @@ public:
 		float in_stepSize_mu, 
 		float in_stepSize_sigma,
 		float in_searchAngle_tau,
+		float in_searchDist,
 		float in_turningRate_max,
 		float in_base_activ,
 		float in_activ_scale,
@@ -186,6 +196,7 @@ public:
 		stepSize_mu(in_stepSize_mu),
 		stepSize_sigma(in_stepSize_sigma),
 		searchAngle_tau(in_searchAngle_tau),
+		searchDist(in_searchDist),
 		turningRate_max(in_turningRate_max),
 		base_activ(in_base_activ),
 		activ_scale(in_activ_scale),
@@ -193,7 +204,9 @@ public:
 		chemType_affinities(in_chemType_affinities),
 		chemType_release(in_chemType_release),
 		rdist_move(in_stepSize_mu, in_stepSize_sigma)
-	{}
+	{
+		searchAngle_lambda = pow( (- 1 + pow( searchAngle_tau, -2 )), 0.5 );
+	}
 };
 
 

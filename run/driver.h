@@ -7,7 +7,7 @@
 #include <iomanip>
 #include <iostream>
 
-#include "consts.h"
+#include "../util/coord.h"
 #include "config.h"
 
 #include "../diffusion/diffusion.h"
@@ -134,7 +134,7 @@ public:
 			g.adi_step();
 
 
-			/*
+			
 			if (releaseNT) {
 				// grid release
 				int chemType = CHEMTYPE_ARR[index].chemType_ID;
@@ -150,7 +150,7 @@ public:
 					}
 				}
 			}
-			*/
+			
 			index++;
 		}
 
