@@ -139,7 +139,7 @@ private:
 	void update_dir()
 	{
 		// vector of sensed directions
-		std::vector<Coord> sensed_dir(MAX_CHEMTYPE, Coord(0,0));
+		// std::vector<Coord> sensed_dir(MAX_CHEMTYPE, Coord(0,0));
 		// UGLY: total sensed graident
 		float total_sensed = 0.0;
 
@@ -153,14 +153,13 @@ private:
 			{
 				std::pair<Coord,float> mypair = sense(g_idx);
 				// store sensed direction
-				sensed_dir[g_idx] = mypair.first;
+				// sensed_dir[g_idx] = mypair.first;
 				total_sensed += mypair.second;
 				
+				// scale by affinity
+				mypair.first.scale( get_cellType().chemType_affinities[g_idx] );
 				// weighted sum of components
-				new_dir = new_dir 
-					+ sensed_dir[g_idx].scale( 
-						get_cellType().chemType_affinities[g_idx] 
-					);
+				new_dir.add( mypair.first );
 			}
 		}
 
