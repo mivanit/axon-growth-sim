@@ -133,10 +133,6 @@ inline Coord Crd_scale_mult(const Coord &a, float x) {
 	return Coord(a).scale(x);
 }
 
-inline float dist(const Coord& a, const Coord& b) {
-	return pow(pow(a.x - b.x, 2) + pow(a.y - b.y, 2), 0.5);
-}
-
 
 /*
  linearly interpolate the two given values a, b
@@ -150,6 +146,7 @@ inline float lin_interp(float a, float b, float x)
 
 
 // REVIEW: deprecate search_vec for new search method
+// TODO: make search_vec more extensible
 const Coord search_vec[8] = {
 	Coord(0, 1),			/* up */
 	Coord(1, 1).norm(),		/* up right */

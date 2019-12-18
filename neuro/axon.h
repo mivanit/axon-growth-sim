@@ -249,7 +249,7 @@ private:
 		move_new.add(past_loc.back());
 		past_loc.push_back(move_new);
 
-		// check for out of bounds, kill
+		// check for no sensing, kill with probability 1/2
 		if ( !(*dGrids).back().Crd_valid(loc()) ) {
 			bln_stopped = true;
 		}

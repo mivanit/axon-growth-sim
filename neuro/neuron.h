@@ -56,7 +56,7 @@ public:
 		// update axons
 		axon.update();
 
-		// REVIEW: reset activity or not?
+		// REVIEW: reset activity
 		// avg_activity = CELLTYPE_ARR[id_cellType].base_activ;
 	}
 

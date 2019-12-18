@@ -1,11 +1,21 @@
 # inline TODO summary:
-Updated:	2019-12-18 00:58:56.825319
+Updated:	2019-12-14 23:58:33.933125
 
 # CRIT:
 
  ## `neuro/axon.h`:
+  [ ] CRIT: stop movement and write to synapse when close to neuron 
+  (line 97)
   [ ] CRIT: check for far out of bands, kill 
-  (line 355)
+  (line 187)
+  [ ] CRIT: check for far out of bands, kill 
+  (line 253)
+
+ ## `run/consts.h`:
+  [ ] CRIT: fix norm to not nan-out when mag is 0 
+  (line 73)
+  [ ] CRIT: assignment operator 
+  (line 95)
 
  ## `run/driver.h`:
   [ ] CRIT: remove this part once activity release done 
@@ -18,6 +28,10 @@ Updated:	2019-12-18 00:58:56.825319
   (line 1)
 
 # TODO:
+
+ ## `diffusion/diffusion.cpp`:
+  [ ] TODO: getC_precise 
+  (line 60)
 
  ## `neuro/axon.h`:
   [ ] TODO: keep track of time when axon growth started/stopped? 
@@ -35,6 +49,10 @@ Updated:	2019-12-18 00:58:56.825319
   [ ] TODO: improve option selection 
   (line 35)
 
+ ## `run/consts.h`:
+  [ ] TODO: make search_vec more extensible 
+  (line 116)
+
  ## `run/driver.h`:
   [ ] TODO: check for validity of path 
   (line 227)
@@ -42,10 +60,6 @@ Updated:	2019-12-18 00:58:56.825319
  ## `run/main.cpp`:
   [ ] TODO: check args, print help msg 
   (line 31)
-
- ## `util/coord.h`:
-  [ ] TODO: make search_vec more extensible 
-  (line 149)
 
  ## `waveform/waveform.h`:
   [ ] TODO: wf_compress(wf, i); 
@@ -61,11 +75,19 @@ Updated:	2019-12-18 00:58:56.825319
   [ ] FIXME: print waveform arrays for neuron write 
   (line 265)
 
+ ## `util/cJSON/cJSON.c`:
+  [ ] FIXME: Can overflow here. Cannot be fixed without breaking the API */ 
+  (line 1735)
+
 # FIX:
 
  ## `run/driver.h`:
   [ ] FIXME: print waveform arrays for neuron write 
   (line 265)
+
+ ## `util/cJSON/cJSON.c`:
+  [ ] FIXME: Can overflow here. Cannot be fixed without breaking the API */ 
+  (line 1735)
 
 # BUG:
 
@@ -117,21 +139,13 @@ Updated:	2019-12-18 00:58:56.825319
   [ ] UGLY: improve configuration method? 
   (line 84)
 
- ## `data/test3/cfg/config_default.c`:
-  [ ] UGLY: improve configuration method? 
-  (line 84)
-
- ## `data/test4/cfg/config_default.c`:
-  [ ] UGLY: improve configuration method? 
-  (line 84)
-
  ## `neuro/axon.h`:
   [ ] UGLY: always makes connections weight 1 for now 
-  (line 117)
-  [ ] UGLY: total sensed graident 
-  (line 143)
+  (line 118)
   [ ] UGLY: total sensed chems 
-  (line 319)
+  (line 151)
+  [ ] UGLY: total sensed chems 
+  (line 217)
 
  ## `neuro/neuron.h`:
   [ ] UGLY: only works for two NTs, also linear at the moment 
@@ -155,7 +169,7 @@ Updated:	2019-12-18 00:58:56.825319
 
  ## `neuro/axon.h`:
   [ ] NOTE: this can be modified later if we choose to update gradient sensing 
-  (line 306)
+  (line 204)
 
  ## `neuro/generator.old/generator.cpp`:
   [ ] NOTE: if modifying network topology during operation, then this should be written seperately 
@@ -164,6 +178,24 @@ Updated:	2019-12-18 00:58:56.825319
  ## `run/driver.h`:
   [ ] NOTE: IF YOU REMOVE THIS IT WILL SEGFAULT 
   (line 75)
+
+ ## `util/cJSON/cJSON.h`:
+  [ ] NOTE: cJSON is not always 100% accurate in estimating how much memory it will use, so to be safe allocate 5 bytes more than you actually need */ 
+  (line 160)
+
+ ## `util/dj_fft.h`:
+  [ ] QUICK NOTES 
+  (line 8)
+  [ ] NOTE: only works for positive power of 2s 
+  (line 64)
+  [ ] NOTE: Only works for 32-bit words max 
+  (line 86)
+  [ ] NOTE: Only works for arrays whose size is a power-of-two 
+  (line 111)
+  [ ] NOTE: the input must be a square matrix whose size is a power-of-two 
+  (line 152)
+  [ ] NOTE: the input must be a square matrix whose size is a power-of-two 
+  (line 221)
 
  ## `waveform/waveform.h`:
   [ ] NOTE: modifies waveform "main" 
@@ -176,8 +208,6 @@ Updated:	2019-12-18 00:58:56.825319
  ## `neuro/axon.h`:
   [ ] REVIEW: move multiple times per diffusion timestep? 
   (line 90)
-  [ ] REVIEW: check for no sensing, kill with probability 1/2 
-  (line 166)
 
  ## `neuro/generator.old/network.h`:
   [ ] REVIEW: clustering of positions, range gen chem type, padding 
@@ -192,7 +222,7 @@ Updated:	2019-12-18 00:58:56.825319
  ## `neuro/neuron.h`:
   [ ] REVIEW: waveforms, dendrites? both RV and references 
   (line 32)
-  [ ] REVIEW: reset activity or not? 
+  [ ] REVIEW: reset activity 
   (line 59)
 
  ## `run/driver.h`:
@@ -208,10 +238,6 @@ Updated:	2019-12-18 00:58:56.825319
  ## `run/old/main_legacy.cpp`:
   [ ] REVIEW: clustering of positions, rang gen chem type 
   (line 38)
-
- ## `util/coord.h`:
-  [ ] REVIEW: deprecate search_vec for new search method 
-  (line 148)
 
  ## `waveform/waveform.h`:
   [ ] REVIEW: go over all waveform code 
