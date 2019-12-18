@@ -127,13 +127,16 @@ public:
 ##    ##    ##    ##       ##
  ######     ##    ######## ##
 */
-	void sim_step(bool releaseNT = true) {
+	void sim_step(bool releaseNT = true)
+	{
+		// update network (neurons, axons, activity)
+		net.update();
+		
 		// update all grids
 		int index = 0;
-		for (auto & g : dGrids) {
+		for (auto & g : dGrids)
+		{
 			g.adi_step();
-
-
 			
 			if (releaseNT) {
 				// grid release
@@ -154,11 +157,9 @@ public:
 			index++;
 		}
 
-		// update all the neurons (which will in turn update axons)
-		for (auto & nrn : net.neurons) {
-			nrn.update();
 
-			
+		for (auto & nrn : net.neurons)
+		{		
 			// CRIT: remove this part once activity release done 
 			// add neurotransmitter to appropriate grid
 			if (releaseNT) {
@@ -168,9 +169,9 @@ public:
 					dGrids[i].Crd_add(nrn.loc, concentration * chemType_release[i]);
 				}
 			}
-			
 		}
-
+			
+		// iterate time
 		TIME++;
 	}
 
