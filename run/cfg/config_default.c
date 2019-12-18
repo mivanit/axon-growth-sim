@@ -31,7 +31,7 @@ size_t N_STEPS = 1000;
 
 // * network specs
 
-extern const uint16_t N_NEURONS = 15;
+extern const uint16_t N_NEURONS = 8;
 extern const uint16_t N_GRIDSIZE = 100;
 extern const uint16_t N_PADDING = 2;
 
@@ -119,13 +119,13 @@ std::vector< cellType > CELLTYPE_ARR({
 	cellType(
 		1, // cellType_ID
 		1.0, // stepSize_mu
-		0.1, // stepSize_sigma
+		0.7, // stepSize_sigma
 		0.1, // searchAngle_tau
 		1.0, // searchDist
 		0.5, // turningRate_max
 		0.1, // base_activ
 		-1.0, // activ_scale
-		std::vector<float>{0.001, 0.001}, // senseNoise_sigma standard {0.01, 0.01}
+		std::vector<float>{0.1, 0.1}, // senseNoise_sigma standard {0.01, 0.01}
 		std::vector<float>{1.0, -0.2}, // chemType_affinities
 		std::vector<float>{1.0, 0.1} // chemType_release
 	)

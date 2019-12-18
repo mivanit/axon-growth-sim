@@ -25,6 +25,10 @@ import matplotlib.patheffects as PathEffects
 # specify which color to plot each axon type in
 COLORS = {-1: 'k', 0: '#ff2146', 1: '#33ff3d', 2: 'm'}
 
+
+
+
+
 def get_dimension(NUM_PLOTS):
     # we want to find a pair of integers that multiply to the nearest square of
     # NUM_PLOTS, which are found by floor(root) and ceil(root). Use the larger one
@@ -34,6 +38,11 @@ def get_dimension(NUM_PLOTS):
     cols = max(math.floor(root), math.ceil(root))
     
     return rows, cols
+
+
+
+
+
 
 def make_single_graph(GRID_NUM, diffusion_filenames, NUM_PLOTS, axon_filenames, OUTPUT_DIR):
     OUTPUT_FILE = os.path.join(OUTPUT_DIR, f'cumulative_{GRID_NUM}.png')
@@ -131,9 +140,13 @@ def make_single_graph(GRID_NUM, diffusion_filenames, NUM_PLOTS, axon_filenames, 
                 txt.set_path_effects([PathEffects.withStroke(linewidth=2, foreground='w')])
 
     # save figure
-    print(f'Saving {OUTPUT_FILE}')
+    print(f'Saving {OUTPUT_FILE}'.replace("\\","/"))
     plt.savefig(OUTPUT_FILE)
     plt.close()
+
+
+
+
 
 def plot_each_timestep(GRID_NUM, diffusion_filenames, NUM_PLOTS, axon_filenames, OUTPUT_DIR):
     for diffusion_file in diffusion_filenames:
@@ -178,7 +191,7 @@ def plot_each_timestep(GRID_NUM, diffusion_filenames, NUM_PLOTS, axon_filenames,
         # plot diffusion grid
         im = ax.imshow(diffusion_arr)
         ax.set_title(f'Step={timestep}', fontsize=15)
-        ax.grid(color='w', linestyle='-', linewidth=2)
+        # ax.grid(color='w', linestyle='-', linewidth=2)
 
         # plot axons on top of heatmap
         for ax_filename in axon_filenames:
@@ -209,15 +222,20 @@ def plot_each_timestep(GRID_NUM, diffusion_filenames, NUM_PLOTS, axon_filenames,
             ax.plot(x_arr, y_arr, color=COLORS[axon_type], linewidth=3)
         
         # save figure
-        print(f'Saving {OUTPUT_FILE}')
+        print(f'\tSaving {OUTPUT_FILE}')
         plt.savefig(OUTPUT_FILE)
         plt.close()
 
+
+
+
 def generate_gif(image_files, OUTPUT_DIR):
-    OUTPUT_FILE = os.path.join(OUTPUT_DIR, '../axons.gif')
+    OUTPUT_FILE = os.path.join(OUTPUT_DIR, '..', 'axons.gif')
     print(f'Generating {OUTPUT_FILE}...')
     images = [imageio.imread(image) for image in image_files]
     imageio.mimsave(OUTPUT_FILE, images)
+
+
 
 def main(TEST_DIR, PLOT_GIF):
     # get filenames of all diffusion timesteps that were saved
@@ -234,7 +252,7 @@ def main(TEST_DIR, PLOT_GIF):
     axon_filenames = glob.glob(os.path.join(AXON_DIR, 'axon*'))
 
     if PLOT_GIF:
-        OUTPUT_DIR = os.path.join('data', TEST_NAME, 'vis/gif')
+        OUTPUT_DIR = os.path.join('data', TEST_NAME, 'vis', 'gif')
         # create output directory if it doesn't already exist
         if not os.path.isdir(OUTPUT_DIR):
             os.makedirs(OUTPUT_DIR)
@@ -254,6 +272,8 @@ def main(TEST_DIR, PLOT_GIF):
         make_single_graph(GRID_NUM=0, diffusion_filenames=diffusion_filenames, 
                         NUM_PLOTS=NUM_PLOTS, axon_filenames=axon_filenames, 
                         OUTPUT_DIR=OUTPUT_DIR)
+
+
 
 if __name__ == '__main__':
     # get test dir from command line input
