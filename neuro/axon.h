@@ -141,7 +141,7 @@ private:
 		// vector of sensed directions
 		// std::vector<Coord> sensed_dir(MAX_CHEMTYPE, Coord(0,0));
 		// UGLY: total sensed graident
-		float total_sensed = 0.0;
+		double total_sensed = 0.0;
 
 		// create vector of new direction
 		Coord new_dir = Coord(0, 0);
@@ -151,7 +151,7 @@ private:
 		{
 			if ( abs(get_cellType().chemType_affinities[g_idx]) > EPSILON )
 			{
-				std::pair<Coord,float> mypair = sense(g_idx);
+				std::pair<Coord,double> mypair = sense(g_idx);
 				// store sensed direction
 				// sensed_dir[g_idx] = mypair.first;
 				total_sensed += mypair.second;
@@ -171,8 +171,9 @@ private:
 		// 	// bln_stopped = true;
 		// }
 
-		// normalize
-		dir.norm();
+		// normalize, write
+		new_dir.norm();
+		dir = new_dir;
 	}
 
 
@@ -189,7 +190,7 @@ private:
 
 	// two pronged sensing
 	// returns pair of (direction coord, gradient strength) for the given grid
-	std::pair<Coord,float> sense(int g_idx)
+	std::pair<Coord,double> sense(int g_idx)
 	{
 		// get orth to current dir
 		Coord prong_L = Coord(dir);
@@ -207,8 +208,8 @@ private:
 		prong_R.scale(get_cellType().searchDist);
 		
 		// sense at two points
-		float c_L = (*dGrids)[g_idx].getC_bilin( loc() + prong_L );
-		float c_R = (*dGrids)[g_idx].getC_bilin( loc() + prong_R );
+		double c_L = (*dGrids)[g_idx].getC_bilin( loc() + prong_L );
+		double c_R = (*dGrids)[g_idx].getC_bilin( loc() + prong_R );
 		
 		// add noise
 		// standard normal distribution around 0 times noise for this chemtype sensing
@@ -219,7 +220,7 @@ private:
 		Coord optimal_dir = Crd_scale_mult(prong_L, c_L) + Crd_scale_mult(prong_R, c_R);
 		optimal_dir.norm();
 
-		return std::make_pair(optimal_dir, abs(c_L - c_R) );
+		return std::make_pair( optimal_dir, c_L - c_R );
 	}
 
 
@@ -267,7 +268,7 @@ private:
        #######  ######## ########
 */
 		// returns pair of (direction coord, max sensed concentration) for the given grid
-	std::pair<Coord,float> sense_grid( int g_idx, std::vector<double> & dot_products )
+	std::pair<Coord,double> sense_grid( int g_idx, std::vector<double> & dot_products )
 	{	
 		// test which grid square has highest concentration
 		Coord optimal_dir(1, 0);
@@ -316,7 +317,7 @@ private:
 		// vector of sensed directions
 		std::vector<Coord> sensed_dir(MAX_CHEMTYPE, Coord());
 		// UGLY: total sensed chems
-		float total_sensed = 0.0;
+		double total_sensed = 0.0;
 
 		// create new dir vector
 		Coord new_dir = Coord(0, 0);
@@ -326,7 +327,7 @@ private:
 		{
 			if ( abs(get_cellType().chemType_affinities[g_idx]) > EPSILON )
 			{
-				std::pair<Coord,float> mypair = sense_grid(g_idx, dot_products);
+				std::pair<Coord,double> mypair = sense_grid(g_idx, dot_products);
 				// store sensed direction
 				sensed_dir[g_idx] = mypair.first;
 				total_sensed += mypair.second;
