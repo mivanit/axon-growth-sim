@@ -219,11 +219,11 @@ def plot_each_timestep(GRID_NUM, diffusion_filenames, NUM_PLOTS, axon_filenames,
                 y_arr = axon_arr[1]
 
             # plot data        
-            ax.plot(x_arr, y_arr, color=COLORS[axon_type], linewidth=1)
+            ax.plot(x_arr, y_arr, color=COLORS[axon_type], linewidth=0.4)
         
         # save figure
         print(f'\tSaving {OUTPUT_FILE}')
-        plt.savefig(OUTPUT_FILE)
+        plt.savefig(OUTPUT_FILE, dpi=175)
         plt.close()
 
 

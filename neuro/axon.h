@@ -126,11 +126,20 @@ public:
 
 	
 	// make connection to a given neuron
-	// UGLY: always makes connections weight 1 for now
+	// OPTIMIZE: use hash table here
 	void make_conn(int nrn_id)
 	{
-		postSyn_id.push_back(nrn_id);
-		postSyn_wgt.push_back(1.0);
+		// check if already made
+
+		// find index in array of ids
+		std::vector<uint16_t>::iterator it = std::find(postSyn_id.begin(), postSyn_id.end(), nrn_id);
+
+		// make new connection if not found
+		if (it == postSyn_id.end())
+		{
+			postSyn_id.push_back(nrn_id);
+			postSyn_wgt.push_back(1.0);
+		}
 	}
 
 private:

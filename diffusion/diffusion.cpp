@@ -48,11 +48,17 @@ void Diffusion::set(const unsigned int row, const unsigned int col,
 }
 
 void Diffusion::Crd_set(const Coord in_crd, const double val) {
-    u_[in_crd.ix()][in_crd.iy()] = val;
+    if ( Crd_valid(in_crd) )
+    {
+        u_[in_crd.ix()][in_crd.iy()] = val;
+    }
 }
 
 void Diffusion::Crd_add(const Coord in_crd, const double val) {
-    u_[in_crd.ix()][in_crd.iy()] += val;
+    if ( Crd_valid(in_crd) )
+    {
+        u_[in_crd.ix()][in_crd.iy()] += val;
+    }
 }
 
 /*******************************************************************/
@@ -66,8 +72,7 @@ const bool Diffusion::Crd_valid(const Coord in_crd) {
     );
 }
 
-const double Diffusion::concentration(const unsigned int row,
-                                const unsigned int col) const {
+const double Diffusion::concentration(const unsigned int row, const unsigned int col) const {
     return u_[row][col];
 }
 

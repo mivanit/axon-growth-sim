@@ -39,19 +39,37 @@ split_indices.append(-1)
 axon_list = [lines[split_indices[i]+1:split_indices[i+1]] for i in range(len(split_indices) - 1)]
 
 # save previous coordinate arrays as separate CSVs per axon
+# UGLY: nan safety
 try:
     for axon in axon_list:
-        metadata = tuple(literal_eval(','.join(axon[0].strip().split('\t'))))
+        metadata = axon[0].strip().split('\t')
         #print(metadata)
         axon_id, axon_type, axon_pos, axon_dir = metadata
+        axon_id = int(axon_id)
+        axon_type = int(axon_type)
 
+        if 'nan' in axon_pos:
+            axon_pos = (float('nan'),float('nan'))
+            print('ERROR: check raw for "nan"')
+        else:
+            axon_pos = tuple(literal_eval(axon_pos))
+
+        if 'nan' in axon_dir:
+            axon_dir = (float('nan'),float('nan'))
+            print('ERROR: check raw for "nan"')
+        else:
+            axon_dir = tuple(literal_eval(axon_dir))
         
         # read in each coordinate in previous position array as tuple
         prev_coordinates = list(axon[1].strip().split('\t'))
         prev_x = []
         prev_y = []
         for i, coordinate in enumerate(prev_coordinates):
-            coordinate = literal_eval(coordinate)
+            if 'nan' in coordinate:
+                coordinate = (float('nan'),float('nan'))
+                print('ERROR: check raw for "nan"')
+            else:
+                coordinate = literal_eval(coordinate)
             if i == 100:
                 # sanity check
                 #print(coordinate)

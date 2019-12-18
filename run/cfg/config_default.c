@@ -31,9 +31,9 @@ size_t N_STEPS = 1000;
 
 // * network specs
 
-extern const uint16_t N_NEURONS = 8;
+extern const uint16_t N_NEURONS = 50;
 extern const uint16_t N_GRIDSIZE = 100;
-extern const uint16_t N_PADDING = 2;
+extern const uint16_t N_PADDING = 5;
 
 // Range for chem types, cell types
 extern const uint8_t MAX_CELLTYPE = 2;

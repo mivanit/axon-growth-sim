@@ -59,8 +59,8 @@ public:
 		// release NTs
 		activ_release();
 
-		// REVIEW: reset activity
-		// avg_activity = get_cellType().base_activ;
+		// normalize activity to prevent large values
+		norm_activ();
 	}
 
 	// get cellType class corresponding to ID
@@ -68,6 +68,16 @@ public:
 	{
 		return CELLTYPE_ARR[id_cellType];
 	}
+
+
+	// normalize activity with absolute limit
+	// UGLY: specify absolute limit in neuron type
+	void norm_activ()
+	{
+		float MAX_ACTIV = 10.0;
+		avg_activity = MAX_ACTIV * std::atan( avg_activity / MAX_ACTIV );
+	}
+
 
 
 	// add activity (called from a different neuron)
@@ -89,6 +99,8 @@ public:
 	// UGLY: only linear NT release functions
 	void activ_release()
 	{
+		// printf("\t\tactiv = %f\n", avg_activity);
+
 		for (int g_idx = 0; g_idx < MAX_CHEMTYPE; g_idx++)
 		{
 			// get initial difference between target and actual activity
@@ -96,19 +108,18 @@ public:
 
 			// apply function, in this case linear function with min value of 0
 			amt_rel *= get_cellType().activ_rel_coeff[g_idx];
-			amt_rel = std::fmax(amt_rel, 0.0);
+			if (amt_rel < 0.0)
+			{
+				amt_rel = 0.0;
+			}
 
 			// add amount to the correct grid
-			// printf("\t\t%s", loc.to_str().c_str());
 			if ((*dGrids)[g_idx].Crd_valid(loc))
 			{
-				// printf("\t!!!!!!!!!\t");
 				(*dGrids)[g_idx].Crd_add(loc, amt_rel);
 			}
 		}
-	}
-
-		
+	}	
 };
 
 std::vector<Diffusion> * Neuron::dGrids = nullptr;

@@ -185,7 +185,7 @@ public:
 	void run(
 		size_t fin_step = N_STEPS, 
 		size_t save_every = 1,
-		int print_every = 5,
+		int print_every = 1,
 		int verbosity = 0
 	) {
 		while (TIME < fin_step) 

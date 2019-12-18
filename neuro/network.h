@@ -56,6 +56,7 @@ public:
 			// for every connection
 			for ( int i : n.axon.postSyn_id )
 			{
+				// printf("\t\tpassing activ\t %d  -->  %d\t%f\t\n", n.id_neuron, i, n.get_activ_scaled());
 				// pass along activity after multiplying by scaling factor
 				neurons[i].add_activ(n.get_activ_scaled());
 			}
@@ -76,8 +77,8 @@ public:
 				i, // neuron ID
 				(rand() % MAX_CELLTYPE), // cellType
 				Coord( //coordinate
-					float(rand() % N_GRIDSIZE), 
-					float(rand() % N_GRIDSIZE)
+					(rand() % (N_GRIDSIZE - 2 * N_PADDING)) + N_PADDING, 
+					(rand() % (N_GRIDSIZE - 2 * N_PADDING)) + N_PADDING
 				)
 			); 
 

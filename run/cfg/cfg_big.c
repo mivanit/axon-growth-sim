@@ -31,9 +31,9 @@ size_t N_STEPS = 1000;
 
 // * network specs
 
-extern const uint16_t N_NEURONS = 100;
-extern const uint16_t N_GRIDSIZE = 500;
-extern const uint16_t N_PADDING = 2;
+extern const uint16_t N_NEURONS = 15;
+extern const uint16_t N_GRIDSIZE = 150;
+extern const uint16_t N_PADDING = 10;
 
 // Range for chem types, cell types
 extern const uint8_t MAX_CELLTYPE = 2;
@@ -88,14 +88,14 @@ std::vector< chemType > CHEMTYPE_ARR({
 	chemType(
 		0, // chemType_ID
 		0.0, // ambient
-		0.0001, // r_decay
+		0.01, // r_decay
 		1.5, // r_diff
 		"EXCITE" // label
 	),
 	chemType(
 		1, // chemType_ID
 		0.0, // ambient
-		0.0001, // r_decay
+		0.01, // r_decay
 		1.5, // r_diff
 		"INHIBIT" // label
 	)
@@ -105,27 +105,33 @@ std::vector< chemType > CHEMTYPE_ARR({
 std::vector< cellType > CELLTYPE_ARR({
 	cellType(
 		0, // cellType_ID
-		0.2, // stepSize_mu
-		0.05, // stepSize_sigma
-		0.5, // searchAngle_tau
+		0.7, // stepSize_mu
+		0.3, // stepSize_sigma
+		0.2, // searchAngle_tau
+		0.5, // searchDist
 		0.5, // turningRate_max
 		0.1, // base_activ
 		1.0, // activ_scale
-		std::vector<float>{0.4, 0.4}, // senseNoise_sigma standard {0.01, 0.01}
-		std::vector<float>{0.5, -0.05}, // chemType_affinities
-		std::vector<float>{0.0, 1.0} // chemType_release
+		0.7, // activ_tgt
+		std::vector<float>{1.0, -1.0}, // activ_rel_coeff
+		std::vector<float>{0.1, 0.1}, // senseNoise_sigma standard {0.01, 0.01}
+		std::vector<float>{1.0, -0.2}, // chemType_affinities
+		std::vector<float>{0.1, 1.0} // chemType_release
 	),
 	cellType(
 		1, // cellType_ID
-		0.2, // stepSize_mu
-		0.05, // stepSize_sigma
-		0.5, // searchAngle_tau
+		0.7, // stepSize_mu
+		0.3, // stepSize_sigma
+		0.2, // searchAngle_tau
+		0.5, // searchDist
 		0.5, // turningRate_max
 		0.1, // base_activ
 		-1.0, // activ_scale
-		std::vector<float>{0.6, 0.6}, // senseNoise_sigma standard {0.01, 0.01}
-		std::vector<float>{-0.05, 0.5}, // chemType_affinities
-		std::vector<float>{1.0, 0.0} // chemType_release
+		0.7, // activ_tgt
+		std::vector<float>{-1.0, 1.0}, // activ_rel_coeff
+		std::vector<float>{0.1, 0.1}, // senseNoise_sigma standard {0.01, 0.01}
+		std::vector<float>{1.0, -0.2}, // chemType_affinities
+		std::vector<float>{1.0, 0.1} // chemType_release
 	)
 });
 
