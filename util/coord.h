@@ -133,6 +133,11 @@ inline Coord Crd_scale_mult(const Coord &a, float x) {
 	return Coord(a).scale(x);
 }
 
+inline double dist(const Coord& a, const Coord& b)
+{
+	return pow(pow(a.x - b.x, 2) + pow(a.y - b.y, 2), 0.5);
+}
+
 
 /*
  linearly interpolate the two given values a, b

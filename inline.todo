@@ -1,37 +1,18 @@
 # inline TODO summary:
-Updated:	2019-12-14 23:58:33.933125
+Updated:	2019-12-18 12:18:28.874721
 
 # CRIT:
-
- ## `neuro/axon.h`:
-  [ ] CRIT: stop movement and write to synapse when close to neuron 
-  (line 97)
-  [ ] CRIT: check for far out of bands, kill 
-  (line 187)
-  [ ] CRIT: check for far out of bands, kill 
-  (line 253)
-
- ## `run/consts.h`:
-  [ ] CRIT: fix norm to not nan-out when mag is 0 
-  (line 73)
-  [ ] CRIT: assignment operator 
-  (line 95)
 
  ## `run/driver.h`:
   [ ] CRIT: remove this part once activity release done 
   (line 162)
-  [ ] CRIT: allow axon/neuron printing at all timesteps 
-  (line 232)
 
- ## `run/old/build.sh`:
-  [ ] CRIT: implement setup script 
-  (line 1)
+
+
+
+
 
 # TODO:
-
- ## `diffusion/diffusion.cpp`:
-  [ ] TODO: getC_precise 
-  (line 60)
 
  ## `neuro/axon.h`:
   [ ] TODO: keep track of time when axon growth started/stopped? 
@@ -49,10 +30,6 @@ Updated:	2019-12-14 23:58:33.933125
   [ ] TODO: improve option selection 
   (line 35)
 
- ## `run/consts.h`:
-  [ ] TODO: make search_vec more extensible 
-  (line 116)
-
  ## `run/driver.h`:
   [ ] TODO: check for validity of path 
   (line 227)
@@ -60,6 +37,10 @@ Updated:	2019-12-14 23:58:33.933125
  ## `run/main.cpp`:
   [ ] TODO: check args, print help msg 
   (line 31)
+
+ ## `util/coord.h`:
+  [ ] TODO: make search_vec more extensible 
+  (line 149)
 
  ## `waveform/waveform.h`:
   [ ] TODO: wf_compress(wf, i); 
@@ -69,25 +50,21 @@ Updated:	2019-12-14 23:58:33.933125
   [ ] TODO: kill/adjust spikes that are too close 
   (line 206)
 
+
+
+
+  
 # FIXME:
 
  ## `run/driver.h`:
   [ ] FIXME: print waveform arrays for neuron write 
   (line 265)
 
- ## `util/cJSON/cJSON.c`:
-  [ ] FIXME: Can overflow here. Cannot be fixed without breaking the API */ 
-  (line 1735)
-
 # FIX:
 
  ## `run/driver.h`:
   [ ] FIXME: print waveform arrays for neuron write 
   (line 265)
-
- ## `util/cJSON/cJSON.c`:
-  [ ] FIXME: Can overflow here. Cannot be fixed without breaking the API */ 
-  (line 1735)
 
 # BUG:
 
@@ -133,19 +110,36 @@ Updated:	2019-12-14 23:58:33.933125
   [ ] __DEBUG("done wf_act, out size: " + std::to_string(wf_out.size())); 
   (line 204)
 
+
+
+
+
+
+
+
+
+
 # UGLY:
 
  ## `data/test2/cfg/cfg_big.c`:
   [ ] UGLY: improve configuration method? 
   (line 84)
 
+ ## `data/test3/cfg/config_default.c`:
+  [ ] UGLY: improve configuration method? 
+  (line 84)
+
+ ## `data/test4/cfg/config_default.c`:
+  [ ] UGLY: improve configuration method? 
+  (line 84)
+
  ## `neuro/axon.h`:
   [ ] UGLY: always makes connections weight 1 for now 
-  (line 118)
+  (line 117)
+  [ ] UGLY: total sensed graident 
+  (line 143)
   [ ] UGLY: total sensed chems 
-  (line 151)
-  [ ] UGLY: total sensed chems 
-  (line 217)
+  (line 319)
 
  ## `neuro/neuron.h`:
   [ ] UGLY: only works for two NTs, also linear at the moment 
@@ -169,7 +163,7 @@ Updated:	2019-12-14 23:58:33.933125
 
  ## `neuro/axon.h`:
   [ ] NOTE: this can be modified later if we choose to update gradient sensing 
-  (line 204)
+  (line 306)
 
  ## `neuro/generator.old/generator.cpp`:
   [ ] NOTE: if modifying network topology during operation, then this should be written seperately 
@@ -178,24 +172,6 @@ Updated:	2019-12-14 23:58:33.933125
  ## `run/driver.h`:
   [ ] NOTE: IF YOU REMOVE THIS IT WILL SEGFAULT 
   (line 75)
-
- ## `util/cJSON/cJSON.h`:
-  [ ] NOTE: cJSON is not always 100% accurate in estimating how much memory it will use, so to be safe allocate 5 bytes more than you actually need */ 
-  (line 160)
-
- ## `util/dj_fft.h`:
-  [ ] QUICK NOTES 
-  (line 8)
-  [ ] NOTE: only works for positive power of 2s 
-  (line 64)
-  [ ] NOTE: Only works for 32-bit words max 
-  (line 86)
-  [ ] NOTE: Only works for arrays whose size is a power-of-two 
-  (line 111)
-  [ ] NOTE: the input must be a square matrix whose size is a power-of-two 
-  (line 152)
-  [ ] NOTE: the input must be a square matrix whose size is a power-of-two 
-  (line 221)
 
  ## `waveform/waveform.h`:
   [ ] NOTE: modifies waveform "main" 
@@ -208,6 +184,8 @@ Updated:	2019-12-14 23:58:33.933125
  ## `neuro/axon.h`:
   [ ] REVIEW: move multiple times per diffusion timestep? 
   (line 90)
+  [ ] REVIEW: check for no sensing, kill with probability 1/2 
+  (line 166)
 
  ## `neuro/generator.old/network.h`:
   [ ] REVIEW: clustering of positions, range gen chem type, padding 
@@ -228,6 +206,8 @@ Updated:	2019-12-14 23:58:33.933125
  ## `run/driver.h`:
   [ ] REVIEW: move write functions to their respective classes? 
   (line 221)
+  [ ] REVIEW: allow printing axon/neuron stuff at intermediate timesteps 
+  (line 232)
   [ ] REVIEW: print more info? 
   (line 372)
 
@@ -238,6 +218,10 @@ Updated:	2019-12-14 23:58:33.933125
  ## `run/old/main_legacy.cpp`:
   [ ] REVIEW: clustering of positions, rang gen chem type 
   (line 38)
+
+ ## `util/coord.h`:
+  [ ] REVIEW: deprecate search_vec for new search method 
+  (line 148)
 
  ## `waveform/waveform.h`:
   [ ] REVIEW: go over all waveform code 
@@ -279,9 +263,9 @@ Updated:	2019-12-14 23:58:33.933125
 
  ## `run/old/build.sh`:
   [ ] CONFIG_PATH=$1 
-  (line 10)
+  (line 8)
   [ ] CONFIG_NAME=$(echo $CONFIG_PATH | rev | cut -d '/' -f 1 | rev) 
-  (line 11)
+  (line 9)
 
 # !!!:
 

@@ -112,6 +112,8 @@ std::vector< cellType > CELLTYPE_ARR({
 		0.5, // turningRate_max
 		0.1, // base_activ
 		1.0, // activ_scale
+		2.5, // activ_tgt
+		std::vector<float>{1.0, -1.0}, // activ_rel_coeff
 		std::vector<float>{0.1, 0.1}, // senseNoise_sigma standard {0.01, 0.01}
 		std::vector<float>{1.0, -0.2}, // chemType_affinities
 		std::vector<float>{0.1, 1.0} // chemType_release
@@ -125,6 +127,8 @@ std::vector< cellType > CELLTYPE_ARR({
 		0.5, // turningRate_max
 		0.1, // base_activ
 		-1.0, // activ_scale
+		2.5, // activ_tgt
+		std::vector<float>{-1.0, 1.0}, // activ_rel_coeff
 		std::vector<float>{0.1, 0.1}, // senseNoise_sigma standard {0.01, 0.01}
 		std::vector<float>{1.0, -0.2}, // chemType_affinities
 		std::vector<float>{1.0, 0.1} // chemType_release

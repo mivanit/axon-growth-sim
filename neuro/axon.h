@@ -107,9 +107,21 @@ public:
 	// return 0.0 if no connection
 	float get_weight_to(int idx_nrn)
 	{
+		// find index in array of ids
 		std::vector<uint16_t>::iterator it = std::find(postSyn_id.begin(), postSyn_id.end(), idx_nrn);
-		int idx_inArr = std::distance(postSyn_id.begin(), it);
-		return postSyn_wgt[idx_inArr];
+
+		// check if found
+		if (it != postSyn_id.end())
+		{
+			// return weight if yes
+			int idx_inArr = std::distance(postSyn_id.begin(), it);
+			return postSyn_wgt[idx_inArr];
+		}
+		else
+		{
+			// return 0 if idx not found (no connection)
+			return 0.0;
+		}
 	}
 
 	
@@ -351,9 +363,6 @@ private:
 		) {
 			// bln_stopped = true;
 		}
-
-		// CRIT: check for far out of bands, kill
-
 
 		// based on total detected NT, weigh the old direction and the new
 		// dir = dir + new_dir.scale(total_sensed);

@@ -157,15 +157,20 @@ public:
 	// activation multiplier (positive --> excitatory, negative --> inhibitory)
 	float activ_scale;
 
+	// target activation
+	float activ_tgt;
+
+	// release function coefficients (linear functions only for now)
+	std::vector<float> activ_rel_coeff;
+
+
 	// noise term for sensing certain chemtypes
 	std::vector<float> senseNoise_sigma;
-
 
 	// axonal affinities for the various chemical types
 	// positive --> turn towards
 	// negative --> turn away
 	std::vector<float> chemType_affinities;
-
 
 	// emission coefficients for various chem types
 	// positive --> proportional to activity
@@ -178,6 +183,8 @@ public:
 	// default empty ctor
 	cellType() {}
 
+
+	// UGLY: remove ctor, manual adding. Makes it easier to extend, and easier compatibility
 	// ctor
 	cellType(
 		uint16_t in_cellType_ID,
@@ -188,6 +195,8 @@ public:
 		float in_turningRate_max,
 		float in_base_activ,
 		float in_activ_scale,
+		float in_activ_tgt,
+		std::vector<float> in_activ_rel_coeff,
 		std::vector<float> in_senseNoise_sigma,
 		std::vector<float> in_chemType_affinities,
 		std::vector<float> in_chemType_release
@@ -200,6 +209,8 @@ public:
 		turningRate_max(in_turningRate_max),
 		base_activ(in_base_activ),
 		activ_scale(in_activ_scale),
+		activ_tgt(in_activ_tgt),
+		activ_rel_coeff(in_activ_rel_coeff),
 		senseNoise_sigma(in_senseNoise_sigma),
 		chemType_affinities(in_chemType_affinities),
 		chemType_release(in_chemType_release),

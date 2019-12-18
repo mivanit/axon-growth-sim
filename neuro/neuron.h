@@ -46,7 +46,7 @@ public:
 		loc(in_coord), 
 		axon(in_ID, in_cellType, in_coord)
 	{
-		avg_activity = CELLTYPE_ARR[id_cellType].base_activ;
+		avg_activity = get_cellType().base_activ;
 	}
 
 
@@ -56,12 +56,15 @@ public:
 		// update axons
 		axon.update();
 
+		// release NTs
+		activ_release();
+
 		// REVIEW: reset activity
-		// avg_activity = CELLTYPE_ARR[id_cellType].base_activ;
+		// avg_activity = get_cellType().base_activ;
 	}
 
 	// get cellType class corresponding to ID
-	cellType & get_cellType()
+	inline cellType & get_cellType()
 	{
 		return CELLTYPE_ARR[id_cellType];
 	}
@@ -78,33 +81,34 @@ public:
 	// scaling by `activ_scale` from cellType
 	const float get_activ_scaled()
 	{
-		return (avg_activity * CELLTYPE_ARR[id_cellType].activ_scale);
+		return (avg_activity * get_cellType().activ_scale);
 	}
 
 
 	// activity based NT release into grid
-	// UGLY: only works for two NTs, also linear at the moment
+	// UGLY: only linear NT release functions
 	void activ_release()
 	{
-		float tgt_activ = 1.0;
-
-		// for excitatory
-		float amt_excite = 0.0;
-		if (avg_activity < tgt_activ)
+		for (int g_idx = 0; g_idx < MAX_CHEMTYPE; g_idx++)
 		{
-			amt_excite = tgt_activ - avg_activity;
-		}
-		(*dGrids)[0].Crd_add(loc, amt_excite);
+			// get initial difference between target and actual activity
+			float amt_rel = get_cellType().activ_tgt - avg_activity;
 
-		// for inhibitory
-		float amt_inh = 0.0;
-		if (avg_activity > tgt_activ)
-		{
-			amt_excite = avg_activity - tgt_activ;
+			// apply function, in this case linear function with min value of 0
+			amt_rel *= get_cellType().activ_rel_coeff[g_idx];
+			amt_rel = std::fmax(amt_rel, 0.0);
+
+			// add amount to the correct grid
+			// printf("\t\t%s", loc.to_str().c_str());
+			if ((*dGrids)[g_idx].Crd_valid(loc))
+			{
+				// printf("\t!!!!!!!!!\t");
+				(*dGrids)[g_idx].Crd_add(loc, amt_rel);
+			}
 		}
-		(*dGrids)[1].Crd_add(loc, amt_inh);
 	}
 
+		
 };
 
 std::vector<Diffusion> * Neuron::dGrids = nullptr;

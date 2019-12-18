@@ -1,5 +1,3 @@
-# CRIT: implement setup script
-
 # Usage: config file path (relative to 568_Project), name of simulation
 
 if [ $# -ne 2 ]; then

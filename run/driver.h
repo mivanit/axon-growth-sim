@@ -127,52 +127,52 @@ public:
 ##    ##    ##    ##       ##
  ######     ##    ######## ##
 */
-	void sim_step(bool releaseNT = true) {
-		// update all grids
-		int index = 0;
-		for (auto & g : dGrids) {
-			g.adi_step();
-
-
-			
-			if (releaseNT) {
-				// grid release
-				int chemType = CHEMTYPE_ARR[index].chemType_ID;
-				for (int i = N_GRIDSIZE / 10; i < N_GRIDSIZE; i += N_GRIDSIZE / 10) {
-					for (int j = N_GRIDSIZE / 10; j < N_GRIDSIZE; j += N_GRIDSIZE / 10) {
-						double concentration_to_add = i * j;
-						Coord location(i, j);
-						if (chemType == 1) {
-							concentration_to_add = (N_GRIDSIZE - i) * (N_GRIDSIZE - j);
-							location = Coord(i + 5, j + 5);
-						}
-						g.Crd_add(location, concentration_to_add / 100);
-					}
-				}
-			}
-			
-			index++;
-		}
+	void sim_step()
+	{
+		net.pass_activity();
+		net.try_conn();
 
 		// update all the neurons (which will in turn update axons)
-		for (auto & nrn : net.neurons) {
+		for (auto & nrn : net.neurons)
+		{
 			nrn.update();
-
-			
-			// CRIT: remove this part once activity release done 
-			// add neurotransmitter to appropriate grid
-			if (releaseNT) {
-				std::vector<float> &chemType_release = nrn.get_cellType().chemType_release;
-				double concentration = 100;
-				for (size_t i = 0; i < chemType_release.size(); ++i) {
-					dGrids[i].Crd_add(nrn.loc, concentration * chemType_release[i]);
-				}
-			}
-			
 		}
 
 		TIME++;
+
+		// update all grids
+		int g_idx = 0;		
+		for (auto & g : dGrids)
+		{
+			g.adi_step();
+			
+			// HARDCODED_RELEASE_TEMP(g_idx);
+			g_idx++;
+		}
+
 	}
+
+
+	void HARDCODED_RELEASE_TEMP(int g_idx, bool releaseNT = true)
+	{
+		auto g = dGrids[g_idx];
+		if (releaseNT) {
+			// grid release
+			int chemType = CHEMTYPE_ARR[g_idx].chemType_ID;
+			for (int i = N_GRIDSIZE / 10; i < N_GRIDSIZE; i += N_GRIDSIZE / 10) {
+				for (int j = N_GRIDSIZE / 10; j < N_GRIDSIZE; j += N_GRIDSIZE / 10) {
+					double concentration_to_add = i * j;
+					Coord location(i, j);
+					if (chemType == 1) {
+						concentration_to_add = (N_GRIDSIZE - i) * (N_GRIDSIZE - j);
+						location = Coord(i + 5, j + 5);
+					}
+					g.Crd_add(location, concentration_to_add / 100);
+				}
+			}
+		}
+	}
+
 
 	/*
 	- run the simulation until `fin_step`
@@ -185,7 +185,7 @@ public:
 	void run(
 		size_t fin_step = N_STEPS, 
 		size_t save_every = 1,
-		int print_every = 1,
+		int print_every = 5,
 		int verbosity = 0
 	) {
 		while (TIME < fin_step) 
@@ -229,12 +229,18 @@ public:
 		ss << std::setw(5) << std::setfill('0') << std::to_string(TIME);
 		const std::string END = "_" + ss.str() + ".tsv";
 
-		// CRIT: allow axon/neuron printing at all timesteps
+		// REVIEW: allow printing axon/neuron stuff at intermediate timesteps
+
+		// UGLY: move connection matrix generation?
+
+		// generate connection matrix
+		net.generate_conn_matrix();
 
 		if (print_final) {
 			const std::string END = "_final.tsv";
 			neuron_write(DIR + "neur" + END);
 			axon_write(DIR + "axon" + END);
+			conn_write(DIR + "conn" + END);
 		}
 		diffusion_write(DIR + "diff" + END);
 	}
@@ -302,21 +308,47 @@ public:
 			}
 			ofs << "\n";
 
-			// post stynaptic connection IDs
-			for (uint16_t id : nrn.axon.postSyn_id) {
-				ofs << std::to_string(id) << "\t";
-			}
-			ofs << "\n";
+			// // post stynaptic connection IDs
+			// for (uint16_t id : nrn.axon.postSyn_id) {
+			// 	ofs << std::to_string(id) << "\t";
+			// }
+			// ofs << "\n";
 
-			// post stynaptic weights
-			for (float wgt : nrn.axon.postSyn_wgt) {
-				ofs << std::to_string(wgt) << "\t";
-			}
-			ofs << "\n";
+			// // post stynaptic weights
+			// for (float wgt : nrn.axon.postSyn_wgt) {
+			// 	ofs << std::to_string(wgt) << "\t";
+			// }
+			// ofs << "\n";
 			
 			// additional newline, flush stream
 			ofs << std::endl;
 		}
+	}
+
+	void conn_write(const std::string& file) const {
+		// init ofstream
+		std::ofstream ofs(file, std::ios_base::app);
+		CHK_ERROR(!ofs.is_open(), "Error opening " + file + ", aborting.");
+		ofs.precision(PRECISION);
+		
+		// write connection matrix
+		// format:
+		/*
+			[array]
+		*/
+		
+		// generate connection matrix
+		std::vector<std::vector<float>> mat = net.conn_matrix;
+		
+		// output array
+		for (unsigned int i = 0; i < mat.size(); ++i) {
+			for (unsigned int j = 0; j < mat.back().size(); ++j) {
+				ofs << std::to_string(mat[i][j]) << "\t";
+			}
+			ofs << "\n";
+		}
+		// additional newline, flush stream
+		ofs << std::endl;
 	}
 
 
@@ -365,12 +397,12 @@ public:
 			break;
 
 		case 0:
-			printf("TIME = \t%d\n", (int)TIME);
+			printf("\tTIME = \t%d\n", (int)TIME);
 			break;
 
 		case 1:
 			// REVIEW: print more info?
-			printf("TIME = \t%d\n", (int)TIME);
+			printf("\tTIME = \t%d\n", (int)TIME);
 			break;
 		
 		default:
