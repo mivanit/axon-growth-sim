@@ -94,7 +94,7 @@ public:
 	*/
 	void try_conn()
 	{
-		const double DIST_THRESHOLD = 10.0;
+		const double DIST_THRESHOLD = 3.0;
 		const double CONN_PROB = 1.0;
 
 		// loop over all axons
@@ -114,10 +114,8 @@ public:
 					Coord nl = neurons[j].loc;
 					double r = static_cast<double>(rand()) / static_cast<double>(RAND_MAX);
 					// if distance less than threshold, make connections
-					if (dist(nl, al) <= DIST_THRESHOLD 
-						// && 
-						// r < CONN_PROB
-					) {
+					if (dist(nl, al) <= DIST_THRESHOLD ) 
+					{
 						axon.make_conn(neurons[j].id_neuron);
 					}
 				}			

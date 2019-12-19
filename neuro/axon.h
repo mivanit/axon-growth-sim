@@ -140,6 +140,17 @@ public:
 			postSyn_id.push_back(nrn_id);
 			postSyn_wgt.push_back(1.0);
 		}
+		else
+		{
+			float PROB_KILL = 0.005;
+			// if already made connection, kill with some probability
+			double r = static_cast<double>(rand()) / static_cast<double>(RAND_MAX);
+			if (r < PROB_KILL)
+			{
+				bln_stopped = true;
+			}
+		}
+		
 	}
 
 private:

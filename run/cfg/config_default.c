@@ -31,7 +31,7 @@ size_t N_STEPS = 1000;
 
 // * network specs
 
-extern const uint16_t N_NEURONS = 50;
+extern const uint16_t N_NEURONS = 75;
 extern const uint16_t N_GRIDSIZE = 100;
 extern const uint16_t N_PADDING = 5;
 
@@ -78,7 +78,7 @@ extern const float DIFF_dt = 1.0;
 extern const float EPSILON = 0.001;
 
 // Decimal precision for writing to files
-extern const int PRECISION = 8;
+extern const int PRECISION = 4;
 
 //* chem/cell type definitions
 // UGLY: improve configuration method?
@@ -105,10 +105,10 @@ std::vector< chemType > CHEMTYPE_ARR({
 std::vector< cellType > CELLTYPE_ARR({
 	cellType(
 		0, // cellType_ID
-		1.0, // stepSize_mu
+		0.4, // stepSize_mu
 		0.1, // stepSize_sigma
 		0.1, // searchAngle_tau
-		1.5, // searchDist
+		1.0, // searchDist
 		0.5, // turningRate_max
 		0.1, // base_activ
 		1.0, // activ_scale
@@ -116,12 +116,12 @@ std::vector< cellType > CELLTYPE_ARR({
 		std::vector<float>{1.0, -1.0}, // activ_rel_coeff
 		std::vector<float>{0.1, 0.1}, // senseNoise_sigma standard {0.01, 0.01}
 		std::vector<float>{1.0, -0.2}, // chemType_affinities
-		std::vector<float>{0.1, 1.0} // chemType_release
+		std::vector<float>{0.0, 1.0} // chemType_release
 	),
 	cellType(
 		1, // cellType_ID
-		1.0, // stepSize_mu
-		0.7, // stepSize_sigma
+		0.4, // stepSize_mu
+		0.1, // stepSize_sigma
 		0.1, // searchAngle_tau
 		1.0, // searchDist
 		0.5, // turningRate_max
@@ -130,8 +130,8 @@ std::vector< cellType > CELLTYPE_ARR({
 		2.5, // activ_tgt
 		std::vector<float>{-1.0, 1.0}, // activ_rel_coeff
 		std::vector<float>{0.1, 0.1}, // senseNoise_sigma standard {0.01, 0.01}
-		std::vector<float>{1.0, -0.2}, // chemType_affinities
-		std::vector<float>{1.0, 0.1} // chemType_release
+		std::vector<float>{-0.2, 1.0}, // chemType_affinities
+		std::vector<float>{1.0, 0.0} // chemType_release
 	)
 });
 

@@ -74,7 +74,7 @@ public:
 	// UGLY: specify absolute limit in neuron type
 	void norm_activ()
 	{
-		float MAX_ACTIV = 10.0;
+		float MAX_ACTIV = 5.0;
 		avg_activity = MAX_ACTIV * std::atan( avg_activity / MAX_ACTIV );
 	}
 
